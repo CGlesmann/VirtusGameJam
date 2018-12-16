@@ -749,7 +749,7 @@ MonoBehaviour:
     _targetTimeScale: 0.01
     _useFrames: 0
     _targetTimeScaleDurationInFrames: 3
-    _targetTimeScaleDurationInSeconds: 0.02
+    _targetTimeScaleDurationInSeconds: 0.03
     _lerpTimeScale: 0
     _lerpSpeed: 6.5
     _impulseSource: {fileID: 793351282839667932, guid: 5132bcede2543034ba173bdbf949df9b,
