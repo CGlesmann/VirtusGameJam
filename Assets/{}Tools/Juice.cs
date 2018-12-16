@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Cinemachine;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,7 +16,7 @@ using TMPro;
 public class Juice
 {
 	[SerializeField] private ParticleSystem _visualEffectPrefab;
-	[SerializeField] private AudioClip _soundEffect;
+	[SerializeField] private AudioSelection _soundEffectSelection;
 
 	//! Time
 	[SerializeField] private bool _modifyTimeScale = false;
@@ -29,18 +30,22 @@ public class Juice
 	[SerializeField] private float _lerpSpeed = 6.5f;
 
 	//! Camera
-	[SerializeField] private bool _addCameraShake = false;
+	//[SerializeField] private bool _addCameraShake = false;
+	
+	[SerializeField] private CinemachineImpulseSource _impulseSource;
 
-	public void MakeItRain(Transform targetPoint)
+	public ParticleSystem MakeItRain(Transform targetPoint)
 	{
+		ParticleSystem particleSystem = null;
+
 		if (this._visualEffectPrefab != null)
 		{
-			Object.Instantiate(this._visualEffectPrefab, targetPoint.position, Quaternion.identity);
+			particleSystem = Object.Instantiate(this._visualEffectPrefab, targetPoint.position, Quaternion.identity);
 		}
 
-		if (this._soundEffect != null)
+		if (this._soundEffectSelection != null)
 		{
-			AudioPlayer.Instance.PlayOneShot(this._soundEffect, AudioPlayer.AudioType.SFX);
+			AudioPlayer.Instance.PlayOneShot(this._soundEffectSelection.GetRandom(), AudioPlayer.AudioType.SFX);
 		}
 
 		if (this._modifyTimeScale)
@@ -54,6 +59,13 @@ public class Juice
 				this.StartCoroutine(TimeController.TimeFreezeProcess(this._targetTimeScale, this._targetTimeScaleDurationInSeconds));
 			}
 		}
+
+		if (this._impulseSource != null)
+		{
+			this._impulseSource.GenerateImpulse();
+		}
+
+		return particleSystem;
 	}
 
 #if UNITY_EDITOR
@@ -94,7 +106,7 @@ public class JuicePropertyDrawer : PropertyDrawer
 			EditorGUILayout.Space();
 
 			EditorGUILayout.LabelField("Audio", EditorStyles.boldLabel);
-			EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_soundEffect"), true);
+			EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_soundEffectSelection"), true);
 
 			EditorGUILayout.Space();
 
@@ -144,17 +156,17 @@ public class JuicePropertyDrawer : PropertyDrawer
 
 			EditorGUILayout.LabelField("Camera Shake", EditorStyles.boldLabel);
 
-			SerializedProperty addCameraShakeProp = serializedProperty.FindPropertyRelative("_addCameraShake");
-			EditorGUILayout.PropertyField(addCameraShakeProp, true);
+			//SerializedProperty addCameraShakeProp = serializedProperty.FindPropertyRelative("_addCameraShake");
+			//EditorGUILayout.PropertyField(addCameraShakeProp, true);
 
-			if (addCameraShakeProp.boolValue)
-			{
-				EditorGUI.indentLevel++;
-				
+			//if (addCameraShakeProp.boolValue)
+			//{
+				//EditorGUI.indentLevel++;
 
+				EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_impulseSource"), true);
 
-				EditorGUI.indentLevel--;
-			}
+				//EditorGUI.indentLevel--;
+			//}
 		}
 
 		serializedProperty.serializedObject.ApplyModifiedProperties();
