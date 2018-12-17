@@ -35,7 +35,7 @@ public class CollocutorEditor : Editor
 
 #pragma warning disable 0219
 		Collocutor sCollocutor = target as Collocutor;
-#pragma warning restore 0219
+#pragma warning restore 0219 
 	}
 }
 #endif

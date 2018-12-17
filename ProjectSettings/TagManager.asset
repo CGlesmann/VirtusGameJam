@@ -14,8 +14,8 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
+  - Player
+  - LevelWalls
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: TileFloors
+    uniqueID: 1220235949
+    locked: 0
+  - name: TileWalls
+    uniqueID: 3552476839
+    locked: 0
+  - name: Enemies
+    uniqueID: 312180767
+    locked: 0
+  - name: Player
+    uniqueID: 1333013721
+    locked: 0
+  - name: GUI
+    uniqueID: 744090735
     locked: 0
