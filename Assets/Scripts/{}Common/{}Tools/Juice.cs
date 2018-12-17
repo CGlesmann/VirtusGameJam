@@ -34,6 +34,14 @@ public class Juice
 	
 	[SerializeField] private CinemachineImpulseSource _impulseSource;
 
+	//! Flash
+	[SerializeField] private CanvasGroup _screenFlashCanvasGroup;
+
+	private IEnumerator ScreenFlashProcess()
+	{
+		yield return null;
+	}
+
 	public ParticleSystem MakeItRain(Transform targetPoint)
 	{
 		ParticleSystem particleSystem = null;
@@ -63,6 +71,11 @@ public class Juice
 		if (this._impulseSource != null)
 		{
 			this._impulseSource.GenerateImpulse();
+		}
+
+		if (this._screenFlashCanvasGroup != null)
+		{
+			
 		}
 
 		return particleSystem;
