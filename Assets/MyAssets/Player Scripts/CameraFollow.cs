@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour {
     public GameObject target; // Tracks the current target
     public float followSpeed = 5f;
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (follow)
         {

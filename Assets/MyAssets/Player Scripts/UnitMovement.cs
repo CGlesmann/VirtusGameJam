@@ -14,7 +14,7 @@ public class UnitMovement : MonoBehaviour
         controller = GetComponent<MovementController>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
