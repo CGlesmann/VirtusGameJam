@@ -31,15 +31,30 @@ public class Juice
 
 	//! Camera
 	//[SerializeField] private bool _addCameraShake = false;
-	
+
 	[SerializeField] private CinemachineImpulseSource _impulseSource;
 
 	//! Flash
-	[SerializeField] private CanvasGroup _screenFlashCanvasGroup;
+	[SerializeField] private CanvasGroup _flashCanvasGroup;
+
+	[Range(0.01f, 10f)]
+	[SerializeField] private float _flashSpeed = 2f;
+	[SerializeField] private AnimationCurve _flashAnimationCurve;
 
 	private IEnumerator ScreenFlashProcess()
 	{
-		yield return null;
+		float progress = 0f;
+
+		while (progress < 1f)
+		{
+			this._flashCanvasGroup.alpha = this._flashAnimationCurve.Evaluate(progress);
+
+			progress += Time.unscaledDeltaTime * this._flashSpeed;
+
+			yield return null;
+		}
+
+		this._flashCanvasGroup.alpha = 0f;
 	}
 
 	public ParticleSystem MakeItRain(Transform targetPoint)
@@ -73,9 +88,9 @@ public class Juice
 			this._impulseSource.GenerateImpulse();
 		}
 
-		if (this._screenFlashCanvasGroup != null)
+		if (this._flashCanvasGroup != null)
 		{
-			
+			this.StartCoroutine(this.ScreenFlashProcess());
 		}
 
 		return particleSystem;
@@ -174,12 +189,17 @@ public class JuicePropertyDrawer : PropertyDrawer
 
 			//if (addCameraShakeProp.boolValue)
 			//{
-				//EditorGUI.indentLevel++;
+			//EditorGUI.indentLevel++;
 
-				EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_impulseSource"), true);
+			EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_impulseSource"), true);
 
-				//EditorGUI.indentLevel--;
+			//EditorGUI.indentLevel--;
 			//}
+
+			EditorGUILayout.LabelField("Screen Flash", EditorStyles.boldLabel);
+			EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashCanvasGroup"), true);
+			EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashSpeed"), true);
+			EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashAnimationCurve"), true);
 		}
 
 		serializedProperty.serializedObject.ApplyModifiedProperties();
