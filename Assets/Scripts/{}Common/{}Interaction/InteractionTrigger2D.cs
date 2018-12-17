@@ -10,8 +10,8 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
-[UnityEngine.RequireComponent(typeof(Collider))]
-public class InteractionTrigger : MonoBehaviour
+[UnityEngine.RequireComponent(typeof(Collider2D))]
+public class InteractionTrigger2D : MonoBehaviour
 {
 	[SerializeField] private LayeredEventTriggerData[] _onTriggerEnterData;
 	[SerializeField] private LayeredEventTriggerData[] _onTriggerStayData;
@@ -19,7 +19,7 @@ public class InteractionTrigger : MonoBehaviour
 
 	private Coroutine _onTriggerStayProcess;
 
-	private IEnumerator OnTriggerStayProcess(Collider other)
+	private IEnumerator OnTriggerStayProcess2D(Collider2D other)
 	{
 		while (true)
 		{
@@ -33,7 +33,7 @@ public class InteractionTrigger : MonoBehaviour
 		}
 	}
 
-	private void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter2D(Collider2D other)
 	{
 		for (int i = 0; i < this._onTriggerEnterData.Length; i++)
 		{
@@ -41,16 +41,10 @@ public class InteractionTrigger : MonoBehaviour
 				this._onTriggerEnterData[i]._UnityEvent.Invoke();
 		}
 
-		this._onTriggerStayProcess = this.StartCoroutine(this.OnTriggerStayProcess(other));
+		this._onTriggerStayProcess = this.StartCoroutine(this.OnTriggerStayProcess2D(other));
 	}
 
-	// Isn't called every frame, thus things like input aren't working properly.
-	//private void OnTriggerStay(Collider other)
-	//{
-
-	//}
-
-	private void OnTriggerExit(Collider other)
+	private void OnTriggerExit2D(Collider2D other)
 	{
 		for (int i = 0; i < this._onTriggerExitData.Length; i++)
 		{
@@ -64,26 +58,26 @@ public class InteractionTrigger : MonoBehaviour
 #if UNITY_EDITOR
 	private const float GIZMO_SIZE_BIAS = 0.1f;
 
-	private BoxCollider _defaultCollider;
+	private BoxCollider2D _defaultCollider;
 
 	[ContextMenu("Reset Collision Data")]
 	public void CheckForTriggerColliders()
 	{
-		foreach (Collider collider in this.GetComponents<Collider>())
+		foreach (Collider2D collider in this.GetComponents<Collider2D>())
 		{
 			if (collider.isTrigger)
 			{
-				this._defaultCollider = collider as BoxCollider;
+				this._defaultCollider = collider as BoxCollider2D;
 				return;
 			}
 		}
 
-		this._defaultCollider = this.gameObject.AddComponent<BoxCollider>();
+		this._defaultCollider = this.gameObject.AddComponent<BoxCollider2D>();
 		this._defaultCollider.isTrigger = true;
 	}
 
 	[Header("Unity Editor Only")]
-	[SerializeField] private Vector3 _gizmoSize = Vector3.one;
+	[SerializeField] private Vector2 _gizmoSize = Vector2.one;
 
 	private bool _triedToFindDefaultCollider;
 
@@ -102,47 +96,37 @@ public class InteractionTrigger : MonoBehaviour
 
 		if (this._defaultCollider != null)
 		{
-			Gizmos.DrawCube(this.transform.position + Vector3.Scale(this._defaultCollider.center, this.transform.localScale), Vector3.Scale(this._defaultCollider.size, this.transform.localScale) + Vector3.one * GIZMO_SIZE_BIAS);
+			Gizmos.DrawCube(this.transform.position + Vector3.Scale(this._defaultCollider.offset, this.transform.localScale), Vector2.Scale(this._defaultCollider.size, this.transform.localScale) + Vector2.one * GIZMO_SIZE_BIAS);
 		}
 		else
 		{
-			Gizmos.DrawCube(this.transform.position, this._gizmoSize + Vector3.one * GIZMO_SIZE_BIAS);
+			Gizmos.DrawCube(this.transform.position, this._gizmoSize + Vector2.one * GIZMO_SIZE_BIAS);
 		}
 	}
 #endif
 }
 
-[System.Serializable]
-public struct LayeredEventTriggerData
-{
-	[SerializeField] private UnityEvent _unityEvent;
-	public UnityEvent _UnityEvent { get { return this._unityEvent; } }
-
-	[SerializeField] private LayerMask _layerMask;
-	public LayerMask _LayerMask { get { return this._layerMask; } }
-}
-
 #if UNITY_EDITOR
-[CustomEditor(typeof(InteractionTrigger))]
+[CustomEditor(typeof(InteractionTrigger2D))]
 [CanEditMultipleObjects]
-public class InteractionTriggerEditor : Editor
+public class InteractionTrigger2DEditor : Editor
 {
 	private void OnEnable()
 	{
-		InteractionTrigger sInteractionTrigger = target as InteractionTrigger;
+		InteractionTrigger2D sInteractionTrigger2D = this.target as InteractionTrigger2D;
 
-		sInteractionTrigger.CheckForTriggerColliders();
+		sInteractionTrigger2D.CheckForTriggerColliders();
 	}
 
 	public override void OnInspectorGUI()
 	{
-		DrawDefaultInspector();
+		this.DrawDefaultInspector();
 
 #pragma warning disable 0219
-		InteractionTrigger sInteractionTrigger = target as InteractionTrigger;
+		InteractionTrigger2D sInteractionTrigger2D = this.target as InteractionTrigger2D;
 #pragma warning restore 0219
 
-		foreach (Collider collider in sInteractionTrigger.GetComponents<Collider>())
+		foreach (Collider2D collider in sInteractionTrigger2D.GetComponents<Collider2D>())
 		{
 			if (collider.isTrigger)
 			{
