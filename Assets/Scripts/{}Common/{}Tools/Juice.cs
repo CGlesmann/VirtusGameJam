@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using Cinemachine;
+using UnityEngine.Rendering.PostProcessing;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -34,6 +35,8 @@ public class Juice
 
 	[SerializeField] private CinemachineImpulseSource _impulseSource;
 
+	[SerializeField] private bool _zoomCamera = false;
+
 	//! Flash
 	[SerializeField] private Image _flashImage;
 
@@ -47,6 +50,10 @@ public class Juice
 
 	[SerializeField] private bool _flashUseCustomAlphaCurve = true;
 	[SerializeField] private AnimationCurve _flashAnimationCurve;
+
+	//! Post Process
+	[SerializeField] private PostProcessProfile _postProcessProfile;
+	[SerializeField] private float _postProcessTime = 1f;
 
 	private IEnumerator ScreenFlashProcess()
 	{
@@ -94,6 +101,17 @@ public class Juice
 		this._flashImage.color = color;
 	}
 
+	private IEnumerator PostProcessProcess()
+	{
+		PostProcessProfile previousPostProcessProfile = PostProcessController.GlobalPostProcessVolume_.profile;
+
+		PostProcessController.GlobalPostProcessVolume_.profile = this._postProcessProfile;
+
+		yield return new WaitForSecondsRealtime(this._postProcessTime);
+
+		PostProcessController.GlobalPostProcessVolume_.profile = previousPostProcessProfile;
+	}
+
 	public ParticleSystem MakeItRain(Transform targetPoint)
 	{
 		ParticleSystem particleSystem = null;
@@ -128,6 +146,11 @@ public class Juice
 		if (this._flashImage != null)
 		{
 			this.StartCoroutine(this.ScreenFlashProcess());
+		}
+
+		if (this._postProcessProfile != null)
+		{
+			this.StartCoroutine(this.PostProcessProcess());
 		}
 
 		return particleSystem;
@@ -233,6 +256,8 @@ public class JuicePropertyDrawer : PropertyDrawer
 			//EditorGUI.indentLevel--;
 			//}
 
+			EditorGUILayout.Space();
+
 			EditorGUILayout.LabelField("Screen Flash", EditorStyles.boldLabel);
 
 			SerializedProperty flashImageProp = serializedProperty.FindPropertyRelative("_flashImage");
@@ -265,6 +290,18 @@ public class JuicePropertyDrawer : PropertyDrawer
 
 					EditorGUI.indentLevel--;
 				}
+			}
+
+			EditorGUILayout.Space();
+
+			EditorGUILayout.LabelField("Post Processing", EditorStyles.boldLabel);
+
+			SerializedProperty postProcessProfileProp = serializedProperty.FindPropertyRelative("_postProcessProfile");
+			EditorGUILayout.PropertyField(postProcessProfileProp, true);
+
+			if (postProcessProfileProp.objectReferenceValue != null)
+			{
+				EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_postProcessTime"), true);
 			}
 		}
 

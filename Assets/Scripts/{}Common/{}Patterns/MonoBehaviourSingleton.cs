@@ -24,7 +24,12 @@ public class MonoBehaviourSingleton<T> : MonoBehaviour
 		{
 			Instance = this as T;
 
-			Object.DontDestroyOnLoad(Instance.transform.parent);
+			Transform target = Instance.transform;
+
+			while (target.parent != null)
+				target = target.parent;
+
+			Object.DontDestroyOnLoad(target.gameObject);
 		}
 		else if (Instance != this)
 		{
