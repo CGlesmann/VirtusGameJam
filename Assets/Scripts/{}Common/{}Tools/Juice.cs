@@ -22,7 +22,7 @@ public class Juice
 	[SerializeField] private bool _modifyTimeScale = false;
 	[SerializeField] private float _targetTimeScale = 0.01f;
 
-	[SerializeField] private bool _useFrames = false;
+	[SerializeField] private bool _timeUseFrames = false;
 	[SerializeField] private int _targetTimeScaleDurationInFrames = 3;
 	[SerializeField] private float _targetTimeScaleDurationInSeconds = 0.02f;
 
@@ -35,26 +35,63 @@ public class Juice
 	[SerializeField] private CinemachineImpulseSource _impulseSource;
 
 	//! Flash
-	[SerializeField] private CanvasGroup _flashCanvasGroup;
+	[SerializeField] private Image _flashImage;
 
-	[Range(0.01f, 10f)]
+	[SerializeField] private Gradient _flashGradient;
+
+	[SerializeField] private bool _flashUseFrames = false;
+	[SerializeField] private int _flashFrames = 3;
+
+	[Range(0.01f, 100f)]
 	[SerializeField] private float _flashSpeed = 2f;
+
+	[SerializeField] private bool _flashUseCustomAlphaCurve = true;
 	[SerializeField] private AnimationCurve _flashAnimationCurve;
 
 	private IEnumerator ScreenFlashProcess()
 	{
 		float progress = 0f;
+		Color color;
 
-		while (progress < 1f)
+		if (this._flashUseFrames)
 		{
-			this._flashCanvasGroup.alpha = this._flashAnimationCurve.Evaluate(progress);
+			for (int i = 0; i < this._flashFrames; i++)
+			{
+				color = this._flashGradient.Evaluate(progress);
 
-			progress += Time.unscaledDeltaTime * this._flashSpeed;
+				if (this._flashUseCustomAlphaCurve)
+					color.a = this._flashAnimationCurve.Evaluate(progress);
 
-			yield return null;
+				this._flashImage.color = color;
+
+				progress = i / (float)this._flashFrames;
+
+				yield return null;
+			}
+		}
+		else
+		{
+			while (progress < 1f)
+			{
+				color = this._flashGradient.Evaluate(progress);
+
+				if (this._flashUseCustomAlphaCurve)
+					color.a = this._flashAnimationCurve.Evaluate(progress);
+
+				this._flashImage.color = color;
+
+				progress += Time.unscaledDeltaTime * this._flashSpeed;
+
+				yield return null;
+			}
 		}
 
-		this._flashCanvasGroup.alpha = 0f;
+		color = this._flashGradient.Evaluate(1f);
+
+		if (this._flashUseCustomAlphaCurve)
+			color.a = 0f;
+
+		this._flashImage.color = color;
 	}
 
 	public ParticleSystem MakeItRain(Transform targetPoint)
@@ -73,7 +110,7 @@ public class Juice
 
 		if (this._modifyTimeScale)
 		{
-			if (this._useFrames)
+			if (this._timeUseFrames)
 			{
 				this.StartCoroutine(TimeController.TimeFreezeProcess(this._targetTimeScale, this._targetTimeScaleDurationInFrames));
 			}
@@ -88,7 +125,7 @@ public class Juice
 			this._impulseSource.GenerateImpulse();
 		}
 
-		if (this._flashCanvasGroup != null)
+		if (this._flashImage != null)
 		{
 			this.StartCoroutine(this.ScreenFlashProcess());
 		}
@@ -149,7 +186,7 @@ public class JuicePropertyDrawer : PropertyDrawer
 
 				EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_targetTimeScale"), true);
 
-				SerializedProperty useFramesProp = serializedProperty.FindPropertyRelative("_useFrames");
+				SerializedProperty useFramesProp = serializedProperty.FindPropertyRelative("_timeUseFrames");
 				EditorGUILayout.PropertyField(useFramesProp, true);
 
 				EditorGUI.indentLevel++;
@@ -197,9 +234,38 @@ public class JuicePropertyDrawer : PropertyDrawer
 			//}
 
 			EditorGUILayout.LabelField("Screen Flash", EditorStyles.boldLabel);
-			EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashCanvasGroup"), true);
-			EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashSpeed"), true);
-			EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashAnimationCurve"), true);
+
+			SerializedProperty flashImageProp = serializedProperty.FindPropertyRelative("_flashImage");
+			EditorGUILayout.PropertyField(flashImageProp, true);
+
+			if (flashImageProp.objectReferenceValue != null)
+			{
+				EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashGradient"), true);
+
+				SerializedProperty flashUseFramesProp = serializedProperty.FindPropertyRelative("_flashUseFrames");
+				EditorGUILayout.PropertyField(flashUseFramesProp, true);
+
+				EditorGUI.indentLevel++;
+
+				if (flashUseFramesProp.boolValue)
+					EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashFrames"), true);
+				else
+					EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashSpeed"), true);
+
+				EditorGUI.indentLevel--;
+
+				SerializedProperty flashUseCustomAlphaProp = serializedProperty.FindPropertyRelative("_flashUseCustomAlphaCurve");
+				EditorGUILayout.PropertyField(flashUseCustomAlphaProp, true);
+
+				if (flashUseCustomAlphaProp.boolValue)
+				{
+					EditorGUI.indentLevel++;
+
+					EditorGUILayout.PropertyField(serializedProperty.FindPropertyRelative("_flashAnimationCurve"), true);
+
+					EditorGUI.indentLevel--;
+				}
+			}
 		}
 
 		serializedProperty.serializedObject.ApplyModifiedProperties();

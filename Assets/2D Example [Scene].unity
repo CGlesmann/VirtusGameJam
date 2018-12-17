@@ -200,6 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 80918095}
   - component: {fileID: 80918096}
+  - component: {fileID: 80918097}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -259,6 +260,21 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1945068210}
+--- !u!114 &80918097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80918094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
 --- !u!1 &151710623
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,15 +416,47 @@ MonoBehaviour:
       type: 2}
     _modifyTimeScale: 0
     _targetTimeScale: 0.01
-    _useFrames: 0
+    _timeUseFrames: 0
     _targetTimeScaleDurationInFrames: 3
     _targetTimeScaleDurationInSeconds: 0.03
     _lerpTimeScale: 0
     _lerpSpeed: 6.5
     _impulseSource: {fileID: 793351282839667932, guid: 5132bcede2543034ba173bdbf949df9b,
       type: 3}
-    _flashCanvasGroup: {fileID: 907951556}
-    _flashSpeed: 0.01
+    _flashImage: {fileID: 907951558}
+    _flashGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 1, g: 0, b: 0, a: 1}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 44140
+      ctime2: 65535
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 22937
+      atime2: 63993
+      atime3: 65535
+      atime4: 65535
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 3
+      m_NumAlphaKeys: 4
+    _flashUseFrames: 1
+    _flashFrames: 3
+    _flashSpeed: 100
+    _flashUseCustomAlphaCurve: 0
     _flashAnimationCurve:
       serializedVersion: 2
       m_Curve:
@@ -1486,9 +1534,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907951553}
   m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!95 &907951557
 Animator:
@@ -1522,8 +1570,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
