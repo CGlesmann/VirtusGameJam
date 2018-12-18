@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
         controller = GetComponent<MovementController>();
 
         // Creating a new reference to UnitStats
-        stats = new UnitStats(gameObject);
+        stats = new UnitStats(2f, 1f);
     }
 
     private void Update()
@@ -73,15 +73,21 @@ public class Enemy : MonoBehaviour
                 target = null;
             }
 
+            if (target == null)
+            {
+                isChasing = false;
+                return;
+            }
+
             float dist = (target.transform.position - transform.position).magnitude;
             if (dist <= attackRange)
             {
                 if (attackTimer <= 0f)
                 {
                     Player player = GameObject.Find("Player").GetComponent<Player>();
-                    if (player != null)
+                    if (player != null && !player.GetComponent<UnitMovement>().isDashing)
                     {
-                        player.stats.TakeDamage(stats.unitDamage);
+                        player.stats.TakeDamage(player.gameObject, stats.unitDamage);
                         attackTimer = attackCooldown;
 
                         if (player == null)
@@ -268,6 +274,22 @@ public class Enemy : MonoBehaviour
         }
 
         return false;
+    }
+
+    IEnumerator HurtFlash()
+    {
+        // Getting the SpriteRenderer
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color baseColor = sr.color;
+        Color flashColor = Color.black;
+        int flashReps = 6;
+        float delay = 0.05f;
+
+        for (int i = 0; i < flashReps; i++)
+        {
+            sr.color = (i % 2 == 0) ? flashColor : baseColor;
+            yield return new WaitForSeconds(delay);
+        }
     }
 
     private void OnDrawGizmos()

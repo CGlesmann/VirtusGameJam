@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Template Main Menu [Scene].unity
-    guid: 7c9b422c7fa97324bbae28876922a4f0
+    path: Assets/MyAssets/PlayerDoorSample.unity
+    guid: b0b32cb04cce58e4fba1bab6c55084ee
   m_configObjects: {}

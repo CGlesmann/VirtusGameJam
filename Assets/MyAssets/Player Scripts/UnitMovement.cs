@@ -59,10 +59,10 @@ public class UnitMovement : MonoBehaviour
 
     IEnumerator Dashing()
     {
-        float power = 125f;
+        float power = 200f;
         float length = 0.2f;
-        float delay = 0.01f;
-        int reps = (int)(length / delay);
+        int reps = 50;
+        float delay = (length / reps);
         
         float inc = power / reps;
 

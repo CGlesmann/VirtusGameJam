@@ -2,50 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitStats
+[CreateAssetMenu(fileName = "New Unit", menuName = "Unit Assets/New Unit", order = 1)]
+public class UnitStats : ScriptableObject
 {
     [Header("Combat Variables")]
     public float unitHealth;
     public float unitMaxHealth;
 
     public float unitDamage;
-
-    [Header("GameObject reference")]
-    public GameObject gObj; 
-
-    /// <summary>
-    /// Default Constructor, Sets the Default health to 100 and damage to 10
-    /// </summary>
-    public UnitStats(GameObject o, float h = 100f, float d = 10f)
+    
+    public UnitStats(float health = 5f, float damage = 1f)
     {
-        // Setting Health
-        unitHealth = h;
-        unitMaxHealth = unitHealth;
+        unitMaxHealth = unitHealth = health;
+        unitDamage = damage;
 
-        // Setting Damage
-        unitDamage = d;
-
-        // Setting the Reference
-        gObj = o;
+        Debug.Log("Unit Initialized at " + health.ToString() + " health and " + damage.ToString("F0") + " damage");
     }
 
     /// <summary>
     /// Takes Damage and checks for death
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage)
+    public void TakeDamage(GameObject target, float damage)
     {
         // Reporting the amount of damage unit has taken
-        Debug.Log(gObj.name + " Takes " + damage.ToString("F0") + " damage");
+        Debug.Log(target.name + " Takes " + damage.ToString("F0") + " damage");
 
         // Assigning the Damage
         unitHealth -= damage;
+
+        Debug.Log(target.name + " has " + unitHealth.ToString("F0") + " left");
 
         // Checking for death
         if (unitHealth <= 0f)
         {
             // Destroying the GameObject
-            GameObject.Destroy(gObj);
+            GameObject.Destroy(target);
         }
     }
 }

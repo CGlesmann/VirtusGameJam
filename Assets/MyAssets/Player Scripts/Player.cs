@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour {
 
@@ -9,6 +11,9 @@ public class Player : MonoBehaviour {
 
     [Header("Stats Reference")]
     public UnitStats stats;
+
+    [Header("GUI References")]
+    public Image playerHealthBar;
 
     [Header("Player Inventory Vars")]
     [HideInInspector] public PlayerInventory pInven;
@@ -35,7 +40,7 @@ public class Player : MonoBehaviour {
         pInven = GetComponent<PlayerInventory>();
 
         // Creating a new reference to Stats
-        stats = new UnitStats(gameObject);
+        stats = new UnitStats(5f, 1f);
     }
 
     private void Update()
@@ -45,6 +50,9 @@ public class Player : MonoBehaviour {
         {
             TryMeleeAttack();
         }
+
+        // Updating the GUI
+        UpdatePlayerGUIElements();
     }
 
     private void AdjustAttackArea()
@@ -72,7 +80,13 @@ public class Player : MonoBehaviour {
         AdjustAttackArea();
 
         // Searching for a target
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position + attackAreaOffset, attackArea, 0f, Vector2.left, 0f, enemyLayer);
+        Vector3 lastVelocity = GetComponent<UnitMovement>().lastVelocity;
+        Vector3 attackVector = new Vector3(((length / 2) * Mathf.Sign(lastVelocity.x)) + ((transform.localScale.x / 2) * Mathf.Sign(lastVelocity.x)),
+                                           ((length / 2) * Mathf.Sign(lastVelocity.y)) + ((transform.localScale.y / 2) * Mathf.Sign(lastVelocity.y)),
+                                           0f);
+
+        float a = Vector3.Angle(transform.position, transform.position + attackVector);
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, attackArea, a, Vector2.left, 0f, enemyLayer);
         if (hit)
         {
             Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
@@ -84,8 +98,18 @@ public class Player : MonoBehaviour {
             }
 
             // Dealing the Damage to the Unit
-            enemy.stats.TakeDamage(stats.unitDamage);
+            enemy.stats.TakeDamage(enemy.gameObject, stats.unitDamage);
+            enemy.StartCoroutine("HurtFlash");
         }
+    }
+
+    /// <summary>
+    /// Updates all GUI References
+    /// </summary>
+    private void UpdatePlayerGUIElements()
+    {
+        // Updating the HealthBar
+        playerHealthBar.fillAmount = (stats.unitHealth / stats.unitMaxHealth);
     }
 
     /// <summary>
