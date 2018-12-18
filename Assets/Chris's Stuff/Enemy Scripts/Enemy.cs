@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
             {
                 if (attackTimer <= 0f)
                 {
-                    Player player = GameObject.Find("Player").GetComponent<Player>();
+                    Player player = this.target.GetComponent<Player>();
                     if (player != null && !player.GetComponent<UnitMovement>().isDashing)
                     {
                         player.stats.TakeDamage(player.gameObject, stats.unitDamage);
