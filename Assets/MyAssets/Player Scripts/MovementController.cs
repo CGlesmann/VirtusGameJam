@@ -34,7 +34,8 @@ public class MovementController : MonoBehaviour
             VerticalCollisions(ref velocity);
         }
 
-        transform.Translate(velocity);
+        if (velocity != Vector3.zero && velocity != null)
+            transform.Translate(velocity);
     }
 
     void HorizontalCollisions(ref Vector3 velocity)
@@ -107,5 +108,4 @@ public class MovementController : MonoBehaviour
         public Vector2 topLeft, topRight;
         public Vector2 bottomLeft, bottomRight;
     }
-
 }

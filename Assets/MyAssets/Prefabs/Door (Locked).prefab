@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7720008030121006879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14.93, y: -1.5012, z: 0}
-  m_LocalScale: {x: 4.0072637, y: 4.4901805, z: 1}
+  m_LocalScale: {x: 2.9117754, y: 6.1817584, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -67,9 +67,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1333013721
-  m_SortingLayer: 4
-  m_SortingOrder: 1
+  m_SortingLayerID: -742490457
+  m_SortingLayer: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: aa92a4235cf703145beac36d498a949e, type: 3}
   m_Color: {r: 0.00057849905, g: 0.11546132, b: 0.122641504, a: 1}
   m_FlipX: 0
@@ -95,14 +95,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactKey: 101
   dState: 0
-  dStyle: 0
-  openPosition: {x: 0, y: 0, z: 0}
-  closedPosition: {x: 0, y: 0, z: 0}
+  dStyle: 1
+  openPosition: {x: 12.93, y: 6.39, z: 0}
+  closedPosition: {x: 12.93, y: 1.027, z: 0}
   autoClose: 1
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
-  interactionRadius: {x: 0, y: 0, z: 0}
+    m_Bits: 2560
+  interactionRadius: {x: 5, y: 6.02, z: 0}
 --- !u!61 &7720008030121006851
 BoxCollider2D:
   m_ObjectHideFlags: 0
