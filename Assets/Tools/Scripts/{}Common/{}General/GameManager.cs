@@ -15,6 +15,47 @@ using TMPro;
 
 public class GameManager : MonoBehaviourSingleton<GameManager>
 {
+	[SerializeField] private UnityEvent _onStartGame;
+	public UnityEvent _OnStartGame { get { return this._onStartGame; } }
+
+	public void StartGame()
+	{
+		this._onStartGame.Invoke();
+	}
+
+	[SerializeField] private UnityEvent _onEndGame;
+	public UnityEvent _OnEndGame { get { return this._onEndGame; } }
+
+	public void EndGame()
+	{
+		this._onEndGame.Invoke();
+	}
+
+	public void RestartGame()
+	{
+		this.EndGame();
+		this.StartGame();
+	}
+
+	private IEnumerator RestartGameProcess(float delay)
+	{
+		this.EndGame();
+
+		yield return new WaitForSecondsRealtime(delay);
+
+		this.StartGame();
+	}
+
+	public void RestartGame(float delay)
+	{
+		this.StartCoroutine(this.RestartGameProcess(delay));
+	}
+
+	private void Start()
+	{
+		this.StartGame();
+	}
+
 #if UNITY_EDITOR
 	//protected override void OnDrawGizmos()
 	//{

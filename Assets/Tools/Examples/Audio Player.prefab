@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6126773062041536533}
   - component: {fileID: 6126773062041536530}
   - component: {fileID: 6126773062041536531}
+  - component: {fileID: 6126773063388052136}
   m_Layer: 0
   m_Name: Audio Player
   m_TagString: Untagged
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicAudioSource: {fileID: 6126773062041536530}
   _sfxAudioSource: {fileID: 6126773062041536531}
-  _musicSelection: {fileID: 11400000, guid: b6b009e56041161479c7cc5edd82ce74, type: 2}
+  _musicSelection: {fileID: 0}
 --- !u!82 &6126773062041536530
 AudioSource:
   m_ObjectHideFlags: 0
@@ -240,3 +241,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6126773063388052136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6126773062041536535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6dce4f191bb5b840aa3809d5ec2571e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioType: 0
+  _audioSelection: {fileID: 11400000, guid: 1cdf0f1080296724cb66ed01d006c75e, type: 2}
+  _silenceTimeRange: {x: 15, y: 45}
