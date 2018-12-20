@@ -46,7 +46,9 @@ public class Enemy : MonoBehaviour
         controller = GetComponent<MovementController>();
 
         // Creating a new reference to UnitStats
-        stats = new UnitStats(2f, 1f);
+        stats = ScriptableObject.CreateInstance<UnitStats>();
+		stats.unitHealth = 2f;
+		stats.unitDamage = 1f;
     }
 
     private void Update()

@@ -40,7 +40,9 @@ public class Player : MonoBehaviour {
         pInven = GetComponent<PlayerInventory>();
 
         // Creating a new reference to Stats
-        stats = new UnitStats(5f, 1f);
+        stats = ScriptableObject.CreateInstance<UnitStats>();
+		stats.unitHealth = 5f;
+		stats.unitDamage = 1f;
     }
 
     private void Update()

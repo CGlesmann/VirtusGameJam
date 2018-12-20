@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -254,6 +254,16 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 257974095}
+    - target: {fileID: 212315611383126052, guid: 64116271b4af5d945bd46e50b1ad8494,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 577207223
+      objectReference: {fileID: 0}
+    - target: {fileID: 212315611383126052, guid: 64116271b4af5d945bd46e50b1ad8494,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64116271b4af5d945bd46e50b1ad8494, type: 3}
 --- !u!1 &159352004
@@ -323,7 +333,7 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -742490457
+  m_SortingLayerID: -1323600467
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
@@ -10886,6 +10896,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7720008030121006848, guid: ce3a69f74125fec4988f70c3ac8ed43f,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1323600467
+      objectReference: {fileID: 0}
+    - target: {fileID: 7720008030121006848, guid: ce3a69f74125fec4988f70c3ac8ed43f,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce3a69f74125fec4988f70c3ac8ed43f, type: 3}
 --- !u!1 &303746494
@@ -11908,7 +11928,7 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1220235949
+  m_SortingLayerID: -641624009
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
@@ -21881,16 +21901,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6375266550959967868, guid: 3659277a51b98d44d86b7d304d1f62d2,
-        type: 3}
-      propertyPath: wanderOrigin.x
-      value: 23.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6375266550959967868, guid: 3659277a51b98d44d86b7d304d1f62d2,
-        type: 3}
-      propertyPath: wanderOrigin.y
-      value: 8.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3659277a51b98d44d86b7d304d1f62d2, type: 3}

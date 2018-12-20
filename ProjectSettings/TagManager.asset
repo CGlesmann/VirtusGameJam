@@ -42,17 +42,17 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: TileFloors
-    uniqueID: 1220235949
+    uniqueID: 3653343287
     locked: 0
   - name: TileWalls
-    uniqueID: 3552476839
+    uniqueID: 2971366829
     locked: 0
   - name: Enemies
-    uniqueID: 312180767
+    uniqueID: 457550033
     locked: 0
   - name: Player
-    uniqueID: 1333013721
+    uniqueID: 577207223
     locked: 0
   - name: GUI
-    uniqueID: 744090735
+    uniqueID: 2474613675
     locked: 0

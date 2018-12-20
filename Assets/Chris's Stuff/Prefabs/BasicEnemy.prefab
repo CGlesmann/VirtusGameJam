@@ -68,8 +68,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1333013721
-  m_SortingLayer: 4
+  m_SortingLayerID: 457550033
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: aa92a4235cf703145beac36d498a949e, type: 3}
   m_Color: {r: 0.4245283, g: 0, b: 0, a: 1}
@@ -149,7 +149,7 @@ MonoBehaviour:
   wanderSpeed: 4
   canWander: 1
   wanderRange: {x: 13, y: 13, z: 0}
-  wanderOrigin: {x: 28.45, y: 0.9, z: 0}
+  wanderOrigin: {x: 23.3, y: 8.2, z: 0}
   wanderPoint: {x: 0, y: 0, z: 0}
   acceptanceRange: 0.2
   wanderDelay: 1.5
