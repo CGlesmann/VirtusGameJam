@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    [Header("Global Player Reference(s)")]
+    public Player player;
+    public UnitStats playerStats;
 
     public void Update()
     {

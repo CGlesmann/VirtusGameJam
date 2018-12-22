@@ -9,6 +9,7 @@ public class UnitMovement : MonoBehaviour
     private Vector3 velocity;
 
     private MovementController controller;
+    private Animator playerAnimator;
 
     [Header("Dashing Variables")]
     public bool isDashing = false;
@@ -29,7 +30,7 @@ public class UnitMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && lastVelocity != Vector3.zero)
         {
             if (!isDashing)
             {
@@ -41,27 +42,32 @@ public class UnitMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        float speed = baseMoveSpeed;
-
-        velocity.x = input.x * speed;
-        velocity.y = input.y * speed;
-
-        Vector3 toMove = velocity * Time.deltaTime;
-        controller.Move(toMove);
-
-        if (toMove != Vector3.zero)
+        if (!isDashing)
         {
-            lastVelocity = toMove;
+            Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+            float speed = baseMoveSpeed;
+
+            velocity.x = input.x * speed;
+            velocity.y = input.y * speed;
+
+            Vector3 toMove = velocity * Time.deltaTime;
+            controller.Move(toMove);
+
+            if (toMove != Vector3.zero)
+            {
+                lastVelocity = toMove;
+            }
         }
     }
 
     IEnumerator Dashing()
     {
-        float power = 200f;
-        float length = 0.2f;
-        int reps = 50;
+        Vector2 dir = lastVelocity;
+
+        float power = 60f;
+        float length = 0.15f;
+        int reps = 10;
         float delay = (length / reps);
         
         float inc = power / reps;

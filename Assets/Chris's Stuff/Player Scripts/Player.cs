@@ -10,7 +10,8 @@ public class Player : MonoBehaviour {
     private enum AttackStyle { Horizontal, Vertical };
 
     [Header("Stats Reference")]
-    public UnitStats stats;
+    public LevelManager manager;
+    public UnitState pState = new UnitState();
 
     [Header("GUI References")]
     public Image playerHealthBar;
@@ -29,7 +30,10 @@ public class Player : MonoBehaviour {
     [SerializeField] private float width = 1f;
 
     [Header("Input Variables")]
+    private UnitMovement playerMovement;
     public KeyCode attackKey;
+
+    private Animator anim;
 
     /// <summary>
     /// Getting References
@@ -39,10 +43,8 @@ public class Player : MonoBehaviour {
         // Getting the PlayerInventory Component
         pInven = GetComponent<PlayerInventory>();
 
-        // Creating a new reference to Stats
-        stats = ScriptableObject.CreateInstance<UnitStats>();
-		stats.unitHealth = 5f;
-		stats.unitDamage = 1f;
+        playerMovement = GetComponent<UnitMovement>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -55,6 +57,38 @@ public class Player : MonoBehaviour {
 
         // Updating the GUI
         UpdatePlayerGUIElements();
+
+        // Updating the Player Sprite
+        UpdatePlayerSprite();
+    }
+
+    private void UpdatePlayerSprite()
+    {
+        // Getting the Last Velocity to determine direction
+        Vector3 lv = playerMovement.lastVelocity;
+
+        if (lv != Vector3.zero)
+        {
+            if (lv.x != 0f)
+            {
+                if (lv.x < 0f)
+                    anim.SetTrigger("LeftMove");
+                if (lv.x > 0f)
+                    anim.SetTrigger("RightMove");
+
+                return;
+            }
+
+            if (lv.y != 0f)
+            {
+                if (lv.y < 0f)
+                    anim.SetTrigger("DownMove");
+                if (lv.y > 0f)
+                    anim.SetTrigger("UpMove");
+
+                return;
+            }
+        }
     }
 
     private void AdjustAttackArea()
@@ -78,17 +112,17 @@ public class Player : MonoBehaviour {
 
     private void TryMeleeAttack()
     {
-        //Readjust the Attack Area based on movement
+        // Read just the Attack Area based on movement
         AdjustAttackArea();
 
         // Searching for a target
         Vector3 lastVelocity = GetComponent<UnitMovement>().lastVelocity;
         Vector3 attackVector = new Vector3(((length / 2) * Mathf.Sign(lastVelocity.x)) + ((transform.localScale.x / 2) * Mathf.Sign(lastVelocity.x)),
-                                           ((length / 2) * Mathf.Sign(lastVelocity.y)) + ((transform.localScale.y / 2) * Mathf.Sign(lastVelocity.y)),
+                                           ((width / 2) * Mathf.Sign(lastVelocity.y)) + ((transform.localScale.y / 2) * Mathf.Sign(lastVelocity.y)),
                                            0f);
 
         float a = Vector3.Angle(transform.position, transform.position + attackVector);
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, attackArea, a, Vector2.left, 0f, enemyLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position + attackAreaOffset, attackArea, a, Vector2.left, 0f, enemyLayer);
         if (hit)
         {
             Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
@@ -100,8 +134,24 @@ public class Player : MonoBehaviour {
             }
 
             // Dealing the Damage to the Unit
-            enemy.stats.TakeDamage(enemy.gameObject, stats.unitDamage);
+            enemy.sTracker.TakeDamage(enemy.gameObject, manager.playerStats.unitDamage);
             enemy.StartCoroutine("HurtFlash");
+        }
+    }
+
+    IEnumerator HurtFlash()
+    {
+        // Getting the SpriteRenderer
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color baseColor = sr.color;
+        Color flashColor = Color.white;
+        int flashReps = 6;
+        float delay = 0.05f;
+
+        for (int i = 0; i < flashReps; i++)
+        {
+            sr.color = (i % 2 == 0) ? flashColor : baseColor;
+            yield return new WaitForSeconds(delay);
         }
     }
 
@@ -111,7 +161,7 @@ public class Player : MonoBehaviour {
     private void UpdatePlayerGUIElements()
     {
         // Updating the HealthBar
-        playerHealthBar.fillAmount = (stats.unitHealth / stats.unitMaxHealth);
+        playerHealthBar.fillAmount = (manager.playerStats.unitHealth / manager.playerStats.unitMaxHealth);
     }
 
     /// <summary>

@@ -8,8 +8,15 @@ public class Enemy : MonoBehaviour
     // Private Enums
     private enum PhaseStyle { Top, Bottom, Left, Right, Behind, Front };
 
+    [Header("LevelManager Reference")]
+    public LevelManager manager;
+
+    [Header("Stat Variables")]
+    public UnitState eState = new UnitState();
+
     [Header("Enemy Stats Reference")]
-    public UnitStats stats;
+    public UnitStats baseStats;
+    public StatsTracker sTracker;
     public float attackRange = 0.5f;
     public float attackCooldown = 0.5f;
 
@@ -44,68 +51,71 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<MovementController>();
-
-        // Creating a new reference to UnitStats
-        stats = ScriptableObject.CreateInstance<UnitStats>();
-		stats.unitHealth = 2f;
-		stats.unitDamage = 1f;
+        sTracker = new StatsTracker(baseStats);
     }
 
     private void Update()
     {
-        if (!isChasing)
+        // Updating Enemy State
+        eState.UpdateState();
+
+        if (eState.StateClear())
         {
-            // Try getting a target
-            target = GetTarget();
-            if (target != null)
+            if (!isChasing)
             {
-                isChasing = true;
-                return;
-            }
-
-            // Else wander around
-            WanderState();
-        }
-        else
-        {
-            // Checking to make sure its still in range
-            if (!InRange())
-            {
-                isChasing = false;
-                target = null;
-            }
-
-            if (target == null)
-            {
-                isChasing = false;
-                return;
-            }
-
-            float dist = (target.transform.position - transform.position).magnitude;
-            if (dist <= attackRange)
-            {
-                if (attackTimer <= 0f)
+                // Try getting a target
+                target = GetTarget();
+                if (target != null)
                 {
-                    Player player = this.target.GetComponent<Player>();
-                    if (player != null && !player.GetComponent<UnitMovement>().isDashing)
-                    {
-                        player.stats.TakeDamage(player.gameObject, stats.unitDamage);
-                        attackTimer = attackCooldown;
+                    isChasing = true;
+                    return;
+                }
 
-                        if (player == null)
+                // Else wander around
+                WanderState();
+            }
+            else
+            {
+                // Checking to make sure its still in range
+                if (!InRange())
+                {
+                    isChasing = false;
+                    target = null;
+                }
+
+                if (target == null)
+                {
+                    isChasing = false;
+                    return;
+                }
+
+                float dist = (target.transform.position - transform.position).magnitude;
+                if (dist <= attackRange)
+                {
+                    if (attackTimer <= 0f)
+                    {
+                        Player player = this.target.GetComponent<Player>();
+                        if (player != null && !player.GetComponent<UnitMovement>().isDashing)
                         {
-                            target = null;
-                            isChasing = false;
-                        } 
+                            manager.playerStats.TakeDamage(player.gameObject, baseStats.unitDamage);
+                            player.StartCoroutine("HurtFlash");
+                            attackTimer = attackCooldown;
+
+                            if (player == null)
+                            {
+                                target = null;
+                                isChasing = false;
+                            }
+                        }
+                    } else
+                    {
+                        attackTimer -= Time.deltaTime;
                     }
                 }
+
+
             }
-
-            
         }
-
-        if (attackTimer > 0f)
-            attackTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -310,4 +320,32 @@ public class Enemy : MonoBehaviour
             Gizmos.DrawCube(wanderPoint, Vector3.one * 2f);
         }
     }
+
+    public struct StatsTracker
+    {
+        public float health;
+        public float damage;
+
+        public StatsTracker(UnitStats baseStats)
+        {
+            health = baseStats.unitHealth;
+            damage = baseStats.unitDamage;
+        }
+
+        public void SetToBase(UnitStats baseStats)
+        {
+            health = baseStats.unitHealth;
+            damage = baseStats.unitDamage;
+        }
+
+        public void TakeDamage(GameObject gObj, float damage)
+        {
+            health -= damage;
+            if (health <= 0f)
+            {
+                GameObject.Destroy(gObj);
+            }
+        }
+    }
 }
+

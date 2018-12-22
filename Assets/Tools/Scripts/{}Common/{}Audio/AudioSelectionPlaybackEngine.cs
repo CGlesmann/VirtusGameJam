@@ -20,7 +20,7 @@ public class AudioSelectionPlaybackEngine : MonoBehaviour
 	[SerializeField] private AudioSelection _audioSelection;
 	[SerializeField] private Vector2 _silenceTimeRange = new Vector2(15f, 45f);
 
-	private IEnumerator PlayProcess()
+    private IEnumerator PlayProcess()
 	{
 		while (true)
 		{
