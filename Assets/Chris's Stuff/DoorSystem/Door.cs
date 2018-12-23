@@ -64,13 +64,6 @@ public class Door : MonoBehaviour {
 
                     if (dState == DoorState.Locked)
                     {
-                        if (player.pInven.keyCards >= 1)
-                        {
-                            dState = DoorState.Unlocked;
-                            player.pInven.keyCards--;
-                        }
-                        else
-                            return;
                     }
 
                     StartCoroutine("ToggleDoor");

@@ -16,9 +16,6 @@ public class Player : MonoBehaviour {
     [Header("GUI References")]
     public Image playerHealthBar;
 
-    [Header("Player Inventory Vars")]
-    [HideInInspector] public PlayerInventory pInven;
-
     [Header("Player Combat Variables")]
     public LayerMask enemyLayer;
     public LayerMask wallLayer;
@@ -40,9 +37,6 @@ public class Player : MonoBehaviour {
     /// </summary>
     private void Awake()
     {
-        // Getting the PlayerInventory Component
-        pInven = GetComponent<PlayerInventory>();
-
         playerMovement = GetComponent<UnitMovement>();
         anim = GetComponent<Animator>();
     }
