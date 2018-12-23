@@ -17,7 +17,7 @@ public class JuiceEmmiterTest : MonoBehaviour
 {
 	[SerializeField] private Juice _juice;
 
-	public void Exec()
+	public void Emmit()
 	{
 		ParticleSystem particleSystem = this._juice.MakeItRain(this.transform);
 
