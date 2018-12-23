@@ -58,30 +58,33 @@ public class Player : MonoBehaviour {
 
     private void UpdatePlayerSprite()
     {
-        // Getting the Last Velocity to determine direction
-        Vector3 lv = playerMovement.lastVelocity;
+        anim.ResetTrigger("UpMove");
+        anim.ResetTrigger("DownMove");
+        anim.ResetTrigger("LeftMove");
+        anim.ResetTrigger("RightMove");
 
-        if (lv != Vector3.zero)
+        if (Input.GetKey(KeyCode.W))
         {
-            if (lv.x != 0f)
-            {
-                if (lv.x < 0f)
-                    anim.SetTrigger("LeftMove");
-                if (lv.x > 0f)
-                    anim.SetTrigger("RightMove");
+            anim.SetTrigger("UpMove");
+            return;
+        }
 
-                return;
-            }
+        if (Input.GetKey(KeyCode.A))
+        {
+            anim.SetTrigger("LeftMove");
+            return;
+        }
 
-            if (lv.y != 0f)
-            {
-                if (lv.y < 0f)
-                    anim.SetTrigger("DownMove");
-                if (lv.y > 0f)
-                    anim.SetTrigger("UpMove");
+        if (Input.GetKey(KeyCode.S))
+        {
+            anim.SetTrigger("DownMove");
+            return;
+        }
 
-                return;
-            }
+        if (Input.GetKey(KeyCode.D))
+        {
+            anim.SetTrigger("RightMove");
+            return;
         }
     }
 
