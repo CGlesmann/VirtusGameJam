@@ -18,6 +18,7 @@ using TMPro;
 public class View : MonoBehaviour
 {
 	protected RectTransform rectTransform;
+	public RectTransform _RectTransform { get { return this.rectTransform; } }
 
 	public void Open()
 	{

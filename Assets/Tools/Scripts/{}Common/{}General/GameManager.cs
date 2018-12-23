@@ -54,7 +54,20 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 	private void Start()
 	{
 		this.StartGame();
+
+		Inventory someInventory = new Inventory(20, 10);
+
+		this._inventoryView.Display(someInventory);
+
+		for (int i = 0; i < this.inventoryItemSharedData.Length; i++)
+		{
+			someInventory.Add(this.inventoryItemSharedData[i].Id, 2);
+		}
 	}
+
+	[Header("TEST")]
+	[SerializeField] private InventoryView _inventoryView;
+	[SerializeField] private InventoryItemSharedData[] inventoryItemSharedData;
 
 #if UNITY_EDITOR
 	//protected override void OnDrawGizmos()
