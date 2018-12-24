@@ -58,34 +58,59 @@ public class Player : MonoBehaviour {
 
     private void UpdatePlayerSprite()
     {
-        anim.ResetTrigger("UpMove");
-        anim.ResetTrigger("DownMove");
-        anim.ResetTrigger("LeftMove");
-        anim.ResetTrigger("RightMove");
+        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
 
+        anim.SetFloat("Horizontal", movement.x);
+        anim.SetFloat("Vertical", movement.y);
+        anim.SetFloat("Magnitude", movement.magnitude);
+
+        
         if (Input.GetKey(KeyCode.W))
         {
-            anim.SetTrigger("UpMove");
+            anim.SetBool("IsMoving", true);
+            anim.SetBool("UpMove", true);
+            anim.SetBool("DownMove", false);
+            anim.SetBool("LeftMove", false);
+            anim.SetBool("RightMove", false);
             return;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            anim.SetTrigger("LeftMove");
+            anim.SetBool("IsMoving", true);
+            anim.SetBool("UpMove", false);
+            anim.SetBool("DownMove", false);
+            anim.SetBool("LeftMove", true);
+            anim.SetBool("RightMove", false);
             return;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            anim.SetTrigger("DownMove");
+            anim.SetBool("IsMoving", true);
+            anim.SetBool("UpMove", false);
+            anim.SetBool("DownMove", true);
+            anim.SetBool("LeftMove", false);
+            anim.SetBool("RightMove", false);
             return;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            anim.SetTrigger("RightMove");
+            anim.SetBool("IsMoving", true);
+            anim.SetBool("UpMove", false);
+            anim.SetBool("DownMove", false);
+            anim.SetBool("LeftMove", false);
+            anim.SetBool("RightMove", true);
             return;
         }
+
+        anim.SetBool("IsMoving", false);
+        anim.SetBool("UpMove", false);
+        anim.SetBool("DownMove", false);
+        anim.SetBool("LeftMove", false);
+        anim.SetBool("RightMove", false);
+
     }
 
     private void AdjustAttackArea()
