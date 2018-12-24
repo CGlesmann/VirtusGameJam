@@ -19,17 +19,30 @@ public class Player : MonoBehaviour {
     [Header("Player Combat Variables")]
     public LayerMask enemyLayer;
     public LayerMask wallLayer;
-    [SerializeField] private AttackStyle aStyle;
+
+    [Header("Player Melee Variables")]
+    public float meleeAttackCooldown;
     public Vector3 attackAreaOffset;
     public Vector3 attackArea;
 
     [SerializeField] private float length = 2.5f;
     [SerializeField] private float width = 1f;
 
+    [SerializeField] private float srWidthAspect = 1f;
+    [SerializeField] private float srHeightAspect = 1f;
+
+    private float meleeAttackTimer = 0f;
+
+    [Header("Player Range Variables")]
+    public float rangeAttackCooldown;
+    public GameObject rangePrefab;
+
+    private float rangeAttackTimer = 0f;
+
     [Header("Input Variables")]
-    private UnitMovement playerMovement;
     public KeyCode attackKey;
 
+    private UnitMovement playerMovement;
     private Animator anim;
 
     /// <summary>
@@ -44,16 +57,19 @@ public class Player : MonoBehaviour {
     private void Update()
     {
         // Checking for Attack Input
-        if (Input.GetKeyDown(attackKey))
-        {
+        if (Input.GetMouseButtonDown(0))
             TryMeleeAttack();
-        }
+        if (Input.GetMouseButtonDown(1))
+            TryRangeAttack();
 
         // Updating the GUI
         UpdatePlayerGUIElements();
 
         // Updating the Player Sprite
         UpdatePlayerSprite();
+
+        // Updating the Attacking Timer
+        UpdateAttackTimers();
     }
 
     private void UpdatePlayerSprite()
@@ -113,51 +129,85 @@ public class Player : MonoBehaviour {
 
     }
 
+    private void UpdateAttackTimers()
+    {
+        // Updating the Melee Attack Timer
+        if (meleeAttackTimer > 0f)
+            meleeAttackTimer -= Time.deltaTime;
+
+        // Updating the Range Attack Timer
+        if (rangeAttackTimer > 0f)
+            rangeAttackTimer -= Time.deltaTime;
+    }
+
     private void AdjustAttackArea()
     {
         // Adjusting the AttackAreaOffset based on velocity
         Vector3 lastVelocity = GetComponent<UnitMovement>().lastVelocity;
         if (lastVelocity.x != 0f)
         {
-            aStyle = AttackStyle.Horizontal;
             attackArea = new Vector3(length, width, 0f);
-            attackAreaOffset = new Vector3(((length / 2) * Mathf.Sign(lastVelocity.x)) + ((transform.localScale.x / 2) * Mathf.Sign(lastVelocity.x)), 0f, 0f);
+            attackAreaOffset = new Vector3(((length / 2) * Mathf.Sign(lastVelocity.x)) + ((srWidthAspect) * Mathf.Sign(lastVelocity.x)), 0f, 0f);
         }
         else
         {
-            aStyle = AttackStyle.Vertical;
             attackArea = new Vector3(width, length, 0f);
-            attackAreaOffset = new Vector3(0f, ((length / 2) * Mathf.Sign(lastVelocity.y)) + ((transform.localScale.y / 2) * Mathf.Sign(lastVelocity.y)), 0f);
+            attackAreaOffset = new Vector3(0f, ((length / 2) * Mathf.Sign(lastVelocity.y)) + ((srHeightAspect) * Mathf.Sign(lastVelocity.y)), 0f);
         }
         
     }
 
     private void TryMeleeAttack()
     {
-        // Read just the Attack Area based on movement
-        AdjustAttackArea();
-
-        // Searching for a target
-        Vector3 lastVelocity = GetComponent<UnitMovement>().lastVelocity;
-        Vector3 attackVector = new Vector3(((length / 2) * Mathf.Sign(lastVelocity.x)) + ((transform.localScale.x / 2) * Mathf.Sign(lastVelocity.x)),
-                                           ((width / 2) * Mathf.Sign(lastVelocity.y)) + ((transform.localScale.y / 2) * Mathf.Sign(lastVelocity.y)),
-                                           0f);
-
-        float a = Vector3.Angle(transform.position, transform.position + attackVector);
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position + attackAreaOffset, attackArea, a, Vector2.left, 0f, enemyLayer);
-        if (hit)
+        if (meleeAttackTimer <= 0f)
         {
-            Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
+            // Read just the Attack Area based on movement
+            AdjustAttackArea();
 
-            if (enemy == null)
+            // Searching for a target
+            Vector3 lastVelocity = GetComponent<UnitMovement>().lastVelocity;
+            Vector3 attackVector = new Vector3(((length / 2) * Mathf.Sign(lastVelocity.x)) + ((transform.localScale.x / 2) * Mathf.Sign(lastVelocity.x)),
+                                               ((width / 2) * Mathf.Sign(lastVelocity.y)) + ((transform.localScale.y / 2) * Mathf.Sign(lastVelocity.y)),
+                                               0f);
+
+            float a = Vector3.Angle(transform.position, transform.position + attackVector);
+            RaycastHit2D hit = Physics2D.BoxCast(transform.position + attackAreaOffset, attackArea, a, Vector2.left, 0f, enemyLayer);
+            if (hit)
             {
-                Debug.Log("Hit an Object on enemyLayer but couldn't find Enemy Reference");
-                return;
-            }
+                Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
 
-            // Dealing the Damage to the Unit
-            enemy.sTracker.TakeDamage(enemy.gameObject, manager.playerStats.unitDamage);
-            enemy.StartCoroutine("HurtFlash");
+                if (enemy == null)
+                {
+                    Debug.Log("Hit an Object on enemyLayer but couldn't find Enemy Reference");
+                    return;
+                }
+
+                // Dealing the Damage to the Unit
+                enemy.sTracker.TakeDamage(enemy.gameObject, manager.playerStats.unitDamage);
+                enemy.StartCoroutine("HurtFlash");
+
+                // Starting the Timer
+                meleeAttackTimer = meleeAttackCooldown;
+            }
+        }
+    }
+
+    private void TryRangeAttack()
+    {
+        if (rangeAttackTimer <= 0f)
+        {
+            // Getting the Direction of the Bullet
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 dir = new Vector2((mousePos - transform.position).x, (mousePos - transform.position).y);
+            float a = Mathf.Atan2((mousePos - transform.position).y, (mousePos - transform.position).x) * Mathf.Rad2Deg;
+
+            // Creating a range attack prefab
+            GameObject newSpear = Instantiate(rangePrefab);
+            newSpear.transform.position = transform.position;
+            newSpear.transform.rotation = Quaternion.Euler(0f, 0f, a);
+            newSpear.GetComponent<PlayerBullet>().SetBullet(dir / dir.magnitude);
+
+            rangeAttackTimer = rangeAttackCooldown;
         }
     }
 
