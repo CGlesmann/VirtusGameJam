@@ -22,12 +22,12 @@ public class View : MonoBehaviour
 	protected RectTransform rectTransform;
 	public RectTransform _RectTransform { get { return this.rectTransform; } }
 
-	public void Open()
+	public virtual void Open()
 	{
 		this.gameObject.SetActive(true);
 	}
 
-	public void Close()
+	public virtual void Close()
 	{
 		this.gameObject.SetActive(false);
 	}
@@ -35,12 +35,12 @@ public class View : MonoBehaviour
 	private Animator _animator;
 	private CanvasGroup _canvasGroup;
 
-	public void Show()
+	public virtual void Show()
 	{
 		this._animator.SetTrigger("Show");
 	}
 
-	public void Hide()
+	public virtual void Hide()
 	{
 		this._animator.SetTrigger("Hide");
 	}

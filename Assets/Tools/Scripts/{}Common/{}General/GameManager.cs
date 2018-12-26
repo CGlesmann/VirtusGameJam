@@ -58,11 +58,6 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 		this.PlayerInventory_ = new Inventory(20, 10);
 
 		this._inventoryView.Display(this.PlayerInventory_);
-
-		for (int i = 0; i < this.inventoryItemSharedData.Length; i++)
-		{
-			this.PlayerInventory_.Add(this.inventoryItemSharedData[i].Id, 2);
-		}
 	}
 
 	[Header("TEST")]

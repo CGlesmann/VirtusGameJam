@@ -51,7 +51,7 @@ public class DialogueView : View
 		if (this._displayDialogueDataIndex < this._displayedDialogue._DialogueData.Count)
 			this.DisplayDialogueData(this._displayedDialogue._DialogueData[this._displayDialogueDataIndex]);
 		else
-			this.Close();
+			this.Hide();
 	}
 
 #if UNITY_EDITOR
