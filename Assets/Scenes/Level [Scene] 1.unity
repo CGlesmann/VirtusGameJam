@@ -70913,7 +70913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initiallyActive: 1
   _useAnimatorForInitialization: 1
-  _initiallyShown: 1
+  _initiallyShown: 0
   _itemTooltipView: {fileID: 816788761}
   _itemSlotViewPrefab: {fileID: 5263831573964076936, guid: 0a910d076fe4c614fb6242650d5e2eed,
     type: 3}

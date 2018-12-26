@@ -62,9 +62,16 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
 	[Header("TEST")]
 	[SerializeField] private InventoryView _inventoryView;
-	[SerializeField] private InventoryItemSharedData[] inventoryItemSharedData;
 
 	public Inventory PlayerInventory_ { get; private set; }
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Tab))
+		{
+			this._inventoryView.ToggleVisibility();
+		}
+	}
 
 #if UNITY_EDITOR
 	//protected override void OnDrawGizmos()
