@@ -11,6 +11,7 @@ public class Door : MonoBehaviour
 {
 	private Animator _animator;
 
+	[SerializeField] private bool _locked = true;
 	private bool _opened;
 
 	public void Open()
@@ -35,11 +36,22 @@ public class Door : MonoBehaviour
 			this.Open();
 	}
 
+	[SerializeField] private InventoryItemSharedData _unlockingItemSharedData;
+
 	public void CheckForInput()
 	{
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-			this.Toggle();
+			if (!this._locked)
+			{
+				this.Toggle();
+			}
+			else if (GameManager.Instance.PlayerInventory_.Remove(this._unlockingItemSharedData.Id))
+			{
+				this._locked = false;
+
+				this.Toggle();
+			}
 		}
 	}
 

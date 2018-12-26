@@ -30336,6 +30336,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fdae61e2c5df249ac916d2a973db59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _locked: 1
+  _unlockingItemSharedData: {fileID: 11400000, guid: 2c3240e3a0d03af4f9d7bda5809790e6,
+    type: 2}
 --- !u!4 &420534150
 Transform:
   m_ObjectHideFlags: 0
