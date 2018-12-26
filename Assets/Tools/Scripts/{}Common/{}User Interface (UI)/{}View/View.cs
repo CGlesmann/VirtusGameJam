@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEditor.Animations;
+using System.IO;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -44,6 +46,8 @@ public class View : MonoBehaviour
 	}
 
 	[SerializeField] private bool _initiallyActive = true;
+	[SerializeField] private bool _useAnimatorForInitialization = true;
+	[SerializeField] private bool _initiallyShown = true;
 
 	protected virtual void Awake()
 	{
@@ -53,12 +57,16 @@ public class View : MonoBehaviour
 		this.rectTransform = this.transform as RectTransform;
 
 		if (this._initiallyActive)
-		{
 			this.Open();
-		}
 		else
-		{
 			this.Close();
+
+		if (this._useAnimatorForInitialization)
+		{
+			if (this._initiallyShown)
+				this.Show();
+			else
+				this.Hide();
 		}
 	}
 
@@ -78,7 +86,7 @@ public class View : MonoBehaviour
 
 			contentRectTransform.anchorMin = new Vector2(0f, 0f);
 			contentRectTransform.anchorMax = new Vector2(1f, 1f);
-			
+
 			contentRectTransform.offsetMin = Vector2.zero;
 			contentRectTransform.offsetMax = Vector2.zero;
 		}
@@ -108,14 +116,119 @@ public class ViewEditor : Editor
 	private View _sView;
 #pragma warning restore 0219, 414
 
-	private void OnEnable()
+	protected Animator animator;
+	protected CanvasGroup canvasGroup;
+
+	protected virtual void DrawCreateAnimatorController(string gameObjectName)
+	{
+		if (GUILayout.Button("Create Animator Controller"))
+		{
+			DirectoryInfo directoryInfo = Directory.CreateDirectory(Path.Combine("Assets/_Specific/#Animator Controllers", "#" + gameObjectName));
+
+			string controllerPath = string.Format("Assets/_Specific/#Animator Controllers/#{0}/{0}.controller", gameObjectName);
+
+			AnimatorController controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(controllerPath);
+
+			if (controller == null)
+			{
+				controller = AnimatorController.CreateAnimatorControllerAtPath(controllerPath);
+
+				// Add parameters
+				controller.AddParameter("Show", AnimatorControllerParameterType.Trigger);
+				controller.AddParameter("Hide", AnimatorControllerParameterType.Trigger);
+
+				AnimatorStateMachine rootStateMachine = controller.layers[0].stateMachine;
+
+				// Create states
+				AnimatorState stateEmpty = rootStateMachine.AddState("Empty");
+				AnimatorState stateShown = rootStateMachine.AddState("Shown");
+				AnimatorState stateHidden = rootStateMachine.AddState("Hidden");
+
+				// Create and assign Show animation clip
+				AnimationClip animationClipShow = AssetDatabase.LoadAssetAtPath<AnimationClip>(string.Format("Assets/_Specific/#Animator Controllers/#{0}/{1}.anim", gameObjectName, gameObjectName + " Show Animation"));
+
+				if (animationClipShow == null)
+				{
+					AnimationCurve curve = AnimationCurve.Linear(0f, 0f, 0.5f, 1f);
+
+					animationClipShow = new AnimationClip();
+					animationClipShow.name = gameObjectName + " Show Animation";
+
+					animationClipShow.SetCurve(string.Empty, typeof(CanvasGroup), "m_Alpha", curve);
+					animationClipShow.SetCurve(string.Empty, typeof(CanvasGroup), "m_Interactable", curve);
+					animationClipShow.SetCurve(string.Empty, typeof(CanvasGroup), "m_BlocksRaycasts", curve);
+
+					AssetDatabase.CreateAsset(animationClipShow, string.Format("Assets/_Specific/#Animator Controllers/#{0}/{1}.anim", gameObjectName, animationClipShow.name));
+				}
+
+				stateShown.motion = animationClipShow;
+
+				// Create and assign Hidden animation clip
+				AnimationClip animationClipHidden = AssetDatabase.LoadAssetAtPath<AnimationClip>(string.Format("Assets/_Specific/#Animator Controllers/#{0}/{1}.anim", gameObjectName, gameObjectName + " Hide Animation"));
+
+				if (animationClipHidden == null)
+				{
+					AnimationCurve curve = AnimationCurve.Linear(0f, 1f, 0.5f, 0f);
+
+					animationClipHidden = new AnimationClip();
+					animationClipHidden.name = gameObjectName + " Hide Animation";
+
+					animationClipHidden.SetCurve(string.Empty, typeof(CanvasGroup), "m_Alpha", curve);
+					animationClipHidden.SetCurve(string.Empty, typeof(CanvasGroup), "m_Interactable", curve);
+					animationClipHidden.SetCurve(string.Empty, typeof(CanvasGroup), "m_BlocksRaycasts", curve);
+
+					AssetDatabase.CreateAsset(animationClipHidden, string.Format("Assets/_Specific/#Animator Controllers/#{0}/{1}.anim", gameObjectName, animationClipHidden.name));
+				}
+
+				stateHidden.motion = animationClipHidden;
+
+				// Create transition from empty to shown and hidden states
+				AnimatorStateTransition emptyToShownStateTransition = stateEmpty.AddTransition(stateShown);
+				emptyToShownStateTransition.hasFixedDuration = false;
+				emptyToShownStateTransition.exitTime = 0f;
+				emptyToShownStateTransition.duration = 0f;
+				emptyToShownStateTransition.AddCondition(AnimatorConditionMode.If, 0f, "Show");
+
+				AnimatorStateTransition emptyToHiddenStateTransition = stateEmpty.AddTransition(stateHidden);
+				emptyToHiddenStateTransition.hasFixedDuration = false;
+				emptyToHiddenStateTransition.exitTime = 0f;
+				emptyToHiddenStateTransition.duration = 0f;
+				emptyToHiddenStateTransition.AddCondition(AnimatorConditionMode.If, 0f, "Hide");
+
+				// Create transition from shown to hidden state
+				AnimatorStateTransition shownToHiddenStateTransition = stateShown.AddTransition(stateHidden);
+				shownToHiddenStateTransition.hasFixedDuration = false;
+				shownToHiddenStateTransition.exitTime = 0f;
+				shownToHiddenStateTransition.duration = 0f;
+				shownToHiddenStateTransition.AddCondition(AnimatorConditionMode.If, 0f, "Hide");
+
+				// Create transition from hidden to shown state
+				AnimatorStateTransition hiddenToShownStateTransition = stateHidden.AddTransition(stateShown);
+				hiddenToShownStateTransition.hasFixedDuration = false;
+				hiddenToShownStateTransition.exitTime = 0f;
+				hiddenToShownStateTransition.duration = 0f;
+				hiddenToShownStateTransition.AddCondition(AnimatorConditionMode.If, 0f, "Show");
+
+				// Assign controller to Animator
+				this.animator.runtimeAnimatorController = controller;
+			}
+		}
+	}
+
+	protected virtual void OnEnable()
 	{
 		this._sView = this.target as View;
+
+		this.animator = this._sView.GetComponent<Animator>();
+		this.canvasGroup = this._sView.GetComponent<CanvasGroup>();
 	}
 
 	public override void OnInspectorGUI()
 	{
-		DrawDefaultInspector();
+		this.DrawDefaultInspector();
+
+		if (this.animator.runtimeAnimatorController == null)
+			this.DrawCreateAnimatorController(this.target.name);
 	}
 }
 #endif

@@ -2,234 +2,96 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Door : MonoBehaviour {
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
-    // Door State Enum
-    public enum DoorState { Locked, Unlocked }; // Tracks whether or not the door is locked
-    public enum DoorMoveStyle { Horizontal, Vertical }; // Tracks how the door opens
+[RequireComponent(typeof(Animator))]
+public class Door : MonoBehaviour
+{
+	private Animator _animator;
 
-    [Header("Door Variable")]
-    public KeyCode interactKey = KeyCode.E;
-    public DoorState dState;
-    public DoorMoveStyle dStyle;
+	private bool _opened;
 
-    [SerializeField]
-    public Vector3 openPosition;
-    [SerializeField]
-    public Vector3 closedPosition;
+	public void Open()
+	{
+		this._opened = true;
 
-    public bool autoClose = true; // Controls the auto close function
+		this._animator.SetTrigger("Open");
+	}
 
-    private bool isOpen = false;
-    private bool isMoving = false; // Tracks whether or not the door is opening or closing
-    private bool playerPassed = false; // Tracks whether the player has passed through the door for autoClose
+	public void Close()
+	{
+		this._opened = false;
 
-    [Header("Door Collision Variables")]
-    public LayerMask playerLayer;
-    public Vector3 interactionRadius;
+		this._animator.SetTrigger("Close");
+	}
 
-    private SpriteRenderer sr;
-    private Player player;
+	public void Toggle()
+	{
+		if (this._opened)
+			this.Close();
+		else
+			this.Open();
+	}
 
-    /// <summary>
-    /// Getting Private References
-    /// </summary>
-    private void Awake()
-    {
-        player = GameObject.Find("Player").GetComponent<Player>();
-        if (player == null)
-            Debug.Log("Door couldn't find the player");
+	public void CheckForInput()
+	{
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			this.Toggle();
+		}
+	}
 
-        sr = GetComponent<SpriteRenderer>();
-        if (sr == null)
-            Debug.Log("Door doesn't have a sprite renderer");
-    }
+	private void Awake()
+	{
+		this._animator = this.GetComponent<Animator>();
+	}
 
-    /// <summary>
-    /// Checks for Door Interactions
-    /// </summary>
-    private void Update()
-    {
-        if (!isMoving)
-        {
-            // Checks for interactions
-            if (Input.GetKeyDown(interactKey))
-            {
-                if (PlayerInRange())
-                {
-                    if (isOpen)
-                        if (!PlayerNotInDoor())
-                            return;
+#if UNITY_EDITOR
+	private void OnDrawGizmosSelected()
+	{
+		if (this._animator == null)
+		{
+			this._animator = this.GetComponent<Animator>();
+		}
 
-                    if (dState == DoorState.Locked)
-                    {
-                    }
-
-                    StartCoroutine("ToggleDoor");
-                    isMoving = true;
-
-                    return;
-                }
-            }
-
-            // Checking for auto Close
-            if (isOpen & autoClose)
-            {
-                // If Player Hasn't passed through, track for player passing
-                if (!playerPassed)
-                {
-                    // Waiting for player to Pass through the door
-                    if (!PlayerNotInDoor())
-                        playerPassed = true;
-
-                    return;
-                }
-
-                // Otherwise after player passes through door, close it
-                if (PlayerNotInDoor())
-                {
-                    StartCoroutine("ToggleDoor");
-                    isMoving = true;
-
-                    return;
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Opening and Closing the Door
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator ToggleDoor()
-    {
-        // Setting the ANimation Variables
-        int reps = 20;
-        float delay = 0.01f;
-        float incAmount = 0f;
-
-        // Getting the incAmount and storing it
-        if (!isOpen)
-        {
-            switch (dStyle)
-            {
-                case DoorMoveStyle.Vertical:
-                    incAmount = (openPosition.y - closedPosition.y) / reps;
-                    break;
-                case DoorMoveStyle.Horizontal:
-                    incAmount = (openPosition.x - closedPosition.x) / reps;
-                    break;
-            }
-        } else {
-            switch (dStyle)
-            {
-                case DoorMoveStyle.Vertical:
-                    incAmount = (closedPosition.y - openPosition.y) / reps;
-                    break;
-                case DoorMoveStyle.Horizontal:
-                    incAmount = (closedPosition.x - openPosition.x) / reps;
-                    break;
-            }
-        }
-
-        // Incrementing the door sprite
-        for(int i = 0; i < reps; i++)
-        {
-            switch (dStyle)
-            {
-                case DoorMoveStyle.Vertical:
-                    transform.position += new Vector3(0f, incAmount, 0f);
-                    break;
-                case DoorMoveStyle.Horizontal:
-                    transform.position += new Vector3(incAmount, 0f, 0f);
-                    break;
-            }
-
-            yield return new WaitForSeconds(delay);
-        }
-
-        // Flipping the Open Sign and stopping movement
-        isOpen = !isOpen;
-        isMoving = false;
-
-        playerPassed = false;
-    }
-
-    /// <summary>
-    /// Casts a BoxCast and returns if a hit was made
-    /// </summary>
-    /// <returns></returns>
-    public bool PlayerInRange()
-    {
-        // Cast a collisionBox on the player Layer
-        RaycastHit2D hit = Physics2D.BoxCast(closedPosition, interactionRadius, 0f, Vector2.left, 0f, playerLayer);
-        return (hit); 
-    }
-
-    /// <summary>
-    /// Returns whether or not the player is in the doors range
-    /// </summary>
-    /// <returns></returns>
-    public bool PlayerNotInDoor()
-    {
-        // Casting the CollisionBox in the doors range
-        RaycastHit2D hit = Physics2D.BoxCast(closedPosition, transform.localScale * 0.95f, 0f, Vector2.left, 0f, playerLayer);
-        return (!hit);
-    }
-
-    /// <summary>
-    /// Gets the current position of the door and stores it in openPosition
-    /// </summary>
-    public void SetOpenPositionToCurrent()
-    {
-        openPosition = transform.position;
-        return;
-    }
-
-    /// <summary>
-    /// Gets the current position of the door and stores it in closedPosition
-    /// </summary>
-    public void SetClosedPositionToCurrent()
-    {
-        closedPosition = transform.position;
-        return;
-    }
-
-    /// <summary>
-    /// Setting the Door to a closed state
-    /// </summary>
-    public void SetDoorToClosed()
-    {
-        // Setting the door to be closed
-        isOpen = false;
-        transform.position = closedPosition;
-    }
-
-    /// <summary>
-    /// Setting the Door to an open state
-    /// </summary>
-    public void SetDoorToOpened()
-    {
-        // Setting the door to be closed
-        isOpen = true;
-        transform.position = openPosition;
-    }
-
-    /// <summary>
-    /// Drawing the collisionChecks
-    /// </summary>
-    private void OnDrawGizmosSelected()
-    {
-        // Setting the Interaction Gizmo Color
-        Gizmos.color = Color.green;
-        // Drawing the Interaction Radius
-        Gizmos.DrawCube(closedPosition, interactionRadius);
-
-        // Setting the Door Range Gizmo Color
-        Gizmos.color = Color.red;
-        // Drawing the Interaction Radius
-        Gizmos.DrawCube(closedPosition, transform.localScale * 0.95f);
-    }
-
+		this._animator.Update(Time.deltaTime);
+	}
+#endif
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(Door))]
+[CanEditMultipleObjects]
+public class DoorEditor : Editor
+{
+#pragma warning disable 0219, 414
+	private Door _sDoor;
+#pragma warning restore 0219, 414
+
+	private Animator _sAnimator;
+
+	private void OnEnable()
+	{
+		this._sDoor = this.target as Door;
+
+		this._sAnimator = this._sDoor.GetComponent<Animator>();
+	}
+
+	public override void OnInspectorGUI()
+	{
+		this.DrawDefaultInspector();
+
+		if (GUILayout.Button("Open"))
+		{
+			this._sAnimator.SetTrigger("Open");
+		}
+
+		if (GUILayout.Button("Close"))
+		{
+			this._sAnimator.SetTrigger("Close");
+		}
+	}
+}
+#endif

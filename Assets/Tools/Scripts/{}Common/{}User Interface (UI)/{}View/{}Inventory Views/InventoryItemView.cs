@@ -64,13 +64,13 @@ public class InventoryItemView : View, IPointerEnterHandler, IPointerExitHandler
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		this._parentInventoryView._ItemTooltipView.Open();
+		this._parentInventoryView._ItemTooltipView.Show();
 		this._parentInventoryView._ItemTooltipView.Display(this.DisplayedItem_.InventoryItemSharedData_, this._parentSlotView);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		this._parentInventoryView._ItemTooltipView.Close();
+		this._parentInventoryView._ItemTooltipView.Hide();
 	}
 
 	public void OnPointerDown(PointerEventData eventData)

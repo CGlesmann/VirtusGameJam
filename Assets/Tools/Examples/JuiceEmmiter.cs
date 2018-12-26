@@ -13,7 +13,7 @@ using UnityEditor;
 
 using TMPro;
 
-public class JuiceEmmiterTest : MonoBehaviour
+public class JuiceEmmiter : MonoBehaviour
 {
 	[SerializeField] private Juice _juice;
 
@@ -32,17 +32,17 @@ public class JuiceEmmiterTest : MonoBehaviour
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(JuiceEmmiterTest))]
+[CustomEditor(typeof(JuiceEmmiter))]
 [CanEditMultipleObjects]
-public class JuiceEmmiterTestEditor : Editor
+public class JuiceEmmiterEditor : Editor
 {
 #pragma warning disable 0219, 414
-	private JuiceEmmiterTest _sJuiceEmmiterTest;
+	private JuiceEmmiter _sJuiceEmmiter;
 #pragma warning restore 0219, 414
 
 	private void OnEnable()
 	{
-		this._sJuiceEmmiterTest = this.target as JuiceEmmiterTest;
+		this._sJuiceEmmiter = this.target as JuiceEmmiter;
 	}
 
 	public override void OnInspectorGUI()

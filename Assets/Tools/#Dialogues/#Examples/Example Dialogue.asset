@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: Example Dialogue
   m_EditorClassIdentifier: 
   _dialogueData:
-  - _sentenceText: This is an example of a dialogue.
+  - _sentenceText: Press E to open door.
     _audioCover: {fileID: 0}
     _collocutor: {fileID: 11400000, guid: b6996cd42ff6be94185e76e55441af34, type: 2}
-  - _sentenceText: You can change collocutors as you can see.
+  - _sentenceText: Got it!
     _audioCover: {fileID: 0}
     _collocutor: {fileID: 11400000, guid: c1b434375df762f4a8b16017d71ddc57, type: 2}
-  - _sentenceText: That is all, except that Audio can be added.
-    _audioCover: {fileID: 0}
-    _collocutor: {fileID: 11400000, guid: b6996cd42ff6be94185e76e55441af34, type: 2}
