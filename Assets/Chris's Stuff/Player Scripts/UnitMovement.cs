@@ -8,8 +8,8 @@ public class UnitMovement : MonoBehaviour
     public float baseMoveSpeed = 6f;
     private Vector3 velocity;
 
+    private Player player;
     private MovementController controller;
-    private Animator playerAnimator;
 
     [Header("Dashing Variables")]
     public bool isDashing = false;
@@ -23,14 +23,15 @@ public class UnitMovement : MonoBehaviour
     [Header("Misc Variables")]
     public Vector3 lastVelocity = Vector3.zero;
 
-    void Start()
+    void Awake()
     {
         controller = GetComponent<MovementController>();
+        player = GetComponent<Player>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && lastVelocity != Vector3.zero)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && lastVelocity != Vector3.zero && player.pState.StateClear())
         {
             if (!isDashing)
             {

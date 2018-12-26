@@ -211,6 +211,30 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void ApplyKnockBack(float power, Vector2 dir)
+    {
+        // Setting the Player State
+        pState.StunUnit(power);
+        StartCoroutine("KnockBack", dir);
+    }
+
+    IEnumerator KnockBack(Vector2 dir)
+    {
+        // KnockBack Variables
+        int reps = 10;
+        float time = pState.stunTimer;
+        float pow = 20f;
+        float delay = (time / reps);
+
+        for(int i = 0; i < reps; i++)
+        {
+            Vector3 vel = new Vector3((dir * pow).x, (dir * pow).y);
+            GetComponent<MovementController>().Move(vel * Time.deltaTime);
+
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
     IEnumerator HurtFlash()
     {
         // Getting the SpriteRenderer

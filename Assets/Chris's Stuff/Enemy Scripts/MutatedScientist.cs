@@ -10,6 +10,7 @@ public class MutatedScientist : MonoBehaviour
     private enum BossStage { Stage1, Stage2, Stage3 };
 
     [Header("MiniBoss Stats")]
+    public LayerMask playerLayer;
     public UnitStats mbStats;
     public UnitState uState;
     public GameObject player;
@@ -28,7 +29,8 @@ public class MutatedScientist : MonoBehaviour
     [SerializeField] private bool inAir; // Tracks when jump should be maintained
     [SerializeField] private bool isJumping; // Tracks when jumping up
 
-    [SerializeField] private float slamRadius;
+    [SerializeField] private float slamDamage;
+    [SerializeField] private Vector2 slamRadius;
     [SerializeField] private float slamKnockback;
 
     [Header("Starting Routine")]
@@ -159,9 +161,11 @@ public class MutatedScientist : MonoBehaviour
     {
         float yGoal = shadow.transform.position.y - shadowOffset.y;
         float time = 0.075f;
-        int reps = 20;
+        int reps = 10;
         float inc = (yGoal - transform.position.y) / reps;
         float delay = (time / reps);
+
+        Debug.Log(delay);
 
         shadow.transform.localScale = shadowScaleEnd;
         Vector2 shadowScaleInc = (shadowScaleStart - shadowScaleEnd) / reps;
@@ -173,13 +177,31 @@ public class MutatedScientist : MonoBehaviour
 
             shadow.transform.localScale += new Vector3(shadowScaleInc.x, shadowScaleInc.y);
 
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(0.001f);
+        }
+
+        // Checking for a hit
+        RaycastHit2D slamHit = Physics2D.CapsuleCast(shadow.transform.position, slamRadius, CapsuleDirection2D.Horizontal, 0f, Vector2.left, 0f, playerLayer);
+        if (slamHit)
+        {
+            Player p = player.GetComponent<Player>();
+            p.manager.playerStats.TakeDamage(player, slamDamage);
+
+            Vector2 dir = new Vector2((player.transform.position - transform.position).x, (player.transform.position - transform.position).y);
+            p.ApplyKnockBack(0.05f, dir / dir.magnitude);
         }
 
         shadow.SetActive(false);
         inAir = false;
     }
     #endregion
+
+    private void OnDrawGizmosSelected()
+    {
+        // Drawing the Slam Radius
+        Gizmos.color = Color.blue;
+        //Gizmos.DrawWireCube(shadow.transform.position, new Vector3(slamRadius.x, slamRadius.y));
+    }
 
 }
 
