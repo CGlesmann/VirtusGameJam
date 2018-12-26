@@ -30,7 +30,8 @@ public class UnitState
 
     public void StunUnit(float stunPower = 1f)
     {
-        stunned = false;
+        stunned = true;
+        canMove = false;
         stunTimer = stunPower;
     }
 
