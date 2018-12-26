@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
     public UnitState pState = new UnitState();
 
     [Header("GUI References")]
-    public Image playerHealthBar;
+    public HealthBarView playerHealthBar;
 
     [Header("Player Combat Variables")]
     public LayerMask enemyLayer;
@@ -233,7 +233,7 @@ public class Player : MonoBehaviour {
     private void UpdatePlayerGUIElements()
     {
         // Updating the HealthBar
-        playerHealthBar.fillAmount = (manager.playerStats.unitHealth / manager.playerStats.unitMaxHealth);
+        playerHealthBar.Fill = (manager.playerStats.unitHealth / manager.playerStats.unitMaxHealth);
     }
 
     /// <summary>

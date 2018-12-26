@@ -64,20 +64,17 @@ public class DialogueView : View
 #if UNITY_EDITOR
 [CustomEditor(typeof(DialogueView))]
 [CanEditMultipleObjects]
-public class DialogueViewEditor : Editor
+public class DialogueViewEditor : ViewEditor
 {
 #pragma warning disable 0219, 414
 	private DialogueView _sDialogueView;
 #pragma warning restore 0219, 414
 
-	private void OnEnable()
+	protected override void OnEnable()
 	{
-		this._sDialogueView = this.target as DialogueView;
-	}
+		base.OnEnable();
 
-	public override void OnInspectorGUI()
-	{
-		DrawDefaultInspector();
+		this._sDialogueView = this.target as DialogueView;
 	}
 }
 #endif

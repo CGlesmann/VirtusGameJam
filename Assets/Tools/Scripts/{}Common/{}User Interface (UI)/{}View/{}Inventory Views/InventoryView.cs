@@ -89,20 +89,17 @@ public class InventoryView : View
 #if UNITY_EDITOR
 [CustomEditor(typeof(InventoryView))]
 [CanEditMultipleObjects]
-public class InventoryViewEditor : Editor
+public class InventoryViewEditor : ViewEditor
 {
 	protected InventoryView sInventoryView;
 
-	private void OnEnable()
+	protected override void OnEnable()
 	{
+		base.OnEnable();
+
 #pragma warning disable 0219
 		this.sInventoryView = this.target as InventoryView;
 #pragma warning restore 0219
-	}
-
-	public override void OnInspectorGUI()
-	{
-		this.DrawDefaultInspector();
 	}
 }
 #endif

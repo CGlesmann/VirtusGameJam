@@ -33,20 +33,17 @@ public class InventoryItemTooltipView : View
 #if UNITY_EDITOR
 [CustomEditor(typeof(InventoryItemTooltipView))]
 [CanEditMultipleObjects]
-public class InventoryItemTooltipViewEditor : Editor
+public class InventoryItemTooltipViewEditor : ViewEditor
 {
 #pragma warning disable 0219, 414
 	private InventoryItemTooltipView _sInventoryItemTooltipView;
 #pragma warning restore 0219, 414
 
-	private void OnEnable()
+	protected override void OnEnable()
 	{
-		this._sInventoryItemTooltipView = this.target as InventoryItemTooltipView;
-	}
+		base.OnEnable();
 
-	public override void OnInspectorGUI()
-	{
-		this.DrawDefaultInspector();
+		this._sInventoryItemTooltipView = this.target as InventoryItemTooltipView;
 	}
 }
 #endif
