@@ -98,6 +98,7 @@ public class Player : MonoBehaviour {
         Vector2 movement = Vector2.zero;
         float x = 0f;
         float y = 0f;
+
         if (Input.GetKey(KeyCode.A))
             x -= 1f;
         if (Input.GetKey(KeyCode.D))
@@ -114,6 +115,9 @@ public class Player : MonoBehaviour {
             anim.SetFloat("Horizontal", movement.x);
             anim.SetFloat("Vertical", movement.y);
             anim.SetBool("Moving", true);
+
+            attackDetermined = false;
+            attackSuccessful = false;
 
             return;
         } else
@@ -193,6 +197,8 @@ public class Player : MonoBehaviour {
         attacking = true;
         anim.SetBool("Attacking", attacking);
         attackCount++;
+
+        pState.canMove = false;
     }
 
     public void StartCheckingForNextAttack()
@@ -222,18 +228,19 @@ public class Player : MonoBehaviour {
                 StopAttacking();
         }
 
+        attackDetermined = true;
         return;
     }
 
     public void StopAttacking()
     {
-        if (!attackSuccessful)
-        {
-            checkingForNextAttack = false;
-            attacking = false;
-            anim.SetBool("Attacking", attacking);
-            attackCount = 0;
-        }
+        checkingForNextAttack = false;
+        attackDetermined = false;
+        attacking = false;
+        anim.SetBool("Attacking", attacking);
+        attackCount = 0;
+
+        pState.canMove = true;
     }
 
     private void TryRangeAttack()
