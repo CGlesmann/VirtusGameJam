@@ -92,6 +92,11 @@ public class Inventory
 		return false;
 	}
 
+	public bool Add(int itemId)
+	{
+		return this.Add(new InventoryItem(itemId, 1));
+	}
+
 	public void Add(int itemId, int quantity)
 	{
 		for (int i = 0; i < quantity; i++)

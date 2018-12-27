@@ -22,27 +22,55 @@ public class View : MonoBehaviour
 	protected RectTransform rectTransform;
 	public RectTransform _RectTransform { get { return this.rectTransform; } }
 
-	public void Open()
+	public bool Active_ { get; private set; }
+
+	public virtual void Open()
 	{
+		this.Active_ = true;
+
 		this.gameObject.SetActive(true);
 	}
 
-	public void Close()
+	public virtual void Close()
 	{
+		this.Active_ = false;
+
 		this.gameObject.SetActive(false);
+	}
+
+	public void ToggleActivity()
+	{
+		if (this.Active_)
+			this.Close();
+		else
+			this.Open();
 	}
 
 	private Animator _animator;
 	private CanvasGroup _canvasGroup;
 
-	public void Show()
+	public bool Visible_ { get; private set; }
+
+	public virtual void Show()
 	{
+		this.Visible_ = true;
+
 		this._animator.SetTrigger("Show");
 	}
 
-	public void Hide()
+	public virtual void Hide()
 	{
+		this.Visible_ = false;
+
 		this._animator.SetTrigger("Hide");
+	}
+
+	public void ToggleVisibility()
+	{
+		if (this.Visible_)
+			this.Hide();
+		else
+			this.Show();
 	}
 
 	[SerializeField] private bool _initiallyActive = true;
