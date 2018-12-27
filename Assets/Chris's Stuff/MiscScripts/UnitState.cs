@@ -24,6 +24,7 @@ public class UnitState
             if (stunTimer <= 0f)
             {
                 stunned = false;
+                canMove = true;
             }
         }
     }

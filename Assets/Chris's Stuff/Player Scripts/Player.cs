@@ -21,6 +21,9 @@ public class Player : MonoBehaviour {
     public LayerMask wallLayer;
 
     [Header("Player Melee Variables")]
+    public bool checkingForNextAttack = false;
+    public bool attackDetermined = false;
+    public bool attackSuccessful = false;
     public float meleeAttackCooldown;
     public Vector3 attackAreaOffset;
     public Vector3 attackArea;
@@ -42,6 +45,11 @@ public class Player : MonoBehaviour {
     [Header("Input Variables")]
     public KeyCode attackKey;
 
+    [Header("Animation Variables")]
+    [SerializeField] private bool moving = false;
+    [SerializeField] private bool attacking = false;
+    [SerializeField] private int attackCount = 0;
+
     private UnitMovement playerMovement;
     private Animator anim;
 
@@ -57,76 +65,63 @@ public class Player : MonoBehaviour {
     private void Update()
     {
         // Checking for Attack Input
-        if (Input.GetMouseButtonDown(0))
-            TryMeleeAttack();
+        if (Input.GetMouseButtonDown(0) && !attacking)
+            MeleeAttack();
+
         if (Input.GetMouseButtonDown(1))
             TryRangeAttack();
 
         // Updating the GUI
         UpdatePlayerGUIElements();
 
+        // Getting Attack Input
+        if (checkingForNextAttack)
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Next Attack Successful");
+                attackSuccessful = true;
+            }
+
         // Updating the Player Sprite
-        UpdatePlayerSprite();
+        if (pState.StateClear())
+            UpdatePlayerSprite();
 
         // Updating the Attacking Timer
         UpdateAttackTimers();
+
+        // Updating the Player State
+        pState.UpdateState();
     }
 
     private void UpdatePlayerSprite()
     {
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
-
-        anim.SetFloat("Horizontal", movement.x);
-        anim.SetFloat("Vertical", movement.y);
-        anim.SetFloat("Magnitude", movement.magnitude);
-
-        
-        if (Input.GetKey(KeyCode.W))
-        {
-            anim.SetBool("IsMoving", true);
-            anim.SetBool("UpMove", true);
-            anim.SetBool("DownMove", false);
-            anim.SetBool("LeftMove", false);
-            anim.SetBool("RightMove", false);
-            return;
-        }
-
+        Vector2 movement = Vector2.zero;
+        float x = 0f;
+        float y = 0f;
         if (Input.GetKey(KeyCode.A))
-        {
-            anim.SetBool("IsMoving", true);
-            anim.SetBool("UpMove", false);
-            anim.SetBool("DownMove", false);
-            anim.SetBool("LeftMove", true);
-            anim.SetBool("RightMove", false);
-            return;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            anim.SetBool("IsMoving", true);
-            anim.SetBool("UpMove", false);
-            anim.SetBool("DownMove", true);
-            anim.SetBool("LeftMove", false);
-            anim.SetBool("RightMove", false);
-            return;
-        }
-
+            x -= 1f;
         if (Input.GetKey(KeyCode.D))
+            x += 1f;
+        if (Input.GetKey(KeyCode.W))
+            y += 1f;
+        if (Input.GetKey(KeyCode.S))
+            y -= 1f;
+
+        movement = new Vector2(x, y);
+
+        if (movement != Vector2.zero && !attacking)
         {
-            anim.SetBool("IsMoving", true);
-            anim.SetBool("UpMove", false);
-            anim.SetBool("DownMove", false);
-            anim.SetBool("LeftMove", false);
-            anim.SetBool("RightMove", true);
+            anim.SetFloat("Horizontal", movement.x);
+            anim.SetFloat("Vertical", movement.y);
+            anim.SetBool("Moving", true);
+
             return;
+        } else
+        {
+            anim.SetBool("Moving", false);
         }
 
-        anim.SetBool("IsMoving", false);
-        anim.SetBool("UpMove", false);
-        anim.SetBool("DownMove", false);
-        anim.SetBool("LeftMove", false);
-        anim.SetBool("RightMove", false);
-
+        return;
     }
 
     private void UpdateAttackTimers()
@@ -189,6 +184,55 @@ public class Player : MonoBehaviour {
                 // Starting the Timer
                 meleeAttackTimer = meleeAttackCooldown;
             }
+        }
+    }
+
+    public void MeleeAttack()
+    {
+        checkingForNextAttack = true;
+        attacking = true;
+        anim.SetBool("Attacking", attacking);
+        attackCount++;
+    }
+
+    public void StartCheckingForNextAttack()
+    {
+        checkingForNextAttack = true;
+        attackSuccessful = false;
+        attackDetermined = false;
+    }
+
+    public void CheckForNextAttack()
+    {
+        if (!attackDetermined)
+        {
+            if (attackSuccessful)
+            {
+                if (attackCount <= 3)
+                {
+                    attackCount++;
+                    attackSuccessful = false;
+                    attackDetermined = true;
+                    return;
+                }
+                else
+                    StopAttacking();
+            }
+            else
+                StopAttacking();
+        }
+
+        return;
+    }
+
+    public void StopAttacking()
+    {
+        if (!attackSuccessful)
+        {
+            checkingForNextAttack = false;
+            attacking = false;
+            anim.SetBool("Attacking", attacking);
+            attackCount = 0;
         }
     }
 

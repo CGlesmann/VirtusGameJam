@@ -30838,6 +30838,7 @@ GameObject:
   - component: {fileID: 1073646578}
   - component: {fileID: 1073646580}
   - component: {fileID: 1073646579}
+  - component: {fileID: 1073646581}
   m_Layer: 0
   m_Name: MutatedScientist
   m_TagString: Untagged
@@ -30981,6 +30982,39 @@ MonoBehaviour:
     m_Bits: 1024
   horizontalRayCount: 4
   verticalRayCount: 4
+--- !u!114 &1073646581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073646575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d27371c33c58a941a9e566c2c256436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 806877732}
+  baseStats: {fileID: 11400000, guid: 7a85e3650f7c5e143851959728d128e7, type: 2}
+  attackRange: 0.5
+  attackCooldown: 0.5
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  wanderSpeed: 4
+  canWander: 0
+  wanderRange: {x: 0, y: 0, z: 0}
+  wanderOrigin: {x: 0, y: 0, z: 0}
+  wanderPoint: {x: 0, y: 0, z: 0}
+  acceptanceRange: 0
+  wanderDelay: 1.5
+  chaseSpeed: 6
+  sightRange: {x: 0, y: 0, z: 0}
+  chaseRange: {x: 0, y: 0, z: 0}
+  isChasing: 0
 --- !u!1 &1077962543
 GameObject:
   m_ObjectHideFlags: 0
