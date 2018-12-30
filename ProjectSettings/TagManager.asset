@@ -41,10 +41,10 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: TileFloors
+  - name: Tile Floors
     uniqueID: 3653343287
     locked: 0
-  - name: TileWalls
+  - name: Tile Walls
     uniqueID: 2971366829
     locked: 0
   - name: Enemies

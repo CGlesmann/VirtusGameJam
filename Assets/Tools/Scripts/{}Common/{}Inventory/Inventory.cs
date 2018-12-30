@@ -43,7 +43,7 @@ public class Inventory
 		this._itemSlots[index].InventoryItemDisplayController__ = inventoryItemDisplayController;
 	}
 
-	private bool Add(InventoryItem item)
+	public bool Add(InventoryItem item)
 	{
 		if (item.InventoryItemSharedData_._Stackable)
 		{
@@ -90,19 +90,6 @@ public class Inventory
 		}
 
 		return false;
-	}
-
-	public bool Add(int itemId)
-	{
-		return this.Add(new InventoryItem(itemId, 1));
-	}
-
-	public void Add(int itemId, int quantity)
-	{
-		for (int i = 0; i < quantity; i++)
-		{
-			this.Add(new InventoryItem(itemId, 1));
-		}
 	}
 
 	public bool Remove(InventoryItem item)
