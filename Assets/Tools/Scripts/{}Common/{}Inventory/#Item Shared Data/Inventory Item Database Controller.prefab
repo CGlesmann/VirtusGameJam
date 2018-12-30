@@ -44,7 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventoryItemSharedData:
-  - {fileID: 11400000, guid: 2d83bc410c5c97645978201a01a60253, type: 2}
-  - {fileID: 11400000, guid: e7c5424b8f943e84ca528908f4f7f7d0, type: 2}
-  - {fileID: 11400000, guid: b0d6b786efd589f409cf2a1290ed3fc8, type: 2}
-  - {fileID: 11400000, guid: 73947700ac318dd4d90403a47bec6d7b, type: 2}
+  - {fileID: 11400000, guid: 2c3240e3a0d03af4f9d7bda5809790e6, type: 2}
+  - {fileID: 11400000, guid: 21d5ac0417a464d42a33df33082b4ff2, type: 2}

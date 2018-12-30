@@ -62,23 +62,43 @@ public class InventoryItemView : View, IPointerEnterHandler, IPointerExitHandler
 		this.DisplayedItem_ = null;
 	}
 
-	public void OnPointerEnter(PointerEventData eventData)
+	public virtual void OnPointerEnter(PointerEventData eventData)
 	{
+		if (this.DisplayedItem_ == null)
+			return;
+
 		this._parentInventoryView._ItemTooltipView.Show();
 		this._parentInventoryView._ItemTooltipView.Display(this.DisplayedItem_.InventoryItemSharedData_, this._parentSlotView);
+
+		this.DisplayedItem_.OnPointerEnter?.Invoke();
 	}
 
-	public void OnPointerExit(PointerEventData eventData)
+	public virtual void OnPointerExit(PointerEventData eventData)
 	{
+		if (this.DisplayedItem_ == null)
+			return;
+
 		this._parentInventoryView._ItemTooltipView.Hide();
+
+		this.DisplayedItem_.OnPointerExit?.Invoke();
 	}
 
-	public void OnPointerDown(PointerEventData eventData)
+	public virtual void OnPointerDown(PointerEventData eventData)
 	{
+		if (this.DisplayedItem_ == null)
+			return;
+
+		Debug.Log("WTF");
+
+		this.DisplayedItem_.OnPointerDown?.Invoke();
 	}
 
-	public void OnPointerUp(PointerEventData eventData)
+	public virtual void OnPointerUp(PointerEventData eventData)
 	{
+		if (this.DisplayedItem_ == null)
+			return;
+
+		this.DisplayedItem_.OnPointerUp?.Invoke();
 	}
 
 #if UNITY_EDITOR

@@ -17,9 +17,11 @@ public class Item : MonoBehaviour
 {
 	[SerializeField] private InventoryItemSharedData _inventoryItemSharedData;
 
+	[SerializeField] private UnityEvent _onInventoryItemPointerDown;
+
 	public void PickUp()
 	{
-		if (GameManager.Instance.PlayerInventory_.Add(this._inventoryItemSharedData.Id))
+		if (GameManager.Instance.PlayerInventory_.Add(new InventoryItem(this._inventoryItemSharedData.Id, this._onInventoryItemPointerDown.Invoke)))
 		{
 			Object.Destroy(this.gameObject);
 		}
@@ -31,6 +33,18 @@ public class Item : MonoBehaviour
 		{
 			this.PickUp();
 		}
+	}
+
+	[SerializeField] private View _interactionTooltip;
+
+	public void ShowRelatedView()
+	{
+		this._interactionTooltip.Show();
+	}
+
+	public void HideRelatedView()
+	{
+		this._interactionTooltip.Hide();
 	}
 
 #if UNITY_EDITOR
