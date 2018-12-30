@@ -17,21 +17,57 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
-  m_PPtrCurves: []
-  m_SampleRate: 60
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: 21300000, guid: 2df537ed8fbf3ba4489236cd91e6ce3b, type: 3}
+    - time: 0.05
+      value: {fileID: 21300000, guid: 6a0f6a5a81cf92c4db6d86919f45024f, type: 3}
+    - time: 0.1
+      value: {fileID: 21300000, guid: 097eb0d5c992aa743a2f5e49e3e8e355, type: 3}
+    - time: 0.15
+      value: {fileID: 21300000, guid: 6af97fe496467e74c8e66ab9d964e0d4, type: 3}
+    - time: 0.2
+      value: {fileID: 21300000, guid: e303a676905430d4c87a69d2fd4616d7, type: 3}
+    - time: 0.25
+      value: {fileID: 21300000, guid: 8fe76098fd0248d48b4b26887589d287, type: 3}
+    - time: 0.3
+      value: {fileID: 21300000, guid: b04773549e1289b4c8f2bd08418ed416, type: 3}
+    - time: 0.35
+      value: {fileID: 21300000, guid: 4df8862aa65c56b4c98c704782338e5f, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+  m_SampleRate: 20
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 21300000, guid: 2df537ed8fbf3ba4489236cd91e6ce3b, type: 3}
+    - {fileID: 21300000, guid: 6a0f6a5a81cf92c4db6d86919f45024f, type: 3}
+    - {fileID: 21300000, guid: 097eb0d5c992aa743a2f5e49e3e8e355, type: 3}
+    - {fileID: 21300000, guid: 6af97fe496467e74c8e66ab9d964e0d4, type: 3}
+    - {fileID: 21300000, guid: e303a676905430d4c87a69d2fd4616d7, type: 3}
+    - {fileID: 21300000, guid: 8fe76098fd0248d48b4b26887589d287, type: 3}
+    - {fileID: 21300000, guid: b04773549e1289b4c8f2bd08418ed416, type: 3}
+    - {fileID: 21300000, guid: 4df8862aa65c56b4c98c704782338e5f, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 0.4
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -50,4 +86,34 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.05
+    functionName: StartSwinging
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.1
+    functionName: StartCheckingForNextAttack
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 43c7da66d3a416f4292bd44b3f0b23b2,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.3
+    functionName: StopSwinging
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.35
+    functionName: CheckForNextAttack
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 43c7da66d3a416f4292bd44b3f0b23b2,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

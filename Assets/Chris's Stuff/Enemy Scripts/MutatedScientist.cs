@@ -21,7 +21,6 @@ public class MutatedScientist : MonoBehaviour
     public Vector2 slamPosition;
 
     [Header("Jump Ability Variables")]
-    // Jumping Variables
     [SerializeField] private GameObject shadow;
     [SerializeField] private Vector2 shadowOffset;
     [SerializeField] private Vector2 shadowScaleStart;
@@ -30,8 +29,17 @@ public class MutatedScientist : MonoBehaviour
     [SerializeField] private bool isJumping; // Tracks when jumping up
 
     [SerializeField] private float slamDamage;
-    [SerializeField] private Vector2 slamRadius;
+    [SerializeField] private float slamRadius;
     [SerializeField] private float slamKnockback;
+
+    [Header("Melee Routine Variables")]
+    public Transform t_test;
+    [SerializeField] private bool meleeMode = false;
+    [SerializeField] private float meleeSpeed = 8f;
+    [SerializeField] private Vector2 acceptanceRange = Vector2.one;
+
+    [SerializeField] private float m_attackCooldown;
+    private float m_attackTimer = 0f;
 
     [Header("Starting Routine")]
     public UnityEvent[] startEvents;
@@ -50,13 +58,20 @@ public class MutatedScientist : MonoBehaviour
             player = GameObject.Find("Player");
 
         shadow.SetActive(false);
+
+        m_attackTimer = m_attackCooldown;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            if (!inAir && !isJumping)
-                JumpUp();
+        if (Input.GetKeyDown(KeyCode.Q))
+            StartMeleeRoutine(15f);
+
+        if (Input.GetKeyDown(KeyCode.E))
+            JumpUp();
+
+        if (Input.GetKeyDown(KeyCode.F))
+            this.transform.SetParent(t_test);
     }
 
     #region Start Functions
@@ -89,7 +104,7 @@ public class MutatedScientist : MonoBehaviour
     }
     #endregion
     
-    #region Ability Functions
+    #region Jump Functions
     public void JumpUp()
     {
         if (!isJumping && !inAir)
@@ -129,7 +144,7 @@ public class MutatedScientist : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
 
-        yield return new WaitForSeconds(1f);
+        GetComponent<SpriteRenderer>().enabled = false;
 
         isJumping = false;
         inAir = true;
@@ -165,10 +180,9 @@ public class MutatedScientist : MonoBehaviour
         float inc = (yGoal - transform.position.y) / reps;
         float delay = (time / reps);
 
-        Debug.Log(delay);
-
         shadow.transform.localScale = shadowScaleEnd;
         Vector2 shadowScaleInc = (shadowScaleStart - shadowScaleEnd) / reps;
+        GetComponent<SpriteRenderer>().enabled = true;
 
         for (int i = 0; i < reps; i++)
         {
@@ -181,7 +195,7 @@ public class MutatedScientist : MonoBehaviour
         }
 
         // Checking for a hit
-        RaycastHit2D slamHit = Physics2D.CapsuleCast(shadow.transform.position, slamRadius, CapsuleDirection2D.Horizontal, 0f, Vector2.left, 0f, playerLayer);
+        RaycastHit2D slamHit = Physics2D.CircleCast(shadow.transform.position, slamRadius, Vector2.left, 0f, playerLayer);
         if (slamHit)
         {
             Player p = player.GetComponent<Player>();
@@ -196,11 +210,75 @@ public class MutatedScientist : MonoBehaviour
     }
     #endregion
 
+    #region Melee Functions
+    public void StartMeleeRoutine(float dur)
+    {
+        StartCoroutine("MeleeRoutine", dur);
+    }
+
+    private IEnumerator MeleeRoutine(float dur)
+    {
+        // Declaring Tracker Variables
+        float timer = dur;
+        float speed = 8f;
+
+        // Repping the Moving Script
+        while (timer > 0f)
+        {
+            // Decrementing the Timer
+            timer -= Time.deltaTime;
+
+            // Checking to see if player is in range
+            RaycastHit2D hit = Physics2D.BoxCast(transform.position, acceptanceRange, 0f, Vector2.zero, 0f, playerLayer);
+            if (hit)
+            {
+                //Trying Melee Attacks
+                MeleeAttack();
+            } else {
+                // Moving towards the player
+                Vector3 pPos = player.transform.position;
+                Vector3 moveVector = new Vector3((pPos.x - transform.position.x), (pPos.y - transform.position.y));
+                moveVector /= moveVector.magnitude;
+
+                GetComponent<MovementController>().Move(moveVector * speed * Time.deltaTime);
+            }
+            
+            yield return new WaitForSeconds(0.01f);
+        }
+
+    }
+
+    private void MeleeAttack()
+    {
+        // Checking if an attack is available
+        if (m_attackTimer <= 0f)
+        {
+            // Getting the Player Reference
+            Player p = player.GetComponent<Player>();
+
+            // Applying the KnockBack
+            Vector3 dir = player.transform.position - transform.position;
+            dir /= dir.magnitude;
+
+            p.ApplyKnockBack(1f, dir);
+
+            // Applying the Damage
+            p.manager.playerStats.TakeDamage(player, mbStats.unitDamage);
+
+            // Setting the Attack Timer
+            m_attackTimer = m_attackCooldown;
+        }
+        else
+            m_attackTimer -= Time.deltaTime;
+    }
+    #endregion
+
     private void OnDrawGizmosSelected()
     {
         // Drawing the Slam Radius
         Gizmos.color = Color.blue;
-        //Gizmos.DrawWireCube(shadow.transform.position, new Vector3(slamRadius.x, slamRadius.y));
+        //Gizmos.DrawWireSphere(shadow.transform.position, slamRadius);
+        Gizmos.DrawWireCube(transform.position, acceptanceRange);
     }
 
 }

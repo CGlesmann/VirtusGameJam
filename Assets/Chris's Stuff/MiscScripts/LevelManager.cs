@@ -9,6 +9,11 @@ public class LevelManager : MonoBehaviour
     public Player player;
     public UnitStats playerStats;
 
+    public void Awake()
+    {
+        playerStats.Reset();
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

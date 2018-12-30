@@ -17,21 +17,78 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
-  m_PPtrCurves: []
-  m_SampleRate: 60
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: 21300000, guid: 0ba9de25ec4aa764097e78eb859335f0, type: 3}
+    - time: 0.05
+      value: {fileID: 21300000, guid: 83097dc940c3a024eab320ace1771323, type: 3}
+    - time: 0.1
+      value: {fileID: 21300000, guid: 9391f5b930ab88a419a2d785429662a6, type: 3}
+    - time: 0.15
+      value: {fileID: 21300000, guid: c9140a9571b1dec46b2a419b3986b3dd, type: 3}
+    - time: 0.2
+      value: {fileID: 21300000, guid: 3711901402a12c842b4eaa3e51ad8472, type: 3}
+    - time: 0.25
+      value: {fileID: 21300000, guid: 3007d7f4376a70c4b9044e6dd335ea56, type: 3}
+    - time: 0.3
+      value: {fileID: 21300000, guid: 1d7572ab0d444b3439630f682f70e0ff, type: 3}
+    - time: 0.35
+      value: {fileID: 21300000, guid: ca83a4fe3270cb24d9fb7b2c7fd3de8e, type: 3}
+    - time: 0.4
+      value: {fileID: 21300000, guid: 578e6e24dfa223d4f8fa93ae7bd46360, type: 3}
+    - time: 0.45
+      value: {fileID: 21300000, guid: 1571f0b1f5b9caf48952ac8cfcef5e2e, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: fb1b1203c3ad2754eafc9c9a3aec3cd8, type: 3}
+    - time: 0.55
+      value: {fileID: 21300000, guid: 33a4e75d14cf96d4b80dc31b30cd60bb, type: 3}
+    - time: 0.6
+      value: {fileID: 21300000, guid: efb2b8e12c8a8094eadd8e123a5fe72c, type: 3}
+    - time: 0.65
+      value: {fileID: 21300000, guid: 7b5b1c40817181845bc8cd764d8af894, type: 3}
+    - time: 0.7
+      value: {fileID: 21300000, guid: f2c2df7599f12c444af07ee559fbd233, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+  m_SampleRate: 20
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 21300000, guid: 0ba9de25ec4aa764097e78eb859335f0, type: 3}
+    - {fileID: 21300000, guid: 83097dc940c3a024eab320ace1771323, type: 3}
+    - {fileID: 21300000, guid: 9391f5b930ab88a419a2d785429662a6, type: 3}
+    - {fileID: 21300000, guid: c9140a9571b1dec46b2a419b3986b3dd, type: 3}
+    - {fileID: 21300000, guid: 3711901402a12c842b4eaa3e51ad8472, type: 3}
+    - {fileID: 21300000, guid: 3007d7f4376a70c4b9044e6dd335ea56, type: 3}
+    - {fileID: 21300000, guid: 1d7572ab0d444b3439630f682f70e0ff, type: 3}
+    - {fileID: 21300000, guid: ca83a4fe3270cb24d9fb7b2c7fd3de8e, type: 3}
+    - {fileID: 21300000, guid: 578e6e24dfa223d4f8fa93ae7bd46360, type: 3}
+    - {fileID: 21300000, guid: 1571f0b1f5b9caf48952ac8cfcef5e2e, type: 3}
+    - {fileID: 21300000, guid: fb1b1203c3ad2754eafc9c9a3aec3cd8, type: 3}
+    - {fileID: 21300000, guid: 33a4e75d14cf96d4b80dc31b30cd60bb, type: 3}
+    - {fileID: 21300000, guid: efb2b8e12c8a8094eadd8e123a5fe72c, type: 3}
+    - {fileID: 21300000, guid: 7b5b1c40817181845bc8cd764d8af894, type: 3}
+    - {fileID: 21300000, guid: f2c2df7599f12c444af07ee559fbd233, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 0.75
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -50,4 +107,26 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.05
+    functionName: StartSwinging
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.25
+    functionName: StopSwinging
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.7
+    functionName: StopAttacking
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 43c7da66d3a416f4292bd44b3f0b23b2,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

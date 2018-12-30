@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Unit", menuName = "Unit Assets/New Unit", order = 1)]
 public class UnitStats : ScriptableObject
 {
+    [Header("Default Values")]
+    public float defHealth;
+    public float defStr;
+
     [Header("Combat Variables")]
     public float unitHealth;
     public float unitMaxHealth;
@@ -39,5 +43,11 @@ public class UnitStats : ScriptableObject
             // Destroying the GameObject
             GameObject.Destroy(target);
         }
+    }
+
+    public void Reset()
+    {
+        unitHealth = unitMaxHealth = defHealth;
+        unitDamage = defStr;
     }
 }

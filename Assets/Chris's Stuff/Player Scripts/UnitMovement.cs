@@ -12,6 +12,7 @@ public class UnitMovement : MonoBehaviour
     private MovementController controller;
 
     [Header("Dashing Variables")]
+    public GameObject dashClone;
     public bool isDashing = false;
     public float dashSpeed = 12f;
     public float dashTime = 0.1f; // In Seconds
@@ -23,10 +24,13 @@ public class UnitMovement : MonoBehaviour
     [Header("Misc Variables")]
     public Vector3 lastVelocity = Vector3.zero;
 
+    private Animator anim;
+
     void Awake()
     {
         controller = GetComponent<MovementController>();
         player = GetComponent<Player>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -35,9 +39,21 @@ public class UnitMovement : MonoBehaviour
         {
             if (!isDashing)
             {
+                anim.SetBool("Dashing", true);
+
                 StartCoroutine("Dashing");
                 isDashing = true;
             }
+        }
+
+        // Creating the Dash Clones
+        if (isDashing)
+        {
+            GameObject newClone = Instantiate(dashClone);
+            newClone.transform.position = transform.position;
+
+            newClone.GetComponent<DashClone>().anim.SetFloat("Horizontal", anim.GetFloat("Horizontal"));
+            newClone.GetComponent<DashClone>().anim.SetFloat("Vertical", anim.GetFloat("Vertical"));
         }
     }
 
@@ -80,6 +96,7 @@ public class UnitMovement : MonoBehaviour
         }
 
         isDashing = false;
+        anim.SetBool("Dashing", false);
     }
 
 }

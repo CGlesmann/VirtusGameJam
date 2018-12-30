@@ -52,6 +52,8 @@ public class Enemy : MonoBehaviour
     {
         controller = GetComponent<MovementController>();
         sTracker = new StatsTracker(baseStats);
+
+        attackTimer = attackCooldown;
     }
 
     private void Update()
@@ -72,7 +74,8 @@ public class Enemy : MonoBehaviour
                 }
 
                 // Else wander around
-                WanderState();
+                if (canWander)
+                    WanderState();
             }
             else
             {
@@ -107,20 +110,41 @@ public class Enemy : MonoBehaviour
                                 isChasing = false;
                             }
                         }
-                    } else
-                    {
+                    } else {
                         attackTimer -= Time.deltaTime;
                     }
                 }
-
-
             }
+        }
+    }
+
+    public void ApplyKnockBack(float power, Vector2 dir)
+    {
+        // Setting the Player State
+        eState.StunUnit(power);
+        StartCoroutine("KnockBack", dir);
+    }
+
+    IEnumerator KnockBack(Vector2 dir)
+    {
+        // KnockBack Variables
+        int reps = 15;
+        float time = eState.stunTimer;
+        float pow = 20f;
+        float delay = (time / reps);
+
+        for (int i = 0; i < reps; i++)
+        {
+            Vector3 vel = new Vector3((dir * pow).x, (dir * pow).y);
+            GetComponent<MovementController>().Move(vel * Time.deltaTime);
+
+            yield return new WaitForSeconds(delay);
         }
     }
 
     private void FixedUpdate()
     {
-        if (isChasing)
+        if (isChasing && eState.StateClear())
         {
             // Get the movement Vector
             float dist = (target.transform.position - transform.position).magnitude;
@@ -306,18 +330,20 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // Drawing the Range
-        Gizmos.color = (isChasing)?Color.red:Color.black;
-        Gizmos.DrawWireCube(transform.position, (isChasing) ? chaseRange : sightRange);
+        if (canWander) {
+            // Drawing the Range
+            Gizmos.color = (isChasing)?Color.red:Color.black;
+            Gizmos.DrawWireCube(transform.position, (isChasing) ? chaseRange : sightRange);
 
-        // Drawing the Wander Zone
-        Gizmos.color = new Color(255f, 255f, 0f, 0.25f);
-        Gizmos.DrawCube(wanderOrigin, wanderRange);
+            // Drawing the Wander Zone
+            Gizmos.color = new Color(255f, 255f, 0f, 0.25f);
+            Gizmos.DrawCube(wanderOrigin, wanderRange);
 
-        if (wanderPoint != Vector3.zero)
-        {
-            Gizmos.color = Color.black;
-            Gizmos.DrawCube(wanderPoint, Vector3.one * 2f);
+            if (wanderPoint != Vector3.zero)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(wanderPoint, Vector3.one * 2f);
+            }
         }
     }
 

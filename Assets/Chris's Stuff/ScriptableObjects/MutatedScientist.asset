@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e065b033da3684dbac01ae2ae89720, type: 3}
   m_Name: MutatedScientist
   m_EditorClassIdentifier: 
+  defHealth: 150
+  defStr: 5
   unitHealth: 150
   unitMaxHealth: 150
   unitDamage: 5

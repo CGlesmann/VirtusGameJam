@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using TMPro;
 
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour {
     public LayerMask wallLayer;
 
     [Header("Player Melee Variables")]
+    public bool swinging = false; // Tracks when to check for collisions
     public bool checkingForNextAttack = false;
     public bool attackDetermined = false;
     public bool attackSuccessful = false;
@@ -42,6 +44,12 @@ public class Player : MonoBehaviour {
 
     private float rangeAttackTimer = 0f;
 
+    [Header("Ultimate Ability Vars")]
+    public GameObject ultimatePrefab;
+    public float ultimateCooldown;
+
+    private float ultimateTimer = 0f;
+
     [Header("Input Variables")]
     public KeyCode attackKey;
 
@@ -52,6 +60,9 @@ public class Player : MonoBehaviour {
 
     private UnitMovement playerMovement;
     private Animator anim;
+
+    private List<GameObject> hits;
+    private RaycastHit2D[] enemies;
 
     /// <summary>
     /// Getting References
@@ -70,6 +81,13 @@ public class Player : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(1))
             TryRangeAttack();
+
+        if (Input.GetKeyDown(KeyCode.Space) && !anim.GetBool("Ultimate"))
+            if (ultimateTimer <= 0f)
+            {
+                anim.SetBool("Ultimate", true);
+                pState.canMove = false;
+            }
 
         // Updating the GUI
         UpdatePlayerGUIElements();
@@ -91,6 +109,18 @@ public class Player : MonoBehaviour {
 
         // Updating the Player State
         pState.UpdateState();
+
+        // Updating ultimate timer
+        if (ultimateTimer > 0f)
+        {
+            ultimateTimer -= Time.deltaTime;
+        }
+
+        // Updating attacking
+        if (swinging)
+        {
+            TryMeleeAttack();
+        }
     }
 
     private void UpdatePlayerSprite()
@@ -139,21 +169,31 @@ public class Player : MonoBehaviour {
             rangeAttackTimer -= Time.deltaTime;
     }
 
-    private void AdjustAttackArea()
+    public void AdjustAttackArea()
     {
         // Adjusting the AttackAreaOffset based on velocity
         Vector3 lastVelocity = GetComponent<UnitMovement>().lastVelocity;
         if (lastVelocity.x != 0f)
         {
             attackArea = new Vector3(length, width, 0f);
-            attackAreaOffset = new Vector3(((length / 2) * Mathf.Sign(lastVelocity.x)) + ((srWidthAspect) * Mathf.Sign(lastVelocity.x)), 0f, 0f);
+            attackAreaOffset = new Vector3(((length / 4) * Mathf.Sign(lastVelocity.x)) + ((srWidthAspect) * Mathf.Sign(lastVelocity.x)), 0f, 0f);
         }
         else
         {
             attackArea = new Vector3(width, length, 0f);
-            attackAreaOffset = new Vector3(0f, ((length / 2) * Mathf.Sign(lastVelocity.y)) + ((srHeightAspect) * Mathf.Sign(lastVelocity.y)), 0f);
+            attackAreaOffset = new Vector3(0f, ((length / 4) * Mathf.Sign(lastVelocity.y)) + ((srHeightAspect) * Mathf.Sign(lastVelocity.y)), 0f);
         }
         
+    }
+
+    public void StartSwinging()
+    {
+        if (swinging == false)
+        {
+            hits = new List<GameObject>();
+            swinging = true;
+            enemies = null;
+        }
     }
 
     private void TryMeleeAttack()
@@ -170,24 +210,43 @@ public class Player : MonoBehaviour {
                                                0f);
 
             float a = Vector3.Angle(transform.position, transform.position + attackVector);
-            RaycastHit2D hit = Physics2D.BoxCast(transform.position + attackAreaOffset, attackArea, a, Vector2.left, 0f, enemyLayer);
-            if (hit)
+            enemies = Physics2D.BoxCastAll(transform.position + attackAreaOffset, attackArea, a, Vector2.left, 0f, enemyLayer);
+         
+            foreach(RaycastHit2D hit in enemies)
             {
-                Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
-
-                if (enemy == null)
+                if (!hits.Contains(hit.collider.gameObject))
                 {
-                    Debug.Log("Hit an Object on enemyLayer but couldn't find Enemy Reference");
-                    return;
+                    Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
+
+                    if (enemy == null)
+                    {
+                        Debug.Log("Hit an Object on enemyLayer but couldn't find Enemy Reference");
+                        return;
+                    }
+
+                    // Dealing the Damage to the Unit
+                    enemy.sTracker.TakeDamage(enemy.gameObject, manager.playerStats.unitDamage);
+                    enemy.StartCoroutine("HurtFlash");
+
+                    // Applying a very brief stun
+                    enemy.eState.StunUnit(0.075f);
+
+                    // Adding the GameObject to the hits
+                    hits.Add(hit.collider.gameObject);
+
+                    // Starting the Timer
+                    //meleeAttackTimer = meleeAttackCooldown;
                 }
-
-                // Dealing the Damage to the Unit
-                enemy.sTracker.TakeDamage(enemy.gameObject, manager.playerStats.unitDamage);
-                enemy.StartCoroutine("HurtFlash");
-
-                // Starting the Timer
-                meleeAttackTimer = meleeAttackCooldown;
             }
+        }
+    }
+
+    public void StopSwinging()
+    {
+        if (swinging == true)
+        {
+            swinging = false;
+            enemies = null;
         }
     }
 
@@ -262,6 +321,24 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void CreateUltimate()
+    {
+        if (ultimateTimer <= 0f)
+        {
+            GameObject ability = Instantiate(ultimatePrefab);
+            ability.transform.position = transform.position;
+
+            ultimateTimer = ultimateCooldown;
+            return;
+        }
+    }
+
+    public void ResetUltTrigger()
+    {
+        anim.SetBool("Ultimate", false);
+        pState.canMove = true;
+    }
+
     public void ApplyKnockBack(float power, Vector2 dir)
     {
         // Setting the Player State
@@ -272,7 +349,7 @@ public class Player : MonoBehaviour {
     IEnumerator KnockBack(Vector2 dir)
     {
         // KnockBack Variables
-        int reps = 10;
+        int reps = 15;
         float time = pState.stunTimer;
         float pow = 20f;
         float delay = (time / reps);
@@ -321,4 +398,20 @@ public class Player : MonoBehaviour {
         Gizmos.DrawWireCube(transform.position + attackAreaOffset, attackArea);
     }
 
+}
+
+[CustomEditor(typeof(Player))]
+public class PlayerInspector : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        Player player = (Player)target;
+
+        if (GUILayout.Button("Set Attack Area"))
+        {
+            player.AdjustAttackArea();
+        }
+    }
 }

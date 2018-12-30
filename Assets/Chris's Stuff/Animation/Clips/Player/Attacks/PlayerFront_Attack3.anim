@@ -17,21 +17,78 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
-  m_PPtrCurves: []
-  m_SampleRate: 60
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: 21300000, guid: 851cd19f88a554f42a2231c006eed722, type: 3}
+    - time: 0.05
+      value: {fileID: 21300000, guid: f242f8f84453dd4459a0d2e99abd6ebf, type: 3}
+    - time: 0.1
+      value: {fileID: 21300000, guid: e6f059060f5a32946ab0805018f14457, type: 3}
+    - time: 0.15
+      value: {fileID: 21300000, guid: 817f0eaa54e8fb442a7ece3e99e0868e, type: 3}
+    - time: 0.2
+      value: {fileID: 21300000, guid: 72c00be0381108a49af78605d215b9a8, type: 3}
+    - time: 0.25
+      value: {fileID: 21300000, guid: 56011e7e428594d4c9259da0e06fcba1, type: 3}
+    - time: 0.3
+      value: {fileID: 21300000, guid: 5781a25daf16d5644a0f158b316ddd7e, type: 3}
+    - time: 0.35
+      value: {fileID: 21300000, guid: c4070631f9131d94b8655a79e4cfd1aa, type: 3}
+    - time: 0.4
+      value: {fileID: 21300000, guid: 8d6b78b23e59ea24e87f855e5fcb16f9, type: 3}
+    - time: 0.45
+      value: {fileID: 21300000, guid: b989d71e81859c5418fbd95144b87aee, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: bc59503ad76505f4fbc1e9fc8fe554fb, type: 3}
+    - time: 0.55
+      value: {fileID: 21300000, guid: 8fa98af66be10f449ba59c3aae118f9a, type: 3}
+    - time: 0.6
+      value: {fileID: 21300000, guid: 76d477c4405274647aaf40476e616b44, type: 3}
+    - time: 0.65
+      value: {fileID: 21300000, guid: 78531b292d238814582bbf440d347c96, type: 3}
+    - time: 0.7
+      value: {fileID: 21300000, guid: 5e6c49ff5053dab4fbde42474dd4ad15, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+  m_SampleRate: 20
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 21300000, guid: 851cd19f88a554f42a2231c006eed722, type: 3}
+    - {fileID: 21300000, guid: f242f8f84453dd4459a0d2e99abd6ebf, type: 3}
+    - {fileID: 21300000, guid: e6f059060f5a32946ab0805018f14457, type: 3}
+    - {fileID: 21300000, guid: 817f0eaa54e8fb442a7ece3e99e0868e, type: 3}
+    - {fileID: 21300000, guid: 72c00be0381108a49af78605d215b9a8, type: 3}
+    - {fileID: 21300000, guid: 56011e7e428594d4c9259da0e06fcba1, type: 3}
+    - {fileID: 21300000, guid: 5781a25daf16d5644a0f158b316ddd7e, type: 3}
+    - {fileID: 21300000, guid: c4070631f9131d94b8655a79e4cfd1aa, type: 3}
+    - {fileID: 21300000, guid: 8d6b78b23e59ea24e87f855e5fcb16f9, type: 3}
+    - {fileID: 21300000, guid: b989d71e81859c5418fbd95144b87aee, type: 3}
+    - {fileID: 21300000, guid: bc59503ad76505f4fbc1e9fc8fe554fb, type: 3}
+    - {fileID: 21300000, guid: 8fa98af66be10f449ba59c3aae118f9a, type: 3}
+    - {fileID: 21300000, guid: 76d477c4405274647aaf40476e616b44, type: 3}
+    - {fileID: 21300000, guid: 78531b292d238814582bbf440d347c96, type: 3}
+    - {fileID: 21300000, guid: 5e6c49ff5053dab4fbde42474dd4ad15, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 0.75
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -50,4 +107,26 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.05
+    functionName: StartSwinging
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.25
+    functionName: StopSwinging
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.7
+    functionName: StopAttacking
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 43c7da66d3a416f4292bd44b3f0b23b2,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
