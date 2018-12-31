@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e4dc22f7f460343bf54072d909a127, type: 3}
+  m_Name: Level 1 Diary Data 3
+  m_EditorClassIdentifier: 
+  _title: May 19, 2025
+  _text: "When I first heard of a human\u2019s DNA blending with the plague bacteria,
+    I didn\u2019t believe it... month after month with no success was only sending
+    everyone in the lab to the point of insanity. \r\n\r\nSubject C27 appeared to
+    remain stable. The experiment was a success.\r\n\r\nI still don\u2019t know how
+    they did it, but when I saw it with my own eyes\u2026 I knew we had made a terrible
+    mistake."
