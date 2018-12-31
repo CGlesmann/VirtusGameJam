@@ -39,6 +39,7 @@ public class Player : MonoBehaviour {
     private float meleeAttackTimer = 0f;
 
     [Header("Player Range Variables")]
+    public bool startingThrow = false;
     public float rangeAttackCooldown;
     public GameObject rangePrefab;
 
@@ -57,6 +58,11 @@ public class Player : MonoBehaviour {
     [SerializeField] private bool moving = false;
     [SerializeField] private bool attacking = false;
     [SerializeField] private int attackCount = 0;
+
+    [Header("Spearhand Variables")]
+    public Transform spearHand;
+    public Vector3 handOffset;
+    public Vector3 handRotation;
 
     private UnitMovement playerMovement;
     private Animator anim;
@@ -80,7 +86,15 @@ public class Player : MonoBehaviour {
             MeleeAttack();
 
         if (Input.GetMouseButtonDown(1))
-            TryRangeAttack();
+        {
+            if (!startingThrow)
+            {
+                //TryRangeAttack();
+                anim.SetBool("ThrowStart", true);
+                startingThrow = true;
+                pState.canMove = false;
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && !anim.GetBool("Ultimate"))
             if (ultimateTimer <= 0f)

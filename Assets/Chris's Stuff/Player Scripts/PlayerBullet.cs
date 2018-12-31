@@ -10,8 +10,6 @@ public class PlayerBullet : MonoBehaviour
     public float bulletSpeed;
     public Vector3 bulletDir;
 
-    public Player player;
-
     private bool set = false;
 
     [SerializeField] private float colRange;
