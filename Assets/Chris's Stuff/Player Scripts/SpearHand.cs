@@ -12,6 +12,16 @@ public class SpearHand : MonoBehaviour
     [SerializeField] private GameObject currentSpear;
     public bool isAiming;
 
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = transform.parent.gameObject.GetComponent<Animator>();
+
+        currentSpear = null;
+        isAiming = false;
+    }
+
     private void Update()
     {
         if (isAiming)
@@ -21,21 +31,39 @@ public class SpearHand : MonoBehaviour
             Vector2 dir = new Vector2((mousePos - transform.position).x, (mousePos - transform.position).y);
             float a = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-            transform.rotation = Quaternion.Euler(0f, 0f, a);
-
             // Updating the Spear
             currentSpear.transform.position = transform.position + spearSpawnOffset;
-            currentSpear.transform.rotation = transform.rotation;
+            currentSpear.transform.rotation = Quaternion.Euler(0f, 0f, a);
+
+            // Updating the Animator
+            /*
+            anim.SetFloat("Horizontal", dir.x);
+            anim.SetFloat("Vertical", dir.y);
+            */
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                Vector3 newDir = new Vector3(dir.x, dir.y, 0f);
+                currentSpear.GetComponent<PlayerBullet>().SetBullet(newDir);
+
+                StopAiming();
+            }
         }
     }
 
     public void CreateSpear()
     {
-        // Spawning A Spear in the hand
-        currentSpear = Instantiate(spearPrefab);
-        currentSpear.transform.position = transform.position + spearSpawnOffset;
+        if (currentSpear == null)
+        {
+            // Spawning A Spear in the hand
+            currentSpear = Instantiate(spearPrefab);
+            currentSpear.transform.position = transform.position + spearSpawnOffset;
 
-        return;
+            // Starting aiming the spear
+            StartAiming();
+
+            return;
+        }
     }
 
     public void StartAiming()
@@ -46,7 +74,12 @@ public class SpearHand : MonoBehaviour
 
     public void StopAiming()
     {
+        // Stop the Aiming
         isAiming = false;
+        currentSpear = null;
+
+        // Tell Player to throw spear
+        transform.parent.gameObject.GetComponent<Player>().ThrowSpear();
         return;
     }
 
@@ -56,5 +89,4 @@ public class SpearHand : MonoBehaviour
         Gizmos.color = Color.black;
         Gizmos.DrawSphere(transform.position + spearSpawnOffset, 0.025f);
     }
-
 }
