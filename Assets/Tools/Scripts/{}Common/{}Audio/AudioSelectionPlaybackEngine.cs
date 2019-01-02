@@ -15,7 +15,10 @@ using TMPro;
 
 public class AudioSelectionPlaybackEngine : MonoBehaviour
 {
+	public enum PlaybackType { Sequential, Random }
+
 	[SerializeField] private AudioPlayer.AudioType _audioType;
+	[SerializeField] private PlaybackType _playbackType;
 
 	[SerializeField] private AudioSelection _audioSelection;
 	[SerializeField] private Vector2 _silenceTimeRange = new Vector2(15f, 45f);
@@ -24,8 +27,22 @@ public class AudioSelectionPlaybackEngine : MonoBehaviour
 	{
 		while (true)
 		{
-			AudioClip audioClip = this._audioSelection.GetRandom();
-			
+			AudioClip audioClip = this._audioSelection._SelectedAudioClip;
+
+			switch (this._playbackType)
+			{
+				case PlaybackType.Sequential:
+
+					audioClip = this._audioSelection.Next();
+
+					break;
+				case PlaybackType.Random:
+
+					audioClip = this._audioSelection.GetRandom();
+
+					break;
+			}
+
 			AudioPlayer.Instance.PlayOneShot(audioClip, this._audioType);
 
 			yield return new WaitForSecondsRealtime(audioClip.length + Random.Range(this._silenceTimeRange.x, this._silenceTimeRange.y));
