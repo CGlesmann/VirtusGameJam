@@ -381,14 +381,15 @@ public class Player : MonoBehaviour {
     IEnumerator KnockBack(Vector2 dir)
     {
         // KnockBack Variables
-        int reps = 15;
+        int reps = 20;
         float time = pState.stunTimer;
-        float pow = 20f;
+        float pow = 500f;
         float delay = (time / reps);
+        float inc = (pow / reps);
 
         for(int i = 0; i < reps; i++)
         {
-            Vector3 vel = new Vector3((dir * pow).x, (dir * pow).y);
+            Vector3 vel = new Vector3((dir * inc).x, (dir * inc).y);
             GetComponent<MovementController>().Move(vel * Time.deltaTime);
 
             yield return new WaitForSeconds(delay);

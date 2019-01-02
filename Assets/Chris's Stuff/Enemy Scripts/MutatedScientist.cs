@@ -233,7 +233,9 @@ public class MutatedScientist : MonoBehaviour
             if (hit)
             {
                 //Trying Melee Attacks
-                MeleeAttack();
+                if (MeleeAttack())
+                    yield return new WaitForSeconds(0.75f);
+
             } else {
                 // Moving towards the player
                 Vector3 pPos = player.transform.position;
@@ -248,7 +250,7 @@ public class MutatedScientist : MonoBehaviour
 
     }
 
-    private void MeleeAttack()
+    private bool MeleeAttack()
     {
         // Checking if an attack is available
         if (m_attackTimer <= 0f)
@@ -267,9 +269,13 @@ public class MutatedScientist : MonoBehaviour
 
             // Setting the Attack Timer
             m_attackTimer = m_attackCooldown;
+
+            return true;
         }
         else
             m_attackTimer -= Time.deltaTime;
+
+        return false;
     }
     #endregion
 
