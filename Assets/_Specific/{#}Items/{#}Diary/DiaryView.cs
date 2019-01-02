@@ -13,15 +13,37 @@ using UnityEditor;
 
 using TMPro;
 
+[RequireComponent(typeof(AudioSelectionPlaybackEngine))]
 public class DiaryView : View
 {
 	[SerializeField] private TextMeshProUGUI _titleTextField;
 	[SerializeField] private TextMeshProUGUI _textTextField;
 
+	private AudioSelectionPlaybackEngine _playbackEngine;
+
 	public void Display(DiaryData diaryData)
 	{
 		this._titleTextField.text = diaryData._Title;
 		this._textTextField.text = diaryData._Text;
+
+		if (Random.value <= 1f)
+		{
+			this._playbackEngine.Play();
+		}
+	}
+
+	public override void Hide()
+	{
+		base.Hide();
+
+		this._playbackEngine.Stop();
+	}
+
+	protected override void Awake()
+	{
+		base.Awake();
+
+		this._playbackEngine = this.GetComponent<AudioSelectionPlaybackEngine>();
 	}
 
 #if UNITY_EDITOR

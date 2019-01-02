@@ -13,6 +13,7 @@ using UnityEditor;
 
 using TMPro;
 
+[RequireComponent(typeof(AudioSelectionPlaybackEngine))]
 public class AudioPlayer : MonoBehaviourSingleton<AudioPlayer>
 {
 	public enum AudioType { Music, SFX }
@@ -120,15 +121,13 @@ public class AudioPlayer : MonoBehaviourSingleton<AudioPlayer>
 	public void MuteSFX() { this.Mute(AudioType.SFX); }
 	public void UnMuteSFX() { this.UnMute(AudioType.SFX); }
 
-	[SerializeField] private AudioSelection _musicSelection;
-
-	public void PlayOneShot(AudioClip audioClip, AudioType audioType)
+	public void Play(AudioClip audioClip, AudioType audioType)
 	{
 		switch (audioType)
 		{
 			case AudioType.Music:
 
-				this._musicAudioSource.PlayOneShot(audioClip);
+				this.PlayFading(this._musicAudioSource, 20f, audioClip, 2f);
 
 				break;
 			case AudioType.SFX:
@@ -138,16 +137,16 @@ public class AudioPlayer : MonoBehaviourSingleton<AudioPlayer>
 				break;
 		}
 	}
-	public void PlayOneShotMusic(AudioClip audioClip) { this.PlayOneShot(audioClip, AudioType.Music); }
-	public void PlayOneShotSFX(AudioClip audioClip) { this.PlayOneShot(audioClip, AudioType.SFX); }
+	public void PlayMusic(AudioClip audioClip) { this.Play(audioClip, AudioType.Music); }
+	public void PlaySFX(AudioClip audioClip) { this.Play(audioClip, AudioType.SFX); }
 
-	public void PlayOneShot(AudioClip audioClip, AudioType audioType, float volumeScale)
+	public void Play(AudioClip audioClip, AudioType audioType, float volumeScale)
 	{
 		switch (audioType)
 		{
 			case AudioType.Music:
 
-				this._musicAudioSource.PlayOneShot(audioClip, volumeScale);
+				this.PlayFading(this._musicAudioSource, 20f, audioClip, 2f, volumeScale);
 
 				break;
 			case AudioType.SFX:
@@ -158,11 +157,74 @@ public class AudioPlayer : MonoBehaviourSingleton<AudioPlayer>
 		}
 	}
 
+	private IEnumerator PlayFadingProcess(AudioSource audioSource, float fadeTime, AudioClip audioClip, float delayTime, float volumeScale)
+	{
+		fadeTime /= 2f;
+
+		float progress = 1f - volumeScale;
+
+		if (audioSource.isPlaying)
+		{
+			float initialVolumeScale = audioSource.volume;
+
+			while (progress <= fadeTime)
+			{
+				float calculatedProgress = (progress / fadeTime);
+
+				audioSource.volume = Mathf.Lerp(initialVolumeScale, 0f, calculatedProgress);
+
+				progress += Time.unscaledDeltaTime;
+
+				yield return null;
+			}
+
+			yield return new WaitForSecondsRealtime(delayTime);
+		}
+
+		audioSource.Stop();
+		audioSource.clip = audioClip;
+		audioSource.Play();
+
+		progress = 0f;
+		while (progress <= fadeTime)
+		{
+			float calculatedProgress = (progress / fadeTime);
+
+			audioSource.volume = Mathf.Lerp(0f, volumeScale, calculatedProgress);
+
+			progress += Time.unscaledDeltaTime;
+
+			yield return null;
+		}
+
+		audioSource.volume = volumeScale;
+	}
+
+	private Coroutine _playFadingProcess;
+
+	private void PlayFading(AudioSource audioSource, float fadeTime, AudioClip audioClip, float delayTime, float volumeScale)
+	{
+		if (this._playFadingProcess != null)
+			audioSource.StopCoroutine(this._playFadingProcess);
+
+		this._playFadingProcess = audioSource.StartCoroutine(this.PlayFadingProcess(audioSource, fadeTime, audioClip, delayTime, volumeScale));
+	}
+
+	private void PlayFading(AudioSource audioSource, float fadeTime, AudioClip audioClip, float delayTime)
+	{
+		this.PlayFading(audioSource, fadeTime, audioClip, delayTime, audioSource.volume);
+	}
+
+	private void PlayFading(AudioSource audioSource, float fadeTime, AudioClip audioClip)
+	{
+		this.PlayFading(audioSource, fadeTime, audioClip, 0f, audioSource.volume);
+	}
+
 	private IEnumerator PlayAudioSelectionProcess(AudioSelection audioSelection, AudioType audioType)
 	{
 		while (true)
 		{
-			this.PlayOneShot(audioSelection.Next(), audioType);
+			this.Play(audioSelection.Next(), audioType);
 
 			yield return new WaitForSecondsRealtime(audioSelection._SelectedAudioClip.length + 1f);
 		}
@@ -173,12 +235,13 @@ public class AudioPlayer : MonoBehaviourSingleton<AudioPlayer>
 		this.StartCoroutine(this.PlayAudioSelectionProcess(audioSelection, audioType));
 	}
 
+	private AudioSelectionPlaybackEngine _musicPlaybackEngine;
+
 	protected override void Awake()
 	{
 		base.Awake();
 
-		if (this._musicSelection != null)
-			this.PlayAudioSelection(this._musicSelection, AudioType.Music);
+		this._musicPlaybackEngine = this.GetComponent<AudioSelectionPlaybackEngine>();
 
 		if (PlayerPrefs.GetInt("MusicMuted") == 1)
 			this.MuteMusic();
@@ -189,6 +252,11 @@ public class AudioPlayer : MonoBehaviourSingleton<AudioPlayer>
 			this.MuteSFX();
 		else
 			this.UnMuteSFX();
+	}
+
+	private void Start()
+	{
+		this._musicPlaybackEngine.PlayLoop();
 	}
 
 #if UNITY_EDITOR

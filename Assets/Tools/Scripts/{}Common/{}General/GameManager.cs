@@ -15,6 +15,14 @@ using TMPro;
 
 public class GameManager : MonoBehaviourSingleton<GameManager>
 {
+	[Header("Automatic Events")]
+
+	[Tooltip("Called on Start when everything is initialized.")]
+	[SerializeField] private UnityEvent _onGameAwake;
+	public UnityEvent _OnGameAwake { get { return this._OnGameAwake; } }
+
+	[Header("Custom Events")]
+
 	[SerializeField] private UnityEvent _onStartGame;
 	public UnityEvent _OnStartGame { get { return this._onStartGame; } }
 
@@ -51,27 +59,19 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 		this.StartCoroutine(this.RestartGameProcess(delay));
 	}
 
-	private void Start()
+	protected override void Awake()
 	{
-		this.StartGame();
+		base.Awake();
 
 		this.PlayerInventory_ = new Inventory(20, 10);
-
-		this._inventoryView.Display(this.PlayerInventory_);
 	}
 
-	[Header("TEST")]
-	[SerializeField] private InventoryView _inventoryView;
+	private void Start()
+	{
+		this._onGameAwake.Invoke();
+	}
 
 	public Inventory PlayerInventory_ { get; private set; }
-
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Tab))
-		{
-			this._inventoryView.ToggleVisibility();
-		}
-	}
 
 #if UNITY_EDITOR
 	//protected override void OnDrawGizmos()

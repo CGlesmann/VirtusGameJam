@@ -83,7 +83,10 @@ public class View : MonoBehaviour
 		this._canvasGroup = this.GetComponent<CanvasGroup>();
 
 		this.rectTransform = this.transform as RectTransform;
+	}
 
+	protected virtual void Start()
+	{
 		if (this._initiallyActive)
 			this.Open();
 		else
