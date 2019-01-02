@@ -123,7 +123,7 @@ public class Juice
 
 		if (this._soundEffectSelection != null)
 		{
-			AudioPlayer.Instance.PlayOneShot(this._soundEffectSelection.GetRandom(), AudioPlayer.AudioType.SFX);
+			AudioPlayer.Instance.Play(this._soundEffectSelection.GetRandom(), AudioPlayer.AudioType.SFX);
 		}
 
 		if (this._modifyTimeScale)

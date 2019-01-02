@@ -48,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicAudioSource: {fileID: 6126773062041536530}
   _sfxAudioSource: {fileID: 6126773062041536531}
-  _musicSelection: {fileID: 0}
 --- !u!82 &6126773062041536530
 AudioSource:
   m_ObjectHideFlags: 0
@@ -157,7 +156,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.407
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -254,5 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioType: 0
-  _audioSelection: {fileID: 11400000, guid: 1cdf0f1080296724cb66ed01d006c75e, type: 2}
+  _playbackType: 1
+  _audioSelection: {fileID: 0}
   _silenceTimeRange: {x: 15, y: 45}
+  _volume: 1

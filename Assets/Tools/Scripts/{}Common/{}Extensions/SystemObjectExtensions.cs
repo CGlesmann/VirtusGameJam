@@ -15,8 +15,18 @@ using TMPro;
 
 public static class SystemObjectExtensions
 {
-	public static void StartCoroutine(this object @object, IEnumerator routine)
+	public static Coroutine StartCoroutine(this object @object, IEnumerator routine)
 	{
-		GameManager.Instance.StartCoroutine(routine);
+		return GameManager.Instance.StartCoroutine(routine);
+	}
+
+	public static void StopCoroutine(this object @object, Coroutine coroutine)
+	{
+		GameManager.Instance.StopCoroutine(coroutine);
+	}
+
+	public static void StopCoroutine(this object @object, IEnumerator routine)
+	{
+		GameManager.Instance.StopCoroutine(routine);
 	}
 }

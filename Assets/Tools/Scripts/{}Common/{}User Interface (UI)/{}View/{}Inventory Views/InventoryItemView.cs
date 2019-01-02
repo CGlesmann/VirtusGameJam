@@ -88,8 +88,6 @@ public class InventoryItemView : View, IPointerEnterHandler, IPointerExitHandler
 		if (this.DisplayedItem_ == null)
 			return;
 
-		Debug.Log("WTF");
-
 		this.DisplayedItem_.OnPointerDown?.Invoke();
 	}
 

@@ -26,10 +26,24 @@ public class DiaryView : View
 		this._titleTextField.text = diaryData._Title;
 		this._textTextField.text = diaryData._Text;
 
-		if ()
+		if (Random.value <= 1f)
 		{
-
+			this._playbackEngine.Play();
 		}
+	}
+
+	public override void Hide()
+	{
+		base.Hide();
+
+		this._playbackEngine.Stop();
+	}
+
+	protected override void Awake()
+	{
+		base.Awake();
+
+		this._playbackEngine = this.GetComponent<AudioSelectionPlaybackEngine>();
 	}
 
 #if UNITY_EDITOR

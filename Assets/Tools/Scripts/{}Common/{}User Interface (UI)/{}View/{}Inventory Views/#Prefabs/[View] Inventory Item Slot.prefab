@@ -157,7 +157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f389c97dce60787418e632b9164648eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initiallyActive: 0
+  _initiallyActive: 1
+  _useAnimatorForInitialization: 1
+  _initiallyShown: 1
   _itemView: {fileID: 5263831573818739455}
 --- !u!1001 &8468168111444353057
 PrefabInstance:
@@ -171,6 +173,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[View] InventoryItem'
       objectReference: {fileID: 0}
+    - target: {fileID: 4361763635062500062, guid: ef1abd613db295a4cba67842697b074b,
+        type: 3}
+      propertyPath: _parentSlotView
+      value: 
+      objectReference: {fileID: 5263831573964076936}
     - target: {fileID: 4361763635062500063, guid: ef1abd613db295a4cba67842697b074b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -276,11 +283,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4361763635062500062, guid: ef1abd613db295a4cba67842697b074b,
-        type: 3}
-      propertyPath: _parentSlotView
-      value: 
-      objectReference: {fileID: 5263831573964076936}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1abd613db295a4cba67842697b074b, type: 3}
 --- !u!224 &5263831573818739454 stripped

@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81e0d1a36409608499d32be637fd48dc, type: 3}
-  m_Name: Music Audio Selection 1
+  m_Name: Music Audio Selection 2
   m_EditorClassIdentifier: 
   _audioClips:
-  - {fileID: 8300000, guid: 1215f4ccb56170c40ab3d5eac7461ceb, type: 3}
-  - {fileID: 8300000, guid: 7face0b4ea19df949b61872ebe0a8e8a, type: 3}
+  - {fileID: 8300000, guid: 7961996cefb54fd4abaf8dab770bdb8e, type: 3}
