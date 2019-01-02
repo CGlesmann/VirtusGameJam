@@ -172,6 +172,16 @@ public class Player : MonoBehaviour {
         return;
     }
 
+    public void RestrainPlayer()
+    {
+        pState.canMove = false;
+    }
+
+    public void FreePlayer()
+    {
+        pState.canMove = true;
+    }
+
     private void UpdateAttackTimers()
     {
         // Updating the Melee Attack Timer
