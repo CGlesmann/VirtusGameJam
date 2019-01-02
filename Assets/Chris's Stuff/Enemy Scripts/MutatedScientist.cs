@@ -8,6 +8,9 @@ public class MutatedScientist : MonoBehaviour
 {
     // Private Enums
     private enum BossStage { Stage1, Stage2, Stage3 };
+    private int eventNum = 0;
+    private int stageEvents;
+    private bool doingMove = false;
 
     [Header("MiniBoss Stats")]
     public LayerMask playerLayer;
@@ -33,7 +36,6 @@ public class MutatedScientist : MonoBehaviour
     [SerializeField] private float slamKnockback;
 
     [Header("Melee Routine Variables")]
-    public Transform t_test;
     [SerializeField] private bool meleeMode = false;
     [SerializeField] private float meleeSpeed = 8f;
     [SerializeField] private Vector2 acceptanceRange = Vector2.one;
@@ -60,18 +62,23 @@ public class MutatedScientist : MonoBehaviour
         shadow.SetActive(false);
 
         m_attackTimer = m_attackCooldown;
+
+        stageEvents = phase1Events.Length;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-            StartMeleeRoutine(15f);
+        if (battleStarted)
+        {
+            if (doingMove)
+                return;
 
-        if (Input.GetKeyDown(KeyCode.E))
-            JumpUp();
+            eventNum++;
+            phase1Events[eventNum].Invoke();
+            doingMove = true;
 
-        if (Input.GetKeyDown(KeyCode.F))
-            this.transform.SetParent(t_test);
+            return;
+        }
     }
 
     #region Start Functions
@@ -207,6 +214,8 @@ public class MutatedScientist : MonoBehaviour
 
         shadow.SetActive(false);
         inAir = false;
+
+        doingMove = false;
     }
     #endregion
 
@@ -220,7 +229,7 @@ public class MutatedScientist : MonoBehaviour
     {
         // Declaring Tracker Variables
         float timer = dur;
-        float speed = 8f;
+        float speed = 4f;
 
         // Repping the Moving Script
         while (timer > 0f)
@@ -248,6 +257,7 @@ public class MutatedScientist : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
+        doingMove = false;
     }
 
     private bool MeleeAttack()
@@ -262,7 +272,7 @@ public class MutatedScientist : MonoBehaviour
             Vector3 dir = player.transform.position - transform.position;
             dir /= dir.magnitude;
 
-            p.ApplyKnockBack(1f, dir);
+            p.pState.StunUnit(1f);
 
             // Applying the Damage
             p.manager.playerStats.TakeDamage(player, mbStats.unitDamage);
@@ -276,6 +286,50 @@ public class MutatedScientist : MonoBehaviour
             m_attackTimer -= Time.deltaTime;
 
         return false;
+    }
+    #endregion
+
+    #region Idle Functions
+    public void Idle(float dir)
+    {
+        StartCoroutine("StandIdle", dir);
+    }
+
+    private IEnumerator StandIdle(float dir)
+    {
+        yield return new WaitForSeconds(dir);
+        doingMove = false;
+    }
+    #endregion
+
+    #region Charge Function
+    public void ChargePlayer()
+    {
+        // Getting the Direction of the charge
+        Vector2 chargeDir = (transform.position - player.transform.position).normalized;
+
+        // Starting the Charging Corroutine
+        StartCoroutine("Charge", chargeDir);
+    }
+
+    private IEnumerator Charge(Vector2 dir)
+    {
+        float speed = 8f;
+        float time = 5f;
+
+        while (time > 0f)
+        {
+            // Moving the Boss
+            GetComponent<MovementController>().Move(dir * speed * Time.deltaTime);
+
+            // Decrementing the Timer
+            time -= Time.deltaTime;
+
+            // Yielding
+            yield return new WaitForSeconds(0.001f);
+        }
+
+        doingMove = false;
     }
     #endregion
 

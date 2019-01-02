@@ -30713,12 +30713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c7da66d3a416f4292bd44b3f0b23b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &819613551 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4205736372462596, guid: 64116271b4af5d945bd46e50b1ad8494,
-    type: 3}
-  m_PrefabInstance: {fileID: 147831173}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &819613554
 Animator:
   serializedVersion: 3
@@ -30877,13 +30871,72 @@ MonoBehaviour:
   slamDamage: 10
   slamRadius: 4
   slamKnockback: 0.05
-  t_test: {fileID: 819613551}
   meleeMode: 0
   meleeSpeed: 8
   acceptanceRange: {x: 7.04, y: 5.69}
   m_attackCooldown: 1.25
   startEvents: []
-  phase1Events: []
+  phase1Events:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1073646579}
+        m_MethodName: StartMeleeRoutine
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 6
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1073646579}
+        m_MethodName: JumpUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1073646579}
+        m_MethodName: ChargePlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1073646579}
+        m_MethodName: Idle
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 2
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1073646580
 MonoBehaviour:
   m_ObjectHideFlags: 0
