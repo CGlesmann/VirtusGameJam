@@ -82,6 +82,21 @@ public class InventoryView : View
 		}
 	}
 
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Tab))
+		{
+			this.ToggleVisibility();
+		}
+	}
+
+	protected override void Start()
+	{
+		base.Start();
+
+		this.Display(GameManager.Instance.PlayerInventory_);
+	}
+
 #if UNITY_EDITOR
 #endif
 }
