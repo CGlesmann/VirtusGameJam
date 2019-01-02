@@ -55,6 +55,7 @@ public class View : MonoBehaviour
 	{
 		this.Visible_ = true;
 
+		this._animator.ResetTrigger("Hide");
 		this._animator.SetTrigger("Show");
 	}
 
@@ -62,6 +63,7 @@ public class View : MonoBehaviour
 	{
 		this.Visible_ = false;
 
+		this._animator.ResetTrigger("Show");
 		this._animator.SetTrigger("Hide");
 	}
 
