@@ -44,7 +44,7 @@ TagManager:
   - name: Tile Floors
     uniqueID: 3653343287
     locked: 0
-  - name: Tile Walls
+  - name: Tile Walls Top
     uniqueID: 2971366829
     locked: 0
   - name: Enemies
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Items
     uniqueID: 1786098999
+    locked: 0
+  - name: Tile Walls Bottom
+    uniqueID: 4205704809
     locked: 0
