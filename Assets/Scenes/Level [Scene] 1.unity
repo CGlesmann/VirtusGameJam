@@ -2874,7 +2874,7 @@ Transform:
   - {fileID: 457777079}
   - {fileID: 343366636}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &183216306
 PrefabInstance:
@@ -3326,7 +3326,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &202701492
 GameObject:
@@ -3414,7 +3414,7 @@ GameObject:
   - component: {fileID: 203824531}
   - component: {fileID: 203824530}
   - component: {fileID: 203824529}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: '[Tilemap] Walls Invisible Left'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5467,6 +5467,36 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &218414626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 218414627}
+  m_Layer: 0
+  m_Name: '---Misc---Destructable'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &218414627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218414626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 113.68706, y: -165.07697, z: -0.4878488}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &221984252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5752,7 +5782,7 @@ GameObject:
   - component: {fileID: 340531171}
   - component: {fileID: 340531170}
   - component: {fileID: 340531169}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: '[Tilemap] Walls Invisible Bottom'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8752,7 +8782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4205736372462596, guid: 64116271b4af5d945bd46e50b1ad8494, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4205736372462596, guid: 64116271b4af5d945bd46e50b1ad8494, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8910,7 +8940,7 @@ Transform:
   - {fileID: 1824464137}
   - {fileID: 1374189272665379293}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &685362752
 GameObject:
@@ -8962,7 +8992,7 @@ GameObject:
   - component: {fileID: 751778760}
   - component: {fileID: 751778759}
   - component: {fileID: 751778758}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: '[Tilemap] Walls Invisible Top'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54992,7 +55022,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1717919304
 MonoBehaviour:
@@ -55700,7 +55730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1941927765}
   m_Layer: 0
-  m_Name: '---Misc'
+  m_Name: '---Misc---UnDestructable'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56145,7 +56175,7 @@ Transform:
   - {fileID: 524701955}
   - {fileID: 1751979356}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1987445259
 GameObject:
@@ -58620,7 +58650,7 @@ GameObject:
   - component: {fileID: 2000992436}
   - component: {fileID: 2000992435}
   - component: {fileID: 2000992437}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: '[Tilemap] Walls Invisible Right'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60980,7 +61010,7 @@ Transform:
   m_Children:
   - {fileID: 1399403826}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2028945791
 GameObject:
@@ -61485,7 +61515,7 @@ PrefabInstance:
     - target: {fileID: 3918941747466497355, guid: 1403b112f41924a4eb75024e2d16415b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3918941747466497355, guid: 1403b112f41924a4eb75024e2d16415b,
         type: 3}
@@ -61521,7 +61551,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _onInventoryItemPointerDown.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 11400000, guid: e3ab17a82f61e1448b1764564947a4f6,
+      objectReference: {fileID: 11400000, guid: 38cf40d448b959049bdfd73d9e70f4a8,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1403b112f41924a4eb75024e2d16415b, type: 3}

@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Level 1 Diary Data 1
   m_EditorClassIdentifier: 
   _title: 'January 6 - 2025 '
-  _text: "After strict instructions from Edgar, we began experimenting on humans in
-    attempt to fuse the plague bacteria with their DNA. \r\n\r\nAll test subjects
-    have responded negatively and has resulted in instant death. What are they hoping
-    to achieve?"
+  _text: 'After strict instructions from Edgar, we began experimenting on humans in
+    attempt to fuse the plague bacteria with their DNA.
+
+
+    All test subjects have responded negatively and has resulted in instant death.
+
+
+    What are they hoping to achieve?'

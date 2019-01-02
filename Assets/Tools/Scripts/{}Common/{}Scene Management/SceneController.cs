@@ -20,13 +20,14 @@ public class SceneController : MonoBehaviourSingleton<SceneController>
 	[SerializeField] private UnityEventFloat _onLoadingSceneAsync;
 	public UnityEventFloat _OnLoadingSceneAsync { get { return this._onLoadingSceneAsync; } }
 
-	private IEnumerator LoadSceneAsyncProcess(int sceneBuildIndex, LoadSceneMode loadSceneMode)
+	private IEnumerator LoadSceneAsyncProcess(int sceneBuildIndex, LoadSceneMode loadSceneMode, UnityEventFloat onLoadingSceneAsync)
 	{
 		AsyncOperation sceneLoadingAsyncOperation = SceneManager.LoadSceneAsync(sceneBuildIndex, loadSceneMode);
 
 		while (!sceneLoadingAsyncOperation.isDone)
 		{
 			this._onLoadingSceneAsync.Invoke(sceneLoadingAsyncOperation.progress);
+			onLoadingSceneAsync?.Invoke(sceneLoadingAsyncOperation.progress);
 
 			yield return null;
 		}
@@ -34,15 +35,14 @@ public class SceneController : MonoBehaviourSingleton<SceneController>
 
 	private Coroutine _loadSceneAsyncProcess;
 
-	public void LoadSceneAsync(int sceneBuildIndex, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
+	public void LoadSceneAsync(int sceneBuildIndex, LoadSceneMode loadSceneMode = LoadSceneMode.Single, UnityEventFloat onLoadingSceneAsync = null)
 	{
 		if (this._loadSceneAsyncProcess != null)
 			this.StopCoroutine(this._loadSceneAsyncProcess);
 
-		this._loadSceneAsyncProcess = this.StartCoroutine(this.LoadSceneAsyncProcess(sceneBuildIndex, loadSceneMode));
+		this._loadSceneAsyncProcess = this.StartCoroutine(this.LoadSceneAsyncProcess(sceneBuildIndex, loadSceneMode, onLoadingSceneAsync));
 	}
-
-	//! Next
+	
 	#region Next
 	public void LoadNextScene(LoadSceneMode loadSceneMode)
 	{
@@ -55,6 +55,7 @@ public class SceneController : MonoBehaviourSingleton<SceneController>
 	}
 	public void LoadNextScene() { this.LoadNextScene(LoadSceneMode.Single); }
 
+	//! Async
 	public void LoadNextSceneAsync(LoadSceneMode loadSceneMode)
 	{
 		int nextSceneBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
@@ -66,10 +67,9 @@ public class SceneController : MonoBehaviourSingleton<SceneController>
 	}
 	public void LoadNextSceneAsync() { this.LoadNextSceneAsync(LoadSceneMode.Single); }
 	#endregion
-
-	//! Previous
+	
 	#region Previous
-	public void LoadPreviousScene(LoadSceneMode loadSceneMode = LoadSceneMode.Single)
+	public void LoadPreviousScene(LoadSceneMode loadSceneMode)
 	{
 		int previousSceneBuildIndex = SceneManager.GetActiveScene().buildIndex - 1;
 
@@ -80,7 +80,8 @@ public class SceneController : MonoBehaviourSingleton<SceneController>
 	}
 	public void LoadPreviousScene() { this.LoadPreviousScene(LoadSceneMode.Single); }
 
-	public void LoadPreviousSceneAsync(LoadSceneMode loadSceneMode = LoadSceneMode.Single)
+	//! Async
+	public void LoadPreviousSceneAsync(LoadSceneMode loadSceneMode)
 	{
 		int previousSceneBuildIndex = SceneManager.GetActiveScene().buildIndex - 1;
 

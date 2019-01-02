@@ -33,7 +33,10 @@ public class MonoBehaviourSingleton<T> : MonoBehaviour
 		}
 		else if (Instance != this)
 		{
-			Object.Destroy(this.gameObject);
+			if (this.transform.parent != null && this.transform.parent.childCount == 1)
+				Object.Destroy(this.transform.parent.gameObject);
+			else
+				Object.Destroy(this.gameObject);
 		}
 	}
 

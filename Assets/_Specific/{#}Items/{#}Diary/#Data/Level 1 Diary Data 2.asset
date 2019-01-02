@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: Level 1 Diary Data 2
   m_EditorClassIdentifier: 
   _title: March 26 - 2025
-  _text: "After many attempts of culturing the bacteria, subject B32 responded differently
-    to any other. The subjects limbs began mutating into something indescribable,
-    and once complete appeared to result in death.\r\n\r\nMoments after the subject
-    showed no signs of life, it became unrestrained and mutilated several of our top
-    researchers. \r\n\r\nWith no sense of any humane response, we were forced to terminate
-    it..."
+  _text: 'After many attempts of culturing the bacteria, subject B32 responded differently
+    to any other.
+
+
+    The subjects limbs began mutating into something indescribable, and once complete
+    appeared to result in death.
+
+
+    Moments after the subject showed no signs of life, it became unrestrained and
+    mutilated several of our top researchers.
+
+
+    With no sense of any humane response, we were forced to terminate it...'
