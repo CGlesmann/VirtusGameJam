@@ -282,19 +282,3 @@ public class MutatedScientist : MonoBehaviour
     }
 
 }
-
-[CustomEditor(typeof(MutatedScientist))]
-public class BossInspector : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        MutatedScientist s = (MutatedScientist)target;
-
-        if (GUILayout.Button("Jump Up Position"))
-        {
-            Debug.Log(s.GettingJumpingPosition());
-        }
-    }
-}

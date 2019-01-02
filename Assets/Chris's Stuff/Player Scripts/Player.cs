@@ -431,19 +431,3 @@ public class Player : MonoBehaviour {
     }
 
 }
-
-[CustomEditor(typeof(Player))]
-public class PlayerInspector : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        Player player = (Player)target;
-
-        if (GUILayout.Button("Set Attack Area"))
-        {
-            player.AdjustAttackArea();
-        }
-    }
-}
