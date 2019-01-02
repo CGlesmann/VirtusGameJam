@@ -30873,10 +30873,25 @@ MonoBehaviour:
   slamKnockback: 0.05
   meleeMode: 0
   meleeSpeed: 8
-  acceptanceRange: {x: 7.04, y: 5.69}
+  acceptanceRange: {x: 4.75, y: 4.75}
   m_attackCooldown: 1.25
   startEvents: []
   phase1Events:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1073646579}
+        m_MethodName: Idle
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.35
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1073646579}
@@ -30886,7 +30901,22 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 6
+          m_FloatArgument: 7.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1073646579}
+        m_MethodName: Idle
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.35
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -30910,13 +30940,13 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1073646579}
-        m_MethodName: ChargePlayer
-        m_Mode: 1
+        m_MethodName: Idle
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.75
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -30925,13 +30955,13 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1073646579}
-        m_MethodName: Idle
-        m_Mode: 4
+        m_MethodName: ChargePlayer
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 2
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2

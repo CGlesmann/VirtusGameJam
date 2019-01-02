@@ -50,9 +50,11 @@ public class MutatedScientist : MonoBehaviour
     public UnityEvent[] phase1Events;
 
     private UnitMovement mControl;
+    private Animator anim;
 
     private void Awake()
     {
+        anim = GetComponent<Animator>();
         mControl = GetComponent<UnitMovement>();
         uState = new UnitState();
 
@@ -68,12 +70,20 @@ public class MutatedScientist : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q) && !battleStarted)
+        {
+            StartBattle();
+        }
+    
         if (battleStarted)
         {
             if (doingMove)
                 return;
 
             eventNum++;
+            if (eventNum == stageEvents)
+                eventNum = 0;
+                
             phase1Events[eventNum].Invoke();
             doingMove = true;
 
@@ -229,7 +239,7 @@ public class MutatedScientist : MonoBehaviour
     {
         // Declaring Tracker Variables
         float timer = dur;
-        float speed = 4f;
+        float speed = meleeSpeed;
 
         // Repping the Moving Script
         while (timer > 0f)
@@ -272,8 +282,6 @@ public class MutatedScientist : MonoBehaviour
             Vector3 dir = player.transform.position - transform.position;
             dir /= dir.magnitude;
 
-            p.pState.StunUnit(1f);
-
             // Applying the Damage
             p.manager.playerStats.TakeDamage(player, mbStats.unitDamage);
 
@@ -306,7 +314,7 @@ public class MutatedScientist : MonoBehaviour
     public void ChargePlayer()
     {
         // Getting the Direction of the charge
-        Vector2 chargeDir = (transform.position - player.transform.position).normalized;
+        Vector2 chargeDir = (player.transform.position - transform.position).normalized;
 
         // Starting the Charging Corroutine
         StartCoroutine("Charge", chargeDir);
@@ -315,7 +323,7 @@ public class MutatedScientist : MonoBehaviour
     private IEnumerator Charge(Vector2 dir)
     {
         float speed = 8f;
-        float time = 5f;
+        float time = 1.5f;
 
         while (time > 0f)
         {
