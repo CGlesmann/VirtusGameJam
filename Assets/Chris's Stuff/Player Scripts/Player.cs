@@ -210,6 +210,27 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void CreateSpear()
+    {
+        spearHand.gameObject.GetComponent<SpearHand>().CreateSpear();
+        return;
+    }
+
+    public void ThrowSpear()
+    {
+        anim.SetBool("ThrowStart", false);
+        anim.SetBool("Throwing", true);
+
+        return;
+    }
+
+    public void ResetThrowState()
+    {
+        anim.SetBool("Throwing", false);
+        startingThrow = false;
+        pState.canMove = true;
+    }
+
     private void TryMeleeAttack()
     {
         if (meleeAttackTimer <= 0f)
@@ -247,9 +268,6 @@ public class Player : MonoBehaviour {
 
                     // Adding the GameObject to the hits
                     hits.Add(hit.collider.gameObject);
-
-                    // Starting the Timer
-                    //meleeAttackTimer = meleeAttackCooldown;
                 }
             }
         }

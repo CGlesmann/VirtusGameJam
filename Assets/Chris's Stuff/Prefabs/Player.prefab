@@ -185,7 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseMoveSpeed: 6
-  dashClone: {fileID: 0}
+  dashClone: {fileID: 2920345380812448351, guid: 7358558c037790049ad112f738f1d3d4,
+    type: 3}
   isDashing: 0
   dashSpeed: 18
   dashTime: 0.1
@@ -201,6 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 607300387464637602}
   - component: {fileID: 51969985326205690}
+  - component: {fileID: 2716480243077991641}
   m_Layer: 0
   m_Name: SpearHand
   m_TagString: Untagged
@@ -270,3 +272,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2716480243077991641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5429694292465218347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c021686354e544c8e9204dcd4b9948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spearPrefab: {fileID: 5545382639519833457, guid: 71321b0ea7354fb4d964fa164834f2c3,
+    type: 3}
+  spearSpawnOffset: {x: -0.31, y: 0.36, z: 0}
+  currentSpear: {fileID: 0}
+  isAiming: 0
+  testStr: Testing 123
