@@ -17,13 +17,18 @@ public class InteractionTooltipView : View
 {
 	[SerializeField] private Transform _target;
 
-	[SerializeField] private Vector2 _offset = new Vector3(0f, 5f);
+	[SerializeField] private CanvasScaler _canvasScaler;
+	[SerializeField] private Vector2 _offset = new Vector3(0f, 100f);
 
 	private void FixedUpdate()
 	{
-		Vector2 newAnchoredPosition = Camera.main.WorldToScreenPoint(this._target.position);
+		Vector2 targetViewportPoint = Camera.main.WorldToViewportPoint(this._target.position);
 
-		this.rectTransform.anchoredPosition = newAnchoredPosition + this._offset;
+		this.rectTransform.anchoredPosition = 
+			new Vector2(
+				this._canvasScaler.referenceResolution.x * targetViewportPoint.x, 
+				this._canvasScaler.referenceResolution.y * targetViewportPoint.y
+			) + this._offset;
 	}
 
 #if UNITY_EDITOR
