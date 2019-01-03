@@ -30874,6 +30874,10 @@ MonoBehaviour:
   meleeMode: 0
   meleeSpeed: 8
   acceptanceRange: {x: 4.75, y: 4.75}
+  dashClone: {fileID: 2306442328779548260, guid: 1f54f19e63d80e147be1cba8e3fb0740,
+    type: 3}
+  chargeTime: 1
+  chargeSpeed: 16
   m_attackCooldown: 1.25
   startEvents: []
   phase1Events:
@@ -31646,10 +31650,10 @@ RectTransform:
   m_Father: {fileID: 1499580922}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 638.7688, y: 479.07654}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 591, y: -331.5}
+  m_SizeDelta: {x: 1920, y: 1078}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1555089413
 MonoBehaviour:

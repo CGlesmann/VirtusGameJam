@@ -35,7 +35,7 @@ public class UnitMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && lastVelocity != Vector3.zero && player.pState.StateClear())
+        if (Input.GetKeyDown(KeyCode.LeftShift) && lastVelocity != Vector3.zero && player.pState.StateClear() && velocity != Vector3.zero)
         {
             if (!isDashing)
             {
@@ -52,8 +52,12 @@ public class UnitMovement : MonoBehaviour
             GameObject newClone = Instantiate(dashClone);
             newClone.transform.position = transform.position;
 
-            newClone.GetComponent<DashClone>().anim.SetFloat("Horizontal", anim.GetFloat("Horizontal"));
-            newClone.GetComponent<DashClone>().anim.SetFloat("Vertical", anim.GetFloat("Vertical"));
+            Animator a = newClone.GetComponent<DashClone>().anim;
+            if (a != null)
+            {
+                a.SetFloat("Horizontal", anim.GetFloat("Horizontal"));
+                a.GetComponent<DashClone>().anim.SetFloat("Vertical", anim.GetFloat("Vertical"));
+            }
         }
     }
 
@@ -82,7 +86,7 @@ public class UnitMovement : MonoBehaviour
     {
         Vector2 dir = lastVelocity;
 
-        float power = 120f;
+        float power = 900f;
         float length = 0.15f;
         int reps = 10;
         float delay = (length / reps);
