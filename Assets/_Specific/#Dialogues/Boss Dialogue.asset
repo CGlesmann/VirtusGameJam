@@ -15,13 +15,13 @@ MonoBehaviour:
   _dialogueData:
   - _sentenceText: "Hello my friend, I came to kill you!!! AAAAAAAAAAAA!!!\t"
     _audioCover: {fileID: 0}
-    _collocutor: {fileID: 0}
+    _collocutor: {fileID: 11400000, guid: a5df705a7bac44a46b7c7c8476b517a0, type: 2}
   - _sentenceText: Oh, hello! Do you want some tea C27?
     _audioCover: {fileID: 0}
-    _collocutor: {fileID: 0}
+    _collocutor: {fileID: 11400000, guid: 2fa9c5ef7f082e44fa8f333de71e1fda, type: 2}
   - _sentenceText: By the way, I will take drugs right now, you ok with that?
     _audioCover: {fileID: 0}
-    _collocutor: {fileID: 0}
+    _collocutor: {fileID: 11400000, guid: 2fa9c5ef7f082e44fa8f333de71e1fda, type: 2}
   - _sentenceText: Yeah, sure mate!
     _audioCover: {fileID: 0}
-    _collocutor: {fileID: 0}
+    _collocutor: {fileID: 11400000, guid: a5df705a7bac44a46b7c7c8476b517a0, type: 2}

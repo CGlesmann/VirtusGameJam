@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8030739660726750790}
   - component: {fileID: 1630804753}
   - component: {fileID: 1630804754}
+  - component: {fileID: 973657122658756022}
   m_Layer: 10
   m_Name: Door
   m_TagString: Untagged
@@ -84,7 +85,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 1}
     pivot: {x: 0.5, y: 0.375}
@@ -95,7 +96,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 7}
+  m_Size: {x: 5, y: 8}
   m_EdgeRadius: 0
 --- !u!114 &8030739660726750790
 MonoBehaviour:
@@ -231,7 +232,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.75}
+  m_Offset: {x: 0, y: -1.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 1}
     pivot: {x: 0.5, y: 0.375}
@@ -242,5 +243,20 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.5}
+  m_Size: {x: 2, y: 3}
   m_EdgeRadius: 0
+--- !u!114 &973657122658756022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8030739660726750795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecac31cfb15d54649a9677ebbc62062d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioType: 1
+  _audioClip: {fileID: 8300000, guid: 17b04d819b8f70a48af42af532c12350, type: 3}
+  _volume: 1

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7984170611825511872}
   - component: {fileID: 5711568698443889471}
   m_Layer: 0
-  m_Name: '[Item] Key'
+  m_Name: '[Item] Keycard'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +96,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventoryItemSharedData: {fileID: 11400000, guid: 2c3240e3a0d03af4f9d7bda5809790e6,
     type: 2}
+  _onInventoryItemPointerDown:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   _interactionTooltip: {fileID: 0}
 --- !u!61 &7984170611825511872
 BoxCollider2D:
@@ -121,7 +126,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.28, y: 1.28}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &5711568698443889471
 MonoBehaviour:
