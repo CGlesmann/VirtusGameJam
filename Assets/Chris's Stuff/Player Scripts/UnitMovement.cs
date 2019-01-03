@@ -35,7 +35,7 @@ public class UnitMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && lastVelocity != Vector3.zero && player.pState.StateClear())
+        if (Input.GetKeyDown(KeyCode.LeftShift) && lastVelocity != Vector3.zero && player.pState.StateClear() && velocity != Vector3.zero)
         {
             if (!isDashing)
             {
@@ -86,7 +86,7 @@ public class UnitMovement : MonoBehaviour
     {
         Vector2 dir = lastVelocity;
 
-        float power = 120f;
+        float power = 900f;
         float length = 0.15f;
         int reps = 10;
         float delay = (length / reps);
