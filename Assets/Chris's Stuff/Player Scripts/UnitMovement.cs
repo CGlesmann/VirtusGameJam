@@ -52,8 +52,12 @@ public class UnitMovement : MonoBehaviour
             GameObject newClone = Instantiate(dashClone);
             newClone.transform.position = transform.position;
 
-            newClone.GetComponent<DashClone>().anim.SetFloat("Horizontal", anim.GetFloat("Horizontal"));
-            newClone.GetComponent<DashClone>().anim.SetFloat("Vertical", anim.GetFloat("Vertical"));
+            Animator a = newClone.GetComponent<DashClone>().anim;
+            if (a != null)
+            {
+                a.SetFloat("Horizontal", anim.GetFloat("Horizontal"));
+                a.GetComponent<DashClone>().anim.SetFloat("Vertical", anim.GetFloat("Vertical"));
+            }
         }
     }
 

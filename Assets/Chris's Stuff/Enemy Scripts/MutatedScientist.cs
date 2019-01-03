@@ -40,6 +40,11 @@ public class MutatedScientist : MonoBehaviour
     [SerializeField] private float meleeSpeed = 8f;
     [SerializeField] private Vector2 acceptanceRange = Vector2.one;
 
+    [Header("Dashing Variables")]
+    [SerializeField] private GameObject dashClone;
+    [SerializeField] private float chargeTime;
+    [SerializeField] private float chargeSpeed;
+
     [SerializeField] private float m_attackCooldown;
     private float m_attackTimer = 0f;
 
@@ -91,35 +96,31 @@ public class MutatedScientist : MonoBehaviour
         }
     }
 
-    #region Start Functions
+    private void ResetAbilityAnimations()
+    {
+        anim.SetBool("Jumping", false);
+        anim.SetBool("Slamming", false);
+        anim.SetBool("Swinging", false);
+        anim.SetBool("Moving", false);
+
+        // Making sure the Scientist is mutated
+        anim.SetBool("Mutating", true);
+    }
+
     /// <summary>
     /// Call this to function to start miniboss battle
     /// </summary>
     public void StartBattle()
     {
-        StartCoroutine("StartBattleRoutine");
+        // Resetting Triggers
+        ResetAbilityAnimations();
+
+        //Invoking the First Ability
+        battleStarted = true;
+        phase1Events[0].Invoke();
+        doingMove = true;
         return;
     }
-
-    /// <summary>
-    /// Runs through the StartRoutine List
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator StartBattleRoutine()
-    {
-        // Declaring the tracker variables
-        float delay = 2f; // In Seconds
-
-        // Running Through Each Event
-        for(int i = 0; i < startEvents.Length; i++)
-        {
-            startEvents[i].Invoke();
-            yield return new WaitForSeconds(delay);
-        }
-
-        battleStarted = true;
-    }
-    #endregion
     
     #region Jump Functions
     public void JumpUp()
@@ -301,6 +302,9 @@ public class MutatedScientist : MonoBehaviour
     public void Idle(float dir)
     {
         StartCoroutine("StandIdle", dir);
+
+        // Resetting Triggers
+        ResetAbilityAnimations();
     }
 
     private IEnumerator StandIdle(float dir)
@@ -318,23 +322,36 @@ public class MutatedScientist : MonoBehaviour
 
         // Starting the Charging Corroutine
         StartCoroutine("Charge", chargeDir);
+
+        // Resetting Triggers
+        ResetAbilityAnimations();
     }
 
     private IEnumerator Charge(Vector2 dir)
     {
-        float speed = 8f;
-        float time = 1.5f;
+        float speed = chargeSpeed;
+        float time = chargeTime;
 
         while (time > 0f)
         {
             // Moving the Boss
             GetComponent<MovementController>().Move(dir * speed * Time.deltaTime);
 
-            // Decrementing the Timer
-            time -= Time.deltaTime;
+            // Creating a dash clone
+            GameObject newClone = Instantiate(dashClone);
+            newClone.transform.position = transform.position;
 
-            // Yielding
-            yield return new WaitForSeconds(0.001f);
+            RaycastHit2D hit = Physics2D.BoxCast(transform.position, acceptanceRange, 0f, Vector2.zero, 0f, playerLayer);
+            if (hit)
+            {
+                Player p = player.GetComponent<Player>();
+                p.manager.playerStats.TakeDamage(player, 20f);
+            } else {
+                // Decrementing the Timer
+                time -= Time.deltaTime;
+                // Yielding
+                yield return new WaitForSeconds(0.001f);
+            }
         }
 
         doingMove = false;
