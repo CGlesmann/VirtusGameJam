@@ -474,7 +474,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &117053347
 Transform:
@@ -3419,7 +3419,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &203824528
 Transform:
@@ -5768,7 +5768,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &340531168
 Transform:
@@ -8924,7 +8924,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &751778757
 Transform:
@@ -12076,7 +12076,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1052286549
 Transform:
@@ -55016,11 +55016,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
-        type: 3}
-      propertyPath: _locked
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8030739660726750790, guid: 02e37e7a256963143a805722a334f165,
         type: 3}
       propertyPath: _onTriggerEnterData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -55040,6 +55035,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _onTriggerExitData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Hide
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
+        type: 3}
+      propertyPath: _locked
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02e37e7a256963143a805722a334f165, type: 3}
@@ -55792,7 +55792,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1999494205
 Transform:
@@ -58125,7 +58125,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2000992434
 Transform:

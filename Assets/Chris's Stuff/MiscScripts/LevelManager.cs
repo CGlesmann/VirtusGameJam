@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
 
     public void Awake()
     {
+        Application.targetFrameRate = 60;
         playerStats.Reset();
     }
 

@@ -259,7 +259,7 @@ public class MutatedScientist : MonoBehaviour
             } else {
                 // Moving towards the player
                 Vector3 pPos = player.transform.position;
-                Vector3 moveVector = new Vector3((pPos.x - transform.position.x), (pPos.y - transform.position.y));
+                Vector3 moveVector = new Vector3((pPos.x - transform.position.x), (pPos.y - transform.position.y)).normalized;
                 moveVector /= moveVector.magnitude;
 
                 GetComponent<MovementController>().Move(moveVector * speed * Time.deltaTime);

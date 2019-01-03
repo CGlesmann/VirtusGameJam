@@ -86,7 +86,7 @@ public class UnitMovement : MonoBehaviour
     {
         Vector2 dir = lastVelocity;
 
-        float power = 900f;
+        float power = 60f;
         float length = 0.15f;
         int reps = 10;
         float delay = (length / reps);
