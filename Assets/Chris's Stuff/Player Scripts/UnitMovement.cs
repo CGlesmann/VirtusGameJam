@@ -14,7 +14,7 @@ public class UnitMovement : MonoBehaviour
     [Header("Dashing Variables")]
     public GameObject dashClone;
     public bool isDashing = false;
-    public float dashSpeed = 12f;
+    public float dashSpeed = 10f;
     public float dashTime = 0.1f; // In Seconds
     public float dashCoolDown = 0.75f; // In Seconds
 
@@ -84,18 +84,17 @@ public class UnitMovement : MonoBehaviour
 
     IEnumerator Dashing()
     {
-        Vector2 dir = lastVelocity;
+        Vector2 dir = lastVelocity.normalized;
 
-        float power = 900f;
         float length = 0.15f;
         int reps = 10;
         float delay = (length / reps);
         
-        float inc = power / reps;
+        float inc = this.dashSpeed / reps;
 
         for(int i = 0; i < reps; i++)
         {
-            controller.Move(velocity * inc * Time.deltaTime);
+            controller.Move(dir * inc);
             yield return new WaitForSeconds(delay);
         }
 
