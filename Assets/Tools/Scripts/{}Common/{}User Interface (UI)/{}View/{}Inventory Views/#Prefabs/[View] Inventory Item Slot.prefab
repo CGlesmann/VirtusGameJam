@@ -178,6 +178,28 @@ PrefabInstance:
       propertyPath: _parentSlotView
       value: 
       objectReference: {fileID: 5263831573964076936}
+    - target: {fileID: 4361763634924315361, guid: ef1abd613db295a4cba67842697b074b,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c68988c759bb754d84fc097308a6d98,
+        type: 2}
+    - target: {fileID: 4361763634924315361, guid: ef1abd613db295a4cba67842697b074b,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21920168506981848, guid: 1c68988c759bb754d84fc097308a6d98,
+        type: 2}
+    - target: {fileID: 4361763634924315361, guid: ef1abd613db295a4cba67842697b074b,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361763634924315361, guid: ef1abd613db295a4cba67842697b074b,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4361763635062500063, guid: ef1abd613db295a4cba67842697b074b,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -14,11 +14,23 @@ public class Door : MonoBehaviour
 	[SerializeField] private bool _locked = true;
 	private bool _opened;
 
+	[SerializeField] private Collider2D _collider;
+
 	public void Open()
 	{
 		this._opened = true;
 
 		this._animator.SetTrigger("Open");
+	}
+
+	public void DisableCollider()
+	{
+		this._collider.enabled = false;
+	}
+
+	public void EnableCollider()
+	{
+		this._collider.enabled = true;
 	}
 
 	public void Close()
