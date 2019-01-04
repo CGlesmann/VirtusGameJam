@@ -151,7 +151,7 @@ MonoBehaviour:
   doingMove: 0
   battleStarted: 0
   slamPosition: {x: 0, y: 0}
-  mutationSFX: {fileID: 0}
+  mutationSFX: {fileID: 8300000, guid: 5ac0f90e1aef81d48a381ad392005025, type: 3}
   shadow: {fileID: 0}
   shadowOffset: {x: 0, y: -2}
   shadowScaleStart: {x: 0, y: 0}
@@ -161,13 +161,13 @@ MonoBehaviour:
   slamDamage: 10
   slamRadius: 4
   slamKnockback: 0.05
-  jumpUpSFX: {fileID: 0}
-  jumpDownSFX: {fileID: 0}
+  jumpUpSFX: {fileID: 8300000, guid: 8c480546d15faad44beaf639a67ce4af, type: 3}
+  jumpDownSFX: {fileID: 8300000, guid: 6fd6694bb0a8cbb4ca966cc6860d42e8, type: 3}
   meleeMode: 0
   meleeSpeed: 8
   acceptanceRange: {x: 4.75, y: 4.75}
-  meleeSwingSFX: {fileID: 0}
-  meleeImpactSFX: {fileID: 0}
+  meleeSwingSFX: {fileID: 8300000, guid: 19c621681a745bd49b206896129410be, type: 3}
+  meleeImpactSFX: {fileID: 8300000, guid: 05ce27b2f0bba054a9fe0e6038622054, type: 3}
   charging: 0
   dashClone: {fileID: 2306442328779548260, guid: 1f54f19e63d80e147be1cba8e3fb0740,
     type: 3}
@@ -175,8 +175,9 @@ MonoBehaviour:
   chargeSpeed: 16
   chargeDamage: 15
   m_attackCooldown: 0.5
-  chargeSFX: {fileID: 0}
+  chargeSFX: {fileID: 8300000, guid: 2b7a8d52e7dcb104394c8893ce82cb42, type: 3}
   awayRadius: {x: 30, y: 30}
+  keyCard: {fileID: 0}
   startEvents: []
   phase1Events:
   - m_PersistentCalls:
@@ -291,7 +292,7 @@ MonoBehaviour:
   attackStyle: 0
   rangeSpawnOffset: {x: 0, y: 0, z: 0}
   rangePrefab: {fileID: 0}
-  attackRange: 0.5
+  attackRange: 1
   attackCooldown: 0.5
   wallLayer:
     serializedVersion: 2
