@@ -356,8 +356,6 @@ public class Player : MonoBehaviour {
             Vector2 dir = new Vector2((mousePos - transform.position).x, (mousePos - transform.position).y);
             float a = Mathf.Atan2((mousePos - transform.position).y, (mousePos - transform.position).x) * Mathf.Rad2Deg;
 
-			Debug.Log("WTF");
-
             // Creating a range attack prefab
             GameObject newSpear = Instantiate(rangePrefab);
             newSpear.transform.position = transform.position;

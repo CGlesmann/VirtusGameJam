@@ -8,9 +8,7 @@ public class MutatedScientist : MonoBehaviour
 {
     // Private Enums
     private enum BossStage { Stage1, Stage2, Stage3 };
-    private int eventNum = 0;
     private int stageEvents;
-    private bool doingMove = false;
 
     [Header("MiniBoss Stats")]
     public LayerMask playerLayer;
@@ -18,6 +16,8 @@ public class MutatedScientist : MonoBehaviour
     public UnitState uState;
     public GameObject player;
     [SerializeField] private BossStage stage;
+    [SerializeField] private int eventNum = 0;
+    [SerializeField] private bool doingMove = false;
 
     [Header("Battle Start Variables")]
     public bool battleStarted = false;
@@ -41,12 +41,17 @@ public class MutatedScientist : MonoBehaviour
     [SerializeField] private Vector2 acceptanceRange = Vector2.one;
 
     [Header("Dashing Variables")]
+    [SerializeField] private bool charging = false;
     [SerializeField] private GameObject dashClone;
     [SerializeField] private float chargeTime;
     [SerializeField] private float chargeSpeed;
+    [SerializeField] private float chargeDamage;
 
     [SerializeField] private float m_attackCooldown;
     private float m_attackTimer = 0f;
+
+    [Header("Special Case Variables")]
+    [SerializeField] private Vector2 awayRadius;
 
     [Header("Starting Routine")]
     public UnityEvent[] startEvents;
@@ -54,11 +59,15 @@ public class MutatedScientist : MonoBehaviour
     [Header("Phase 1")]
     public UnityEvent[] phase1Events;
 
+    private Enemy enemy;
+    private MovementController mController;
     private UnitMovement mControl;
     private Animator anim;
 
     private void Awake()
     {
+        enemy = GetComponent<Enemy>();
+        mController = GetComponent<MovementController>();
         anim = GetComponent<Animator>();
         mControl = GetComponent<UnitMovement>();
         uState = new UnitState();
@@ -77,7 +86,7 @@ public class MutatedScientist : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) && !battleStarted)
         {
-            StartBattle();
+            StartMutation();
         }
     
         if (battleStarted)
@@ -102,8 +111,10 @@ public class MutatedScientist : MonoBehaviour
         anim.SetBool("Slamming", false);
         anim.SetBool("Swinging", false);
         anim.SetBool("Moving", false);
+    }
 
-        // Making sure the Scientist is mutated
+    public void StartMutation()
+    {
         anim.SetBool("Mutating", true);
     }
 
@@ -152,6 +163,7 @@ public class MutatedScientist : MonoBehaviour
 
         Vector2 shadowScaleInc = (shadowScaleEnd - shadowScaleStart) / reps;
 
+        anim.SetBool("Jumping", true);
         for (int i = 0; i < reps; i++)
         {
             Vector3 newPos = new Vector3(transform.position.x, transform.position.y + inc, transform.position.z);
@@ -209,6 +221,9 @@ public class MutatedScientist : MonoBehaviour
 
             shadow.transform.localScale += new Vector3(shadowScaleInc.x, shadowScaleInc.y);
 
+            if ((i / reps) <= 0.25f)
+                anim.SetBool("Slamming", true);
+
             yield return new WaitForSecondsRealtime(0.001f);
         }
 
@@ -233,6 +248,7 @@ public class MutatedScientist : MonoBehaviour
     #region Melee Functions
     public void StartMeleeRoutine(float dur)
     {
+        anim.SetBool("Moving", true);
         StartCoroutine("MeleeRoutine", dur);
     }
 
@@ -253,28 +269,49 @@ public class MutatedScientist : MonoBehaviour
             if (hit)
             {
                 //Trying Melee Attacks
-                if (MeleeAttack())
+                if (m_attackTimer <= 0f)
+                {
+                    anim.SetBool("Swinging", true);
                     yield return new WaitForSeconds(0.75f);
+                } else
+                {
+                    m_attackTimer -= Time.deltaTime;
+                }
 
             } else {
+                anim.SetBool("Moving", true);
+
                 // Moving towards the player
                 Vector3 pPos = player.transform.position;
                 Vector3 moveVector = new Vector3((pPos.x - transform.position.x), (pPos.y - transform.position.y)).normalized;
                 moveVector /= moveVector.magnitude;
 
-                GetComponent<MovementController>().Move(moveVector * speed * Time.deltaTime);
+                mController.Move(moveVector * speed * Time.deltaTime);
+
+                if ((enemy.sTracker.health / mbStats.unitMaxHealth) <= 0.5f)
+                {
+                    Debug.Log("Checking for another charge");
+                    RaycastHit2D away = Physics2D.BoxCast(transform.position, awayRadius, 0f, Vector2.left, 0f, playerLayer);
+                    if (!away)
+                    {
+                        Debug.Log("Chase Charge");
+                        ChargePlayer();
+                        yield break;
+                    }
+                }
             }
             
             yield return new WaitForSeconds(0.01f);
         }
 
+        anim.SetBool("Moving", false);
         doingMove = false;
     }
 
-    private bool MeleeAttack()
+    private void MeleeAttack()
     {
-        // Checking if an attack is available
-        if (m_attackTimer <= 0f)
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, acceptanceRange * 1.1f, 0f, Vector2.left, 0f, playerLayer);
+        if (hit)
         {
             // Getting the Player Reference
             Player p = player.GetComponent<Player>();
@@ -288,13 +325,9 @@ public class MutatedScientist : MonoBehaviour
 
             // Setting the Attack Timer
             m_attackTimer = m_attackCooldown;
-
-            return true;
         }
-        else
-            m_attackTimer -= Time.deltaTime;
 
-        return false;
+        anim.SetBool("Swinging", false);
     }
     #endregion
 
@@ -317,43 +350,76 @@ public class MutatedScientist : MonoBehaviour
     #region Charge Function
     public void ChargePlayer()
     {
-        // Getting the Direction of the charge
-        Vector2 chargeDir = (player.transform.position - transform.position).normalized;
+        if (!charging)
+        {
+            // Starting the Charging Corroutine
+            StartCoroutine("ChargeShake", 1.5f);
 
-        // Starting the Charging Corroutine
-        StartCoroutine("Charge", chargeDir);
-
-        // Resetting Triggers
-        ResetAbilityAnimations();
+            // Resetting Triggers
+            ResetAbilityAnimations();
+        }
     }
 
-    private IEnumerator Charge(Vector2 dir)
+    IEnumerator ChargeShake(float dur)
     {
-        float speed = chargeSpeed;
-        float time = chargeTime;
+        Vector3 startPos = transform.position;
+        float timer = dur;
 
-        while (time > 0f)
+        while (timer > 0f)
         {
-            // Moving the Boss
-            GetComponent<MovementController>().Move(dir * speed * Time.deltaTime);
+            timer -= Time.deltaTime;
+            transform.localPosition = startPos + (Random.insideUnitSphere.normalized * 0.1f);
 
-            // Creating a dash clone
+            yield return new WaitForSeconds(0.001f);
+        }
+
+        transform.position = startPos;
+        StartCoroutine("Charge");
+    }
+
+    IEnumerator Charge()
+    {
+        charging = true;
+        Vector2 dir = (player.transform.position - transform.position).normalized;
+        bool pHit = false;
+
+        float length = 0.25f;
+        int reps = 10;
+        float delay = (length / reps);
+
+        float inc = this.chargeSpeed / reps;
+
+        for (int i = 0; i < reps; i++)
+        {
+            // Moving
+            mController.Move(dir * inc);
+
+            // Creating Dash Effect
             GameObject newClone = Instantiate(dashClone);
             newClone.transform.position = transform.position;
 
-            RaycastHit2D hit = Physics2D.BoxCast(transform.position, acceptanceRange, 0f, Vector2.zero, 0f, playerLayer);
-            if (hit)
+            // Checking for a collision
+            if (!pHit)
             {
-                Player p = player.GetComponent<Player>();
-                p.manager.playerStats.TakeDamage(player, 20f);
-            } else {
-                // Decrementing the Timer
-                time -= Time.deltaTime;
-                // Yielding
-                yield return new WaitForSeconds(0.001f);
+                RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one * slamRadius, 0f, Vector2.left, 0f, playerLayer);
+                if (hit)
+                {
+                    // Damage the Player
+                    Player p = player.GetComponent<Player>();
+                    p.manager.playerStats.TakeDamage(player, chargeDamage);
+
+                    // Stunning the Player
+                    p.pState.StunUnit(1.5f);
+
+                    // Marking the Hit
+                    pHit = true;
+                }
             }
+
+            yield return new WaitForSeconds(delay);
         }
 
+        charging = false;
         doingMove = false;
     }
     #endregion
@@ -363,7 +429,8 @@ public class MutatedScientist : MonoBehaviour
         // Drawing the Slam Radius
         Gizmos.color = Color.blue;
         //Gizmos.DrawWireSphere(shadow.transform.position, slamRadius);
-        Gizmos.DrawWireCube(transform.position, acceptanceRange);
+        //Gizmos.DrawWireCube(transform.position, acceptanceRange);
+        Gizmos.DrawWireCube(transform.position, awayRadius);
     }
 
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // Private Enums
+    private enum AttackStyle { Melee, Range };
     private enum PhaseStyle { Top, Bottom, Left, Right, Behind, Front };
 
     [Header("LevelManager Reference")]
@@ -17,6 +18,11 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Stats Reference")]
     public UnitStats baseStats;
     public StatsTracker sTracker;
+
+    [Header("Attacking Variables")]
+    [SerializeField] private AttackStyle attackStyle = AttackStyle.Melee;
+    [SerializeField] private Vector3 rangeSpawnOffset;
+    public GameObject rangePrefab = null;
     public float attackRange = 0.5f;
     public float attackCooldown = 0.5f;
 
@@ -45,6 +51,7 @@ public class Enemy : MonoBehaviour
 
     public bool isChasing = false;
 
+    private bool flashing = false;
     private MovementController controller;
     private GameObject target = null;
 
@@ -97,18 +104,38 @@ public class Enemy : MonoBehaviour
                 {
                     if (attackTimer <= 0f)
                     {
-                        Player player = this.target.GetComponent<Player>();
-                        if (player != null && !player.GetComponent<UnitMovement>().isDashing)
+                        if (attackStyle == AttackStyle.Melee)
                         {
-                            manager.playerStats.TakeDamage(player.gameObject, baseStats.unitDamage);
-                            player.StartCoroutine("HurtFlash");
-                            attackTimer = attackCooldown;
-
-                            if (player == null)
+                            Player player = this.target.GetComponent<Player>();
+                            if (player != null && !player.GetComponent<UnitMovement>().isDashing)
                             {
-                                target = null;
-                                isChasing = false;
+                                manager.playerStats.TakeDamage(player.gameObject, baseStats.unitDamage);
+                                player.StartCoroutine("HurtFlash");
+                                attackTimer = attackCooldown;
+
+                                if (player == null)
+                                {
+                                    target = null;
+                                    isChasing = false;
+                                }
                             }
+                        }
+
+                        if (attackStyle == AttackStyle.Range)
+                        {
+                            // Making a range Prefab
+                            GameObject newRange = Instantiate(rangePrefab);
+                            newRange.transform.position = transform.position + rangeSpawnOffset;
+
+                            // Getting the Shooting Direction
+                            GameObject player = GameObject.Find("Player");
+                            Vector3 sDir = player.transform.position - transform.position;
+                            sDir /= sDir.magnitude;
+
+                            // Setting Up The Bullet
+                            newRange.GetComponent<EnemyBullet>().SetUp(15f, baseStats.unitDamage, sDir);
+
+                            attackTimer = attackCooldown;
                         }
                     } else {
                         attackTimer -= Time.deltaTime;
@@ -314,17 +341,22 @@ public class Enemy : MonoBehaviour
 
     IEnumerator HurtFlash()
     {
-        // Getting the SpriteRenderer
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        Color baseColor = sr.color;
-        Color flashColor = Color.black;
-        int flashReps = 6;
-        float delay = 0.05f;
-
-        for (int i = 0; i < flashReps; i++)
+        if (!flashing)
         {
-            sr.color = (i % 2 == 0) ? flashColor : baseColor;
-            yield return new WaitForSeconds(delay);
+            flashing = true;
+            // Getting the SpriteRenderer
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            Color baseColor = sr.color;
+            Color flashColor = Color.black;
+            int flashReps = 6;
+            float delay = 0.05f;
+
+            for (int i = 0; i < flashReps; i++)
+            {
+                sr.color = (i % 2 == 0) ? flashColor : baseColor;
+                yield return new WaitForSeconds(delay);
+            }
+            flashing = false;
         }
     }
 
@@ -344,6 +376,16 @@ public class Enemy : MonoBehaviour
                 Gizmos.color = Color.black;
                 Gizmos.DrawCube(wanderPoint, Vector3.one * 2f);
             }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackStyle == AttackStyle.Range)
+        {
+            // Drawing the Offset Point
+            Gizmos.color = Color.black;
+            Gizmos.DrawSphere(transform.position + rangeSpawnOffset, 0.1f);
         }
     }
 
@@ -367,6 +409,7 @@ public class Enemy : MonoBehaviour
         public void TakeDamage(GameObject gObj, float damage)
         {
             health -= damage;
+            Debug.Log(gObj.name + " has " + health + " health left");
             if (health <= 0f)
             {
                 GameObject.Destroy(gObj);
