@@ -39,9 +39,9 @@ AnimationClip:
       value: {fileID: 21300000, guid: 237b1be05d28c4941aa7413b29302121, type: 3}
     - time: 0.75
       value: {fileID: 21300000, guid: 68fe97a7e6d80d549bb360d3ced0e8bd, type: 3}
-    - time: 0.8333333
-      value: {fileID: 21300000, guid: 73977207a0fe51e47a51b47d3fa2fe9f, type: 3}
     - time: 0.9166667
+      value: {fileID: 21300000, guid: 73977207a0fe51e47a51b47d3fa2fe9f, type: 3}
+    - time: 1
       value: {fileID: 21300000, guid: 5b58b4c776adefd4b8f60476a75d104e, type: 3}
     attribute: m_Sprite
     path: 
@@ -79,12 +79,12 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 1.0833334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -99,6 +99,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0.25
+    functionName: Play
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.75
     functionName: StartChecking
     data: 

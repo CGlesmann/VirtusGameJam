@@ -18,6 +18,8 @@ public class UnitMovement : MonoBehaviour
     public float dashTime = 0.1f; // In Seconds
     public float dashCoolDown = 0.75f; // In Seconds
 
+	[SerializeField] private AudioClip _dashSFX;
+
     private float dashCool = 0f;
     private float dashTimer = 0f;
 
@@ -84,6 +86,8 @@ public class UnitMovement : MonoBehaviour
 
     IEnumerator Dashing()
     {
+		AudioPlayer.Instance.PlaySFX(this._dashSFX);
+
         Vector2 dir = lastVelocity.normalized;
 
         float length = 0.15f;

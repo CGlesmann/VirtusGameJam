@@ -42,6 +42,7 @@ public class Player : MonoBehaviour {
     public bool startingThrow = false;
     public float rangeAttackCooldown;
     public GameObject rangePrefab;
+	[SerializeField] private AudioClip _rangeAttackSFX;
 
     private float rangeAttackTimer = 0f;
 
@@ -231,7 +232,9 @@ public class Player : MonoBehaviour {
         anim.SetBool("ThrowStart", false);
         anim.SetBool("Throwing", true);
 
-        return;
+		AudioPlayer.Instance.PlaySFX(this._rangeAttackSFX);
+
+		return;
     }
 
     public void ResetThrowState()
@@ -239,7 +242,7 @@ public class Player : MonoBehaviour {
         anim.SetBool("Throwing", false);
         startingThrow = false;
         pState.canMove = true;
-    }
+	}
 
     private void TryMeleeAttack()
     {
@@ -353,6 +356,8 @@ public class Player : MonoBehaviour {
             Vector2 dir = new Vector2((mousePos - transform.position).x, (mousePos - transform.position).y);
             float a = Mathf.Atan2((mousePos - transform.position).y, (mousePos - transform.position).x) * Mathf.Rad2Deg;
 
+			Debug.Log("WTF");
+
             // Creating a range attack prefab
             GameObject newSpear = Instantiate(rangePrefab);
             newSpear.transform.position = transform.position;
@@ -360,7 +365,7 @@ public class Player : MonoBehaviour {
             newSpear.GetComponent<PlayerBullet>().SetBullet(dir / dir.magnitude);
 
             rangeAttackTimer = rangeAttackCooldown;
-        }
+		}
     }
 
     public void CreateUltimate()
@@ -370,8 +375,7 @@ public class Player : MonoBehaviour {
             GameObject ability = Instantiate(ultimatePrefab);
             ability.transform.position = transform.position;
 
-            ultimateTimer = ultimateCooldown;
-            return;
+            ultimateTimer = ultimateCooldown;;
         }
     }
 

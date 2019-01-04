@@ -167,6 +167,7 @@ MonoBehaviour:
   ultimatePrefab: {fileID: 84873638643089021, guid: 05b04f2509e9ada45931be8e1acf7729,
     type: 3}
   ultimateCooldown: 0
+  _ultimateSFX: {fileID: 8300000, guid: b6eaad4c428525c41b9a536ef2807c33, type: 3}
   attackKey: 32
   moving: 0
   attacking: 0
@@ -193,6 +194,7 @@ MonoBehaviour:
   dashSpeed: 10
   dashTime: 0.1
   dashCoolDown: 0.75
+  _dashSFX: {fileID: 8300000, guid: 63f64b821f001944eafe19faaa575199, type: 3}
   lastVelocity: {x: 0, y: 0, z: 0}
 --- !u!50 &128725748
 Rigidbody2D:
