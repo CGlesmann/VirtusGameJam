@@ -442,11 +442,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
-        type: 3}
-      propertyPath: _locked
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8030739660726750790, guid: 02e37e7a256963143a805722a334f165,
         type: 3}
       propertyPath: _onTriggerEnterData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -466,6 +461,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _onTriggerExitData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Hide
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
+        type: 3}
+      propertyPath: _locked
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02e37e7a256963143a805722a334f165, type: 3}
@@ -7802,13 +7802,19 @@ PrefabInstance:
     - target: {fileID: 2640922882178339883, guid: 2736f7c2cf637ca4dbee6e896508a122,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2640922882178339883, guid: 2736f7c2cf637ca4dbee6e896508a122,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2640922882178339882, guid: 2736f7c2cf637ca4dbee6e896508a122,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2b0896a5835c0004eabdfa1ffefd1c5d,
+        type: 3}
     - target: {fileID: 2640922882178339881, guid: 2736f7c2cf637ca4dbee6e896508a122,
         type: 3}
       propertyPath: player
@@ -7839,17 +7845,41 @@ PrefabInstance:
       propertyPath: m_attackCooldown
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2640922882178339881, guid: 2736f7c2cf637ca4dbee6e896508a122,
+        type: 3}
+      propertyPath: mutationSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 5ac0f90e1aef81d48a381ad392005025, type: 3}
+    - target: {fileID: 2640922882178339881, guid: 2736f7c2cf637ca4dbee6e896508a122,
+        type: 3}
+      propertyPath: jumpUpSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 8c480546d15faad44beaf639a67ce4af, type: 3}
+    - target: {fileID: 2640922882178339881, guid: 2736f7c2cf637ca4dbee6e896508a122,
+        type: 3}
+      propertyPath: jumpDownSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 6fd6694bb0a8cbb4ca966cc6860d42e8, type: 3}
+    - target: {fileID: 2640922882178339881, guid: 2736f7c2cf637ca4dbee6e896508a122,
+        type: 3}
+      propertyPath: meleeSwingSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 19c621681a745bd49b206896129410be, type: 3}
+    - target: {fileID: 2640922882178339881, guid: 2736f7c2cf637ca4dbee6e896508a122,
+        type: 3}
+      propertyPath: meleeImpactSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 05ce27b2f0bba054a9fe0e6038622054, type: 3}
+    - target: {fileID: 2640922882178339881, guid: 2736f7c2cf637ca4dbee6e896508a122,
+        type: 3}
+      propertyPath: chargeSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b7a8d52e7dcb104394c8893ce82cb42, type: 3}
     - target: {fileID: 2640922882178339887, guid: 2736f7c2cf637ca4dbee6e896508a122,
         type: 3}
       propertyPath: manager
       value: 
       objectReference: {fileID: 183216309}
-    - target: {fileID: 2640922882178339882, guid: 2736f7c2cf637ca4dbee6e896508a122,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 2b0896a5835c0004eabdfa1ffefd1c5d,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2736f7c2cf637ca4dbee6e896508a122, type: 3}
 --- !u!114 &705119608 stripped
@@ -10046,11 +10076,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
-        type: 3}
-      propertyPath: _locked
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8030739660726750790, guid: 02e37e7a256963143a805722a334f165,
         type: 3}
       propertyPath: _onTriggerEnterData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -10070,6 +10095,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _onTriggerExitData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Hide
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
+        type: 3}
+      propertyPath: _locked
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02e37e7a256963143a805722a334f165, type: 3}
@@ -37426,11 +37456,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.9
       objectReference: {fileID: 0}
-    - target: {fileID: 6375266550959967868, guid: 3659277a51b98d44d86b7d304d1f62d2,
-        type: 3}
-      propertyPath: manager
-      value: 
-      objectReference: {fileID: 183216309}
     - target: {fileID: 6375266550959967866, guid: 3659277a51b98d44d86b7d304d1f62d2,
         type: 3}
       propertyPath: m_Sprite
@@ -37452,6 +37477,11 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6375266550959967868, guid: 3659277a51b98d44d86b7d304d1f62d2,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 183216309}
     - target: {fileID: 6375266550959967870, guid: 3659277a51b98d44d86b7d304d1f62d2,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
@@ -37848,11 +37878,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
-        type: 3}
-      propertyPath: _locked
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8030739660726750790, guid: 02e37e7a256963143a805722a334f165,
         type: 3}
       propertyPath: _onTriggerEnterData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -37872,6 +37897,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _onTriggerExitData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Hide
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
+        type: 3}
+      propertyPath: _locked
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02e37e7a256963143a805722a334f165, type: 3}

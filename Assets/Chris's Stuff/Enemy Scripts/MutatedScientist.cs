@@ -36,10 +36,16 @@ public class MutatedScientist : MonoBehaviour
     [SerializeField] private float slamRadius;
     [SerializeField] private float slamKnockback;
 
+    [SerializeField] private AudioClip jumpUpSFX;
+    [SerializeField] private AudioClip jumpDownSFX;
+
     [Header("Melee Routine Variables")]
     [SerializeField] private bool meleeMode = false;
     [SerializeField] private float meleeSpeed = 8f;
     [SerializeField] private Vector2 acceptanceRange = Vector2.one;
+
+    [SerializeField] private AudioClip meleeSwingSFX;
+    [SerializeField] private AudioClip meleeImpactSFX;
 
     [Header("Dashing Variables")]
     [SerializeField] private bool charging = false;
@@ -50,6 +56,8 @@ public class MutatedScientist : MonoBehaviour
 
     [SerializeField] private float m_attackCooldown;
     private float m_attackTimer = 0f;
+
+    [SerializeField] private AudioClip chargeSFX;
 
     [Header("Special Case Variables")]
     [SerializeField] private Vector2 awayRadius;
@@ -139,6 +147,7 @@ public class MutatedScientist : MonoBehaviour
     {
         if (!isJumping && !inAir)
         {
+            AudioPlayer.Instance.PlaySFX(jumpUpSFX);
             isJumping = true;
             StartCoroutine("JumpingUp");
         } else
@@ -205,6 +214,7 @@ public class MutatedScientist : MonoBehaviour
 
     IEnumerator SlamDown()
     {
+        bool setSlam = false;
         float yGoal = shadow.transform.position.y - shadowOffset.y;
         float time = 0.075f;
         int reps = 10;
@@ -223,7 +233,14 @@ public class MutatedScientist : MonoBehaviour
             shadow.transform.localScale += new Vector3(shadowScaleInc.x, shadowScaleInc.y);
 
             if ((i / reps) <= 0.25f)
-                anim.SetBool("Slamming", true);
+            {
+                if (!setSlam)
+                {
+                    AudioPlayer.Instance.PlaySFX(jumpDownSFX);
+                    anim.SetBool("Slamming", true);
+                    setSlam = true;
+                }
+            }
 
             yield return new WaitForSecondsRealtime(0.001f);
         }
@@ -309,6 +326,16 @@ public class MutatedScientist : MonoBehaviour
         doingMove = false;
     }
 
+    public void PlaySwingSFX()
+    {
+        AudioPlayer.Instance.PlaySFX(meleeSwingSFX);
+    }
+
+    public void PlayImpactSFX()
+    {
+        AudioPlayer.Instance.PlaySFX(meleeImpactSFX);
+    }
+
     private void MeleeAttack()
     {
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, acceptanceRange * 1.1f, 0f, Vector2.left, 0f, playerLayer);
@@ -375,6 +402,7 @@ public class MutatedScientist : MonoBehaviour
         }
 
         transform.position = startPos;
+        AudioPlayer.Instance.PlaySFX(chargeSFX);
         StartCoroutine("Charge");
     }
 

@@ -221,7 +221,8 @@ public class Player : MonoBehaviour {
             swinging = true;
             enemies = null;
 
-            AudioPlayer.Instance.PlaySFX(meleeSwingSFX[attackCount - 1]);
+            if (attackCount < 3)
+                AudioPlayer.Instance.PlaySFX(meleeSwingSFX[attackCount - 1]);
         }
     }
 
