@@ -9672,11 +9672,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2640922882178339881, guid: 2736f7c2cf637ca4dbee6e896508a122,
         type: 3}
-      propertyPath: _onMutationStart.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2640922882178339881, guid: 2736f7c2cf637ca4dbee6e896508a122,
-        type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1799625389}
@@ -9698,7 +9693,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 705119607}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061555409}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9e90a16a1d1b0042914d4e790894219, type: 3}
@@ -38641,27 +38636,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1061555409 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2640922882178339893, guid: 2736f7c2cf637ca4dbee6e896508a122,
-    type: 3}
-  m_PrefabInstance: {fileID: 705119607}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1061555410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061555409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecac31cfb15d54649a9677ebbc62062d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioType: 1
-  _audioClip: {fileID: 8300000, guid: 5ac0f90e1aef81d48a381ad392005025, type: 3}
-  _volume: 1
 --- !u!1 &1067889568
 GameObject:
   m_ObjectHideFlags: 0

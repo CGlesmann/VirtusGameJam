@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2640922882178339887}
   - component: {fileID: 2640922882178339884}
   - component: {fileID: 1061555410}
+  - component: {fileID: 8138173206023809697}
   m_Layer: 11
   m_Name: MutatedScientist
   m_TagString: Untagged
@@ -150,6 +151,7 @@ MonoBehaviour:
   doingMove: 0
   battleStarted: 0
   slamPosition: {x: 0, y: 0}
+  mutationSFX: {fileID: 0}
   shadow: {fileID: 0}
   shadowOffset: {x: 0, y: -2}
   shadowScaleStart: {x: 0, y: 0}
@@ -159,9 +161,13 @@ MonoBehaviour:
   slamDamage: 10
   slamRadius: 4
   slamKnockback: 0.05
+  jumpUpSFX: {fileID: 0}
+  jumpDownSFX: {fileID: 0}
   meleeMode: 0
   meleeSpeed: 8
   acceptanceRange: {x: 4.75, y: 4.75}
+  meleeSwingSFX: {fileID: 0}
+  meleeImpactSFX: {fileID: 0}
   charging: 0
   dashClone: {fileID: 2306442328779548260, guid: 1f54f19e63d80e147be1cba8e3fb0740,
     type: 3}
@@ -169,6 +175,7 @@ MonoBehaviour:
   chargeSpeed: 16
   chargeDamage: 15
   m_attackCooldown: 0.5
+  chargeSFX: {fileID: 0}
   awayRadius: {x: 30, y: 30}
   startEvents: []
   phase1Events:
@@ -264,18 +271,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   _onMutationStart:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1061555410}
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2640922882178339887
@@ -347,4 +343,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioType: 0
   _audioClip: {fileID: 8300000, guid: 7961996cefb54fd4abaf8dab770bdb8e, type: 3}
+  _volume: 1
+--- !u!114 &8138173206023809697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2640922882178339893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecac31cfb15d54649a9677ebbc62062d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioType: 1
+  _audioClip: {fileID: 8300000, guid: 5ac0f90e1aef81d48a381ad392005025, type: 3}
   _volume: 1
