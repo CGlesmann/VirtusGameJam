@@ -85,11 +85,6 @@ public class MutatedScientist : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !battleStarted)
-        {
-            StartMutation();
-        }
-    
         if (battleStarted)
         {
             if (doingMove)
@@ -114,10 +109,14 @@ public class MutatedScientist : MonoBehaviour
         anim.SetBool("Moving", false);
     }
 
+	[SerializeField] private UnityEvent _onMutationStart;
+
     public void StartMutation()
     {
         AudioPlayer.Instance.PlaySFX(mutationSFX);
         anim.SetBool("Mutating", true);
+
+		this._onMutationStart.Invoke();
     }
 
     /// <summary>
