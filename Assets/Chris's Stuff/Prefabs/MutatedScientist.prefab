@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2640922882178339881}
   - component: {fileID: 2640922882178339887}
   - component: {fileID: 2640922882178339884}
+  - component: {fileID: 1061555410}
   m_Layer: 11
   m_Name: MutatedScientist
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 577207223
   m_SortingLayer: 4
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: f6a9c101fc25cff43ac3445009cbfd05, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b0896a5835c0004eabdfa1ffefd1c5d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,7 +102,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.56, y: 1.76}
+    oldSize: {x: 3.6875, y: 2.8125}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -143,11 +144,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   mbStats: {fileID: 11400000, guid: 7a85e3650f7c5e143851959728d128e7, type: 2}
-  player: {fileID: 1426028758001202, guid: 64116271b4af5d945bd46e50b1ad8494, type: 3}
+  player: {fileID: 0}
   stage: 0
+  eventNum: 0
+  doingMove: 0
   battleStarted: 0
   slamPosition: {x: 0, y: 0}
-  shadow: {fileID: 2937450734096444369, guid: 9d70851eab6d5af47bd1a98a8686dd18, type: 3}
+  shadow: {fileID: 0}
   shadowOffset: {x: 0, y: -2}
   shadowScaleStart: {x: 0, y: 0}
   shadowScaleEnd: {x: 8, y: 6}
@@ -159,11 +162,14 @@ MonoBehaviour:
   meleeMode: 0
   meleeSpeed: 8
   acceptanceRange: {x: 4.75, y: 4.75}
+  charging: 0
   dashClone: {fileID: 2306442328779548260, guid: 1f54f19e63d80e147be1cba8e3fb0740,
     type: 3}
   chargeTime: 1
   chargeSpeed: 16
-  m_attackCooldown: 1.25
+  chargeDamage: 15
+  m_attackCooldown: 0.5
+  awayRadius: {x: 30, y: 30}
   startEvents: []
   phase1Events:
   - m_PersistentCalls:
@@ -256,6 +262,22 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  _onMutationStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1061555410}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &2640922882178339887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +292,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   baseStats: {fileID: 11400000, guid: 7a85e3650f7c5e143851959728d128e7, type: 2}
+  attackStyle: 0
+  rangeSpawnOffset: {x: 0, y: 0, z: 0}
+  rangePrefab: {fileID: 0}
   attackRange: 0.5
   attackCooldown: 0.5
   wallLayer:
@@ -308,3 +333,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1061555410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2640922882178339893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecac31cfb15d54649a9677ebbc62062d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioType: 0
+  _audioClip: {fileID: 8300000, guid: 7961996cefb54fd4abaf8dab770bdb8e, type: 3}
+  _volume: 1
