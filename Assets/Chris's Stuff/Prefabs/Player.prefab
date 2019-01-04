@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 128725747}
   m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   playerHealthBar: {fileID: 0}
+  respawnPosition: {x: 0, y: 0, z: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 2048

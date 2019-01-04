@@ -921,11 +921,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
-        type: 3}
-      propertyPath: _locked
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8030739660726750790, guid: 02e37e7a256963143a805722a334f165,
         type: 3}
       propertyPath: _onTriggerEnterData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -945,6 +940,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _onTriggerExitData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Hide
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
+        type: 3}
+      propertyPath: _locked
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1630804753, guid: 02e37e7a256963143a805722a334f165, type: 3}
       propertyPath: m_Sprite
@@ -9800,11 +9800,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4205736372462596, guid: 64116271b4af5d945bd46e50b1ad8494, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 144.1
+      value: 50.9
       objectReference: {fileID: 0}
     - target: {fileID: 4205736372462596, guid: 64116271b4af5d945bd46e50b1ad8494, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -196.9
+      value: -79.6
       objectReference: {fileID: 0}
     - target: {fileID: 4205736372462596, guid: 64116271b4af5d945bd46e50b1ad8494, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13492,11 +13492,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
-        type: 3}
-      propertyPath: _locked
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8030739660726750790, guid: 02e37e7a256963143a805722a334f165,
         type: 3}
       propertyPath: _onTriggerEnterData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -13516,6 +13511,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _onTriggerExitData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Hide
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
+        type: 3}
+      propertyPath: _locked
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02e37e7a256963143a805722a334f165, type: 3}
@@ -43692,11 +43692,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
-        type: 3}
-      propertyPath: _locked
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8030739660726750790, guid: 02e37e7a256963143a805722a334f165,
         type: 3}
       propertyPath: _onTriggerEnterData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -43716,6 +43711,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _onTriggerExitData.Array.data[0]._unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Hide
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030739660726750794, guid: 02e37e7a256963143a805722a334f165,
+        type: 3}
+      propertyPath: _locked
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02e37e7a256963143a805722a334f165, type: 3}

@@ -17,6 +17,9 @@ public class Player : MonoBehaviour {
     [Header("GUI References")]
     public HealthBarView playerHealthBar;
 
+    [Header("Respawn Variables")]
+    public Vector3 respawnPosition;
+
     [Header("Player Combat Variables")]
     public LayerMask enemyLayer;
     public LayerMask wallLayer;
@@ -138,6 +141,20 @@ public class Player : MonoBehaviour {
         {
             TryMeleeAttack();
         }
+    }
+
+    public void SetRespawnPoint(Vector3 pos)
+    {
+        respawnPosition = pos;
+    }
+
+    public void Respawn()
+    {
+        // Setting Position to respawn Point
+        transform.position = respawnPosition;
+
+        // Resetting Stats
+        manager.playerStats.Reset();
     }
 
     private void UpdatePlayerSprite()

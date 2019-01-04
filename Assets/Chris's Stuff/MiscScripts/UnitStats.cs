@@ -40,6 +40,12 @@ public class UnitStats : ScriptableObject
         // Checking for death
         if (unitHealth <= 0f)
         {
+            // Checking for a player Object
+            if (target.tag == "Player")
+            {
+                target.GetComponent<Player>().Respawn();
+            }
+
             // Destroying the GameObject
             GameObject.Destroy(target);
         }
