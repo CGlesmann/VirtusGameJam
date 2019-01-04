@@ -61,6 +61,7 @@ public class MutatedScientist : MonoBehaviour
 
     [Header("Special Case Variables")]
     [SerializeField] private Vector2 awayRadius;
+    [SerializeField] private GameObject keyCard;
 
     [Header("Starting Routine")]
     public UnityEvent[] startEvents;
@@ -89,6 +90,12 @@ public class MutatedScientist : MonoBehaviour
         m_attackTimer = m_attackCooldown;
 
         stageEvents = phase1Events.Length;
+    }
+
+    private void OnDestroy()
+    {
+        keyCard.SetActive(true);
+        return;
     }
 
     private void Update()
