@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e4dc22f7f460343bf54072d909a127, type: 3}
   m_Name: Level 1 Diary Data 2
   m_EditorClassIdentifier: 
-  _title: March 26 - 2025
+  _title: March 26, 2025
   _text: 'After many attempts of culturing the bacteria, subject B32 responded differently
     to any other.
 

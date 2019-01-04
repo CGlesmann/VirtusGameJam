@@ -10,14 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e4dc22f7f460343bf54072d909a127, type: 3}
-  m_Name: Level 1 Diary Data 1
+  m_Name: Level 1 Diary Data 5
   m_EditorClassIdentifier: 
-  _title: 'January 6, 2025 '
-  _text: 'After strict instructions from Edgar, we began experimenting on humans in
-    attempt to fuse the plague bacteria with their DNA.
-
-
-    All test subjects have responded negatively and has resulted in instant death.
-
-
-    What are they hoping to achieve?'
+  _title: September 13, 2025
+  _text: "It seems my hierarchy have betrayed me. I was under the assurance that with
+    the success of my experiments, my family and I would remain safe. \n\nI\u2019ve
+    been left for dead and outside is crawling with mutations. With survivability
+    becoming slim, I may have no other choice\u2026"

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e4dc22f7f460343bf54072d909a127, type: 3}
+  m_Name: Level 1 Diary Data 6
+  m_EditorClassIdentifier: 
+  _title: September 14, 2025
+  _text: "\rAfter the success of subject C27, I knew it was possible\u2026 I knew
+    I could use the virus bacteria to inject my own cells to enhance my physical strength.
+    However, after many attempts my cells have only mutated and rejected the virus.\r\n\r\nI\u2019m
+    running out of time. If I remain control of my body and mind after injecting myself
+    with an extreme concentrated dose\u2026 I have no answer\u2026 But I have no way
+    out and no other options."
