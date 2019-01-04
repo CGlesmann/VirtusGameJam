@@ -149,6 +149,11 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 1024
+  meleeSwingSFX:
+  - {fileID: 8300000, guid: 1068c7a2b96e22c45b0a63b4ed7efdcb, type: 3}
+  - {fileID: 8300000, guid: 222da7d43cc7c484ea2fc25fda24db36, type: 3}
+  - {fileID: 8300000, guid: 1068c7a2b96e22c45b0a63b4ed7efdcb, type: 3}
+  meleeAttack: 0
   swinging: 0
   checkingForNextAttack: 0
   attackDetermined: 0
@@ -164,10 +169,10 @@ MonoBehaviour:
   rangeAttackCooldown: 0
   rangePrefab: {fileID: 5545382639519833457, guid: 71321b0ea7354fb4d964fa164834f2c3,
     type: 3}
+  _rangeAttackSFX: {fileID: 0}
   ultimatePrefab: {fileID: 84873638643089021, guid: 05b04f2509e9ada45931be8e1acf7729,
     type: 3}
   ultimateCooldown: 0
-  _ultimateSFX: {fileID: 8300000, guid: b6eaad4c428525c41b9a536ef2807c33, type: 3}
   attackKey: 32
   moving: 0
   attacking: 0
