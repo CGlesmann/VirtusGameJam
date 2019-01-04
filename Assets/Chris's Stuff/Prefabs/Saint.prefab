@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3973439027017028787}
   - component: {fileID: 5439483783034291946}
   - component: {fileID: 5592496506862153597}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Saint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,22 +143,22 @@ MonoBehaviour:
   rangeSpawnOffset: {x: 0.225, y: 0.705, z: 0}
   rangePrefab: {fileID: 2334162306548081, guid: 5abfa03e452be8b449eeaeb311c5943b,
     type: 3}
-  attackRange: 0.5
-  attackCooldown: 0.5
+  attackRange: 15
+  attackCooldown: 1.25
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   wanderSpeed: 4
-  canWander: 1
+  canWander: 0
   wanderRange: {x: 0, y: 0, z: 0}
   wanderOrigin: {x: 0, y: 0, z: 0}
   wanderPoint: {x: 0, y: 0, z: 0}
   acceptanceRange: 0
   wanderDelay: 1.5
   chaseSpeed: 6
-  sightRange: {x: 0, y: 0, z: 0}
-  chaseRange: {x: 0, y: 0, z: 0}
+  sightRange: {x: 25, y: 25, z: 0}
+  chaseRange: {x: 30, y: 30, z: 0}
   isChasing: 0
