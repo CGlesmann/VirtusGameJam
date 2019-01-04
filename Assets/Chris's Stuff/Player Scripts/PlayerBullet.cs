@@ -10,6 +10,7 @@ public class PlayerBullet : MonoBehaviour
     public float bulletSpeed;
     public Vector3 bulletDir;
 
+    [SerializeField] private AudioClip spearHit;
     private bool set = false;
 
     [SerializeField] private float colRange;
@@ -54,6 +55,9 @@ public class PlayerBullet : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, bulletDir, 0.25f, enemyLayer);
         if (hit)
         {
+            // Playing the Sound Effect
+            AudioPlayer.Instance.PlaySFX(spearHit);
+
             // Getting the Enemy
             Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
             if (enemy == null)
