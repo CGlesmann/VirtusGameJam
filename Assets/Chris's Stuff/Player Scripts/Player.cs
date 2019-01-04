@@ -20,8 +20,10 @@ public class Player : MonoBehaviour {
     [Header("Player Combat Variables")]
     public LayerMask enemyLayer;
     public LayerMask wallLayer;
+    public AudioClip[] meleeSwingSFX;
 
     [Header("Player Melee Variables")]
+    public int meleeAttack = 0;
     public bool swinging = false; // Tracks when to check for collisions
     public bool checkingForNextAttack = false;
     public bool attackDetermined = false;
@@ -218,6 +220,8 @@ public class Player : MonoBehaviour {
             hits = new List<GameObject>();
             swinging = true;
             enemies = null;
+
+            AudioPlayer.Instance.PlaySFX(meleeSwingSFX[attackCount - 1]);
         }
     }
 

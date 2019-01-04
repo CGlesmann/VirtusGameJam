@@ -22,6 +22,7 @@ public class MutatedScientist : MonoBehaviour
     [Header("Battle Start Variables")]
     public bool battleStarted = false;
     public Vector2 slamPosition;
+    public AudioClip mutationSFX;
 
     [Header("Jump Ability Variables")]
     [SerializeField] private GameObject shadow;
@@ -115,6 +116,7 @@ public class MutatedScientist : MonoBehaviour
 
     public void StartMutation()
     {
+        AudioPlayer.Instance.PlaySFX(mutationSFX);
         anim.SetBool("Mutating", true);
     }
 
